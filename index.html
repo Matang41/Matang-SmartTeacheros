@@ -75,7 +75,6 @@
 <div id="login-screen">
     <div class="login-card">
         <h2 style="color: var(--primary); margin-top:0;">เข้าสู่ระบบจัดการคะแนน</h2>
-        <!-- แจ้งเตือนการดึงข้อมูล Firebase -->
         <div id="firebase-init-msg" style="color:var(--text-muted); font-size:14px; margin-bottom:10px;">กำลังเชื่อมต่อฐานข้อมูล...</div>
         
         <div id="user-select-container" style="margin-bottom: 15px; text-align: left; display:none;">
@@ -104,16 +103,14 @@
         </div>
     </div>
     
-    <!-- เมนู Cloud Sync แบบใหม่ (Firebase) -->
     <div style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); text-align: center;">
-        <span style="font-size: 13px; color: #10B981; font-weight: bold;">☁️ เชื่อมต่อระบบ Firebase สำเร็จ</span>
+        <span id="cloud-status-indicator" style="font-size: 13px; color: #10B981; font-weight: bold;">☁️ เชื่อมต่อระบบ Firebase สำเร็จ</span>
         <div style="display: flex; gap: 5px; margin-top: 8px;">
             <button class="btn btn-gold" style="font-size:12px; padding:5px; flex:1;" onclick="manualSave()">⬆️ บันทึกขึ้น Cloud</button>
         </div>
         <div style="font-size: 10px; color: gray; margin-top: 5px;">* ข้อมูลถูกบันทึกอัตโนมัติเมื่อมีการเปลี่ยนแปลง</div>
     </div>
 
-    <!-- ศูนย์คัดกรองเด็กเสี่ยง -->
     <div style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
         <button class="btn btn-outline" style="width: 100%; background:#fee2e2; color:#991b1b; border-color:#991b1b; font-weight:bold;" onclick="openGlobalRiskDashboard()">🚨 ศูนย์คัดกรองเด็กเสี่ยง (ทุกห้อง)</button>
     </div>
@@ -200,7 +197,6 @@
                         <option value="1">1 คาบ / สัปดาห์</option>
                         <option value="2">2 คาบ / สัปดาห์</option>
                     </select>
-
                     <div style="display:flex; gap:10px;">
                         <div style="flex:1;">
                             <label>เรียนวัน (คาบ 1):</label>
@@ -210,7 +206,6 @@
                         </div>
                         <div style="flex:1;"><label>คาบเรียนที่:</label><select id="schedule-period" class="input-text" onchange="saveSettings()"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div>
                     </div>
-
                     <div id="period-2-container" style="display:none; gap:10px;">
                         <div style="flex:1;">
                             <label>เรียนวัน (คาบ 2):</label>
@@ -220,28 +215,23 @@
                         </div>
                         <div style="flex:1;"><label>คาบเรียนที่:</label><select id="schedule-period-2" class="input-text" onchange="saveSettings()"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div>
                     </div>
-
                     <label>วันที่เปิดเทอม (สัปดาห์ที่ 1):</label><input type="date" id="start-date" class="input-text" onchange="saveSettings()">
                     <label>วันหยุดราชการ (YYYY-MM-DD):</label><textarea id="holidays" rows="3" class="input-text" onchange="saveSettings()"></textarea>
                 </div>
                 <div class="card">
                     <h3 style="margin-top:0; color: var(--primary);">การคำนวณคะแนน & ตัดเกรด (สัดส่วนอัตโนมัติ)</h3>
                     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">* ระบบจะนำรวมคะแนนดิบทั้งหมด ไปเทียบสัดส่วนให้ลงล็อกตาม "คะแนนเก็บ (ไม่รวมจิตพิสัย)" อัตโนมัติ</p>
-                    
                     <div style="display: flex; gap: 10px; margin-bottom: 15px; background: #fffbeb; padding: 10px; border-radius: 6px; border: 1px solid #fde68a;">
                         <div style="flex:1;"><label style="color:#92400e; font-weight:bold;">น้ำหนักคะแนนระหว่างเรียน:</label><input type="number" id="weight-mid" class="input-text" value="80" onchange="saveSettings()"></div>
                         <div style="flex:1;"><label style="color:#92400e; font-weight:bold;">น้ำหนักคะแนนสอบปลายภาค:</label><input type="number" id="weight-final" class="input-text" value="20" onchange="saveSettings()"></div>
                     </div>
-
                     <label>คะแนนจิตพิสัยเต็ม (แทรกอยู่ในระหว่างเรียน / หักจาก สาย,ลา,ขาด):</label>
                     <input type="number" id="affective-max" class="input-text" value="10" onchange="saveSettings()">
-
                     <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; background: #f8fafc; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer;">
                         <input type="checkbox" id="enable-attendance-rule" style="width: 20px; height: 20px;" onchange="saveSettings()">
                         <span style="font-weight: 500;">เปิดใช้งานเวลาเรียนตัด (มส.) เกณฑ์ % ขั้นต่ำ:</span>
                         <input type="number" id="min-attendance" class="input-text" style="width: 60px; margin:0;" onchange="saveSettings()">
                     </label>
-                    
                     <div style="display: flex; gap: 10px; margin-top: 15px;">
                         <div style="flex:1;"><label>เกรด 4 (>=):</label><input type="number" id="grade-cut-4" class="input-text" value="80" onchange="saveSettings()"></div>
                         <div style="flex:1;"><label>เกรด 3.5 (>=):</label><input type="number" id="grade-cut-35" class="input-text" value="75" onchange="saveSettings()"></div>
@@ -581,10 +571,8 @@
     import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // === 🔴 จุดที่ครูต้องเอา Config จาก Firebase มาวาง ===
-    // คำแนะนำ: ไปที่ Project Settings ของ Firebase > เลื่อนลงมาล่างสุด > ก๊อปปี้ส่วนนี้มาแปะ
     const firebaseConfig = {
-        apiKey: "AIzaSyDNQL_KDwcn9q5t8MUQJzhuZvR_dHD2FaM", // สอดไส้ API Key ที่ให้มาเรียบร้อย
+        apiKey: "AIzaSyDNQL_KDwcn9q5t8MUQJzhuZvR_dHD2FaM", 
         authDomain: "matangsmarttecheros.firebaseapp.com",     
         projectId: "matangsmarttecheros",                      
         storageBucket: "matangsmarttecheros.firebasestorage.app",      
@@ -593,36 +581,53 @@
     };
 
     let app, auth, db;
+    let firebaseReadyFired = false;
+    
+    // ฟังก์ชันยิงอีเวนต์เพื่อให้ระบบเดินหน้าต่อ (ลดการรอคอย)
+    const fireReadyEvent = () => {
+        if (!firebaseReadyFired) {
+            firebaseReadyFired = true;
+            window.dispatchEvent(new Event('firebaseReady'));
+        }
+    };
+
     try {
         if (firebaseConfig.projectId === "YOUR_PROJECT_ID") {
-            throw new Error("Placeholder config detected. Switching to Offline Mode.");
+            console.warn("⚠️ ยังไม่ได้ใส่ข้อมูล Firebase Project ID จะใช้งานในโหมด Offline");
+            fireReadyEvent();
+        } else {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+
+            window.firebaseDb = db;
+            window.firebaseDoc = doc;
+            window.firebaseSetDoc = setDoc;
+            window.firebaseGetDoc = getDoc;
+
+            signInAnonymously(auth).catch(error => {
+                console.error("Firebase Auth Error (Offline Mode):", error);
+                fireReadyEvent();
+            });
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    window.firebaseUserId = user.uid;
+                    fireReadyEvent();
+                }
+            });
+            
+            // ตั้งเวลาเผื่อเน็ตหลุด ถ้า 4 วินาทีแล้ว Firebase ยังเงียบ ให้บังคับเข้า Offline Mode ไปก่อน
+            setTimeout(() => {
+                if(!firebaseReadyFired) {
+                    console.warn("⚠️ เชื่อมต่อคลาวด์ใช้เวลานานเกินไป... บังคับเข้าสู่ระบบด้วยข้อมูล Offline");
+                    fireReadyEvent();
+                }
+            }, 4000);
         }
-        
-        app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        db = getFirestore(app);
-
-        // Export to global scope for legacy script to use
-        window.firebaseDb = db;
-        window.firebaseDoc = doc;
-        window.firebaseSetDoc = setDoc;
-        window.firebaseGetDoc = getDoc;
-
-        signInAnonymously(auth).catch(error => {
-            console.error("Auth error:", error);
-            // Fallback to local init if auth fails completely
-            window.dispatchEvent(new Event('firebaseReady'));
-        });
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                window.firebaseUserId = user.uid;
-                window.dispatchEvent(new Event('firebaseReady'));
-            }
-        });
     } catch(err) {
-        console.warn("⚠️ Firebase ไม่ได้ตั้งค่าอย่างถูกต้อง ระบบจะทำงานในโหมด Offline");
-        window.dispatchEvent(new Event('firebaseReady'));
+        console.error("Firebase Error:", err);
+        fireReadyEvent();
     }
 </script>
 
@@ -639,7 +644,6 @@
     let parsedGroupDataCache = [];
     let pendingGroupScore = 0;
 
-    // เปลี่ยนจุดเริ่มต้นแอป: รอให้ Firebase ยืนยันตัวตนสำเร็จก่อน (Auto Migration)
     window.addEventListener('firebaseReady', async () => {
         if(window.firebaseDb && window.firebaseUserId) {
             const docRef = window.firebaseDoc(window.firebaseDb, 'users', window.firebaseUserId, 'appData', 'MainSystem');
@@ -648,27 +652,24 @@
                 if (docSnap.exists() && docSnap.data().globalData) {
                     globalData = docSnap.data().globalData;
                 } else {
-                    // ไม่พบข้อมูลบน Firebase -> ทำ Auto Migration ดูດจาก LocalStorage เดิมขึ้นไป!
                     let localData = localStorage.getItem('GradeSystemV30') || localStorage.getItem('GradeSystemV26');
                     if (localData) {
                         globalData = JSON.parse(localData);
                         await window.firebaseSetDoc(docRef, { globalData: globalData });
-                        alert("🎉 ตรวจพบข้อมูลเก่าในเครื่อง! ระบบได้อัปโหลดข้อมูลของคุณขึ้น Firebase สำเร็จแล้ว");
                     }
                 }
             } catch(e) { 
-                console.warn("Firebase is offline or unreachable. Loading local data fallback."); 
-                // [แก้ไขใหม่] ถ้าโหลดจากคลาวด์พัง (เช่น offline) ให้ดึงข้อมูลจากเครื่องมาใช้แทนทันที
+                console.warn("โหลดข้อมูลคลาวด์ไม่สำเร็จ ดึงข้อมูล LocalStorage มาใช้แทน");
                 let localData = localStorage.getItem('GradeSystemV30') || localStorage.getItem('GradeSystemV26');
                 if (localData) globalData = JSON.parse(localData);
             }
         } else {
-            // โหมดออฟไลน์
             let localData = localStorage.getItem('GradeSystemV30') || localStorage.getItem('GradeSystemV26');
             if (localData) globalData = JSON.parse(localData);
         }
         
-        document.getElementById('firebase-init-msg').style.display = 'none';
+        let msgEl = document.getElementById('firebase-init-msg');
+        if (msgEl) msgEl.style.display = 'none';
         initLoginScreen();
     });
 
@@ -679,7 +680,7 @@
     function onSelectUser(idx) { if (idx === "") { document.getElementById('login-password-box').style.display = 'none'; return; } let user = globalData.users[idx]; document.getElementById('login-selected-name').innerText = `ผู้ใช้งาน: ${user.name}`; document.getElementById('user-select-container').style.display = 'none'; document.getElementById('login-password-box').style.display = 'block'; document.getElementById('login-pin').value = ''; window.selectedUserIdx = idx; }
     function resetLoginSelection() { document.getElementById('login-password-box').style.display = 'none'; document.getElementById('user-select-container').style.display = 'block'; }
     function doLogin() { let pin = document.getElementById('login-pin').value.trim(); let user = globalData.users[window.selectedUserIdx]; if (pin === user.pin) loginSuccess(user); else alert('รหัส PIN ไม่ถูกต้อง!'); }
-    function loginSuccess(user) { currentUser = user; globalData.currentUserIndex = window.selectedUserIdx; document.getElementById('login-screen').style.display = 'none'; if(globalData.cloudUrl) { document.getElementById('cloud-url').value = globalData.cloudUrl; document.getElementById('cloud-url').disabled = true; } updateTeacherUI(); renderApp(); }
+    function loginSuccess(user) { currentUser = user; globalData.currentUserIndex = window.selectedUserIdx; document.getElementById('login-screen').style.display = 'none'; updateTeacherUI(); renderApp(); }
     function logout() { currentUser = null; globalData.currentUserIndex = null; initLoginScreen(); }
     function openNewUserModal() { document.getElementById('reg-name').value = ''; document.getElementById('reg-position').value = ''; document.getElementById('reg-school').value = ''; document.getElementById('reg-pin').value = ''; document.getElementById('new-user-modal').style.display = 'flex'; }
     function registerNewUser() { let name = document.getElementById('reg-name').value.trim(), position = document.getElementById('reg-position').value.trim(), school = document.getElementById('reg-school').value.trim(), pin = document.getElementById('reg-pin').value.trim(); if (!name || !position || !school || !pin) { alert('กรุณากรอกข้อมูลให้ครบทุกช่อง'); return; } globalData.users.push({ name: name, position: position, school: school, pin: pin, classes: [] }); saveData(); document.getElementById('new-user-modal').style.display = 'none'; initLoginScreen(); alert('ลงทะเบียนผู้ใช้ใหม่สำเร็จ!'); }
@@ -698,6 +699,18 @@
         currentUser.classes.forEach(c => { let isActive = c.id === currentUser.activeClassId ? 'active' : ''; listContainer.innerHTML += `<div class="class-item ${isActive}" onclick="setActiveClass('${c.id}')"><div style="font-weight: bold;">${c.subjectName}</div><div class="class-meta">ชั้น ${c.level}/${c.room}</div></div>`; });
         
         let activeC = currentUser.classes.find(c => c.id === currentUser.activeClassId); if(!activeC) return;
+        
+        // Auto Healing เก่า
+        activeC.gradeColumns.forEach(col => {
+            if (!col.scores) col.scores = {};
+            if (!col.groups) col.groups = {};
+            if (!col.max) col.max = 10;
+        });
+        activeC.students.forEach(std => {
+            if (std.finalScore === undefined) std.finalScore = 0;
+            if (!std.attendanceStatus) std.attendanceStatus = [];
+        });
+
         document.getElementById('workspace-title').innerText = `${activeC.subjectName} (ชั้น ${activeC.level}/${activeC.room})`;
         document.getElementById('workspace-subtitle').innerText = `รหัสวิชา: ${activeC.subjectCode} | นักเรียน: ${activeC.students.length} คน`;
         let printTitle = document.getElementById('print-header-title').innerText;
@@ -723,7 +736,6 @@
 
         let maxP = (activeC.periodsPerWeek == 2) ? 40 : 20;
         activeC.students.forEach(std => {
-            if (!std.attendanceStatus) std.attendanceStatus = [];
             while(std.attendanceStatus.length < maxP) std.attendanceStatus.push('มา');
         });
         renderTables(activeC);
@@ -938,6 +950,11 @@
         tbody.innerHTML = html;
     }
 
+    function openAnalyticsModal() { let activeC = currentUser.classes.find(c => c.id === currentUser.activeClassId); if (!activeC) return; let sel = document.getElementById('analytics-student-select'); sel.innerHTML = ''; activeC.students.forEach((s, i) => { sel.innerHTML += `<option value="${s.id}">${i+1}. ${s.name}</option>`; }); document.getElementById('analytics-view-mode').value = 'class'; document.getElementById('analytics-student-select').style.display = 'none'; renderClassAnalytics(); document.getElementById('analytics-modal').style.display = 'flex'; }
+    function switchAnalyticsView(mode) { if (mode === 'student') { document.getElementById('analytics-student-select').style.display = 'inline-block'; renderStudentAnalytics(); } else { document.getElementById('analytics-student-select').style.display = 'none'; renderClassAnalytics(); } }
+    function renderClassAnalytics() { let activeC = currentUser.classes.find(c => c.id === currentUser.activeClassId); let riskCount = 0, missingWorkCount = 0; let maxP = activeC.periodsPerWeek == 2 ? 40 : 20; activeC.students.forEach(std => { let present = (std.attendanceStatus || []).filter(v => v === 'มา' || v === 'สาย' || v === 'ลา').length; if ((present / maxP) * 100 < activeC.minAttendance) riskCount++; activeC.gradeColumns.forEach(col => { let val = col.scores[std.id]; if (val === undefined || val === 0 || val === null || val === "") missingWorkCount++; }); }); document.getElementById('analytics-body').innerHTML = `<h3>📈 สรุปภาพรวมห้องเรียน</h3><p>นักเรียน: <b>${activeC.students.length} คน</b> | ชิ้นงาน: <b>${activeC.gradeColumns.length} ชิ้น</b></p><hr><ul><li>🚨 นักเรียนที่เสี่ยงเวลาเรียนต่ำกว่าเกณฑ์: <b style="color:var(--red);">${riskCount} คน</b></li><li>❌ งานที่ยังค้างส่งรวมทั้งห้อง: <b style="color:var(--red);">${missingWorkCount} งาน</b></li></ul>`; }
+    function renderStudentAnalytics() { let activeC = currentUser.classes.find(c => c.id === currentUser.activeClassId); let stdId = document.getElementById('analytics-student-select').value; let std = activeC.students.find(s => s.id === stdId); if (!std) return; if (!std.attendanceStatus) std.attendanceStatus = Array(20).fill('มา'); let maxP = activeC.periodsPerWeek == 2 ? 40 : 20; let present = std.attendanceStatus.filter(v => v === 'มา' || v === 'สาย' || v === 'ลา').length, lateCount = std.attendanceStatus.filter(s => s === 'สาย').length, leaveCount = std.attendanceStatus.filter(s => s === 'ลา').length, absentCount = std.attendanceStatus.filter(s => s === 'ขาด').length; let affectiveMax = parseFloat(activeC.affectiveMax) || 10, affectiveScore = Math.max(0, affectiveMax - (lateCount * 0.5) - (absentCount * 2) - (leaveCount * 0.2)); let missingList = []; activeC.gradeColumns.forEach(col => { let val = col.scores[std.id]; if (val === undefined || val === 0 || val === null || val === "") missingList.push(col.name); }); document.getElementById('analytics-body').innerHTML = `<h3>👤 รายงานผลการเรียน: ${std.name}</h3><p>เวลาเรียน: นับคาบ ${present} สัปดาห์ | สาย: ${lateCount} | ลา: ${leaveCount} | ขาด: ${absentCount}</p><p>จิตพิสัย: <b style="color:var(--primary);">${affectiveScore.toFixed(1)} / ${affectiveMax}</b></p><hr><p><b>ชิ้นงานที่ค้างส่ง:</b> ${missingList.length > 0 ? missingList.join(', ') : 'ส่งครบยอดเยี่ยม!'}</p><button class="btn btn-outline" style="margin-top:10px;" onclick="window.print()">🖨️ พิมพ์หน้านี้</button>`; }
+    
     function printModalArea(elementId) {
         let printContent = document.getElementById(elementId).innerHTML;
         let originalContent = document.body.innerHTML;
@@ -992,98 +1009,106 @@
     
     function openExportPreviewModal() { let workspace = document.getElementById('class-workspace').cloneNode(true); workspace.querySelectorAll('.no-print').forEach(el => el.style.display = 'none'); workspace.style.display = 'block'; workspace.style.background = 'white'; workspace.style.padding = '20px'; document.getElementById('export-preview-box').innerHTML = ''; document.getElementById('export-preview-box').appendChild(workspace); document.getElementById('export-preview-modal').style.display = 'flex'; }
     function executeExportPNG(targetId) { document.getElementById('export-preview-modal').style.display = 'none'; let workspace = document.getElementById(targetId || 'class-workspace'), noPrintEls = workspace.querySelectorAll('.no-print'); noPrintEls.forEach(el => el.style.display = 'none'); html2canvas(workspace, { scale: 2 }).then(canvas => { noPrintEls.forEach(el => el.style.display = ''); let link = document.createElement('a'); link.download = `${currentUser.name}_Report.png`; link.href = canvas.toDataURL('image/png'); link.click(); }).catch(err => { noPrintEls.forEach(el => el.style.display = ''); alert('Error: ' + err); }); }
-    function exportExcelCSV() { let activeC = currentUser.classes.find(c => c.id === currentUser.activeClassId); if (!activeC || activeC.students.length === 0) return; let csvContent = "\uFEFFรายวิชา: " + activeC.subjectName + "\nเลขที่,รหัส,ชื่อ,รวมเก็บดิบ,หารสัดส่วนแล้ว,จิตพิสัย,ปลายภาค,รวม,เกรด\n"; activeC.students.forEach((std, idx) => { let calc = calculateStudentTotalObj(std, activeC); let g = calc.grandTotal >= 80 ? "4" : calc.grandTotal >= 50 ? "1" : "0"; csvContent += `${idx+1},"${std.studentId||''}","${std.name}",${calc.totalRaw.toFixed(1)},${calc.scaledAssignmentScore.toFixed(1)},${calc.affectiveScore.toFixed(1)},${calc.finalScore},${calc.grandTotal.toFixed(1)},${g}\n`; }); let link = document.createElement("a"); link.setAttribute("href", encodeURI("data:text/csv;charset=utf-8," + csvContent)); link.setAttribute("download", "Scores.csv"); link.click(); link.remove(); }
 
+    // ================= SYSTEM CONFIG =================
+    function exportExcelCSV() { let activeC = currentUser.classes.find(c => c.id === currentUser.activeClassId); if (!activeC || activeC.students.length === 0) return; let csvContent = "\uFEFFรายวิชา: " + activeC.subjectName + "\nเลขที่,รหัส,ชื่อ,รวมเก็บดิบ,หารสัดส่วนแล้ว,จิตพิสัย,ปลายภาค,รวม,เกรด\n"; activeC.students.forEach((std, idx) => { let calc = calculateStudentTotalObj(std, activeC); let g = calc.grandTotal >= 80 ? "4" : calc.grandTotal >= 50 ? "1" : "0"; csvContent += `${idx+1},"${std.studentId||''}","${std.name}",${calc.totalRaw.toFixed(1)},${calc.scaledAssignmentScore.toFixed(1)},${calc.affectiveScore.toFixed(1)},${calc.finalScore},${calc.grandTotal.toFixed(1)},${g}\n`; }); let link = document.createElement("a"); link.setAttribute("href", encodeURI("data:text/csv;charset=utf-8," + csvContent)); link.setAttribute("download", "Scores.csv"); link.click(); link.remove(); }
     function saveSettings() { let activeC = currentUser.classes.find(c => c.id === currentUser.activeClassId); activeC.periodsPerWeek = parseInt(document.getElementById('periods-per-week').value) || 1; activeC.scheduleDay2 = document.getElementById('schedule-day-2').value; activeC.schedulePeriod2 = document.getElementById('schedule-period-2').value; activeC.weightMid = parseFloat(document.getElementById('weight-mid').value) || 80; activeC.weightFinal = parseFloat(document.getElementById('weight-final').value) || 20; activeC.minAttendance = parseFloat(document.getElementById('min-attendance').value) || 80; activeC.affectiveMax = parseFloat(document.getElementById('affective-max').value) || 10; activeC.enableAttendanceRule = document.getElementById('enable-attendance-rule').checked; activeC.gradeCut4 = parseFloat(document.getElementById('grade-cut-4').value) || 80; activeC.gradeCut35 = parseFloat(document.getElementById('grade-cut-35').value) || 75; activeC.gradeCut3 = parseFloat(document.getElementById('grade-cut-3').value) || 70; activeC.startDate = document.getElementById('start-date').value; activeC.holidays = document.getElementById('holidays').value; activeC.scheduleDay = document.getElementById('schedule-day').value; activeC.schedulePeriod = document.getElementById('schedule-period').value; saveData(); }
     function updateTeacherUI() { if (currentUser) { document.getElementById('sidebar-teacher-name').innerText = currentUser.name; document.getElementById('print-teacher-name').innerText = `(${currentUser.name})`; document.getElementById('print-teacher-meta').innerText = `ตำแหน่ง ${currentUser.position} ${currentUser.school}`; document.getElementById('admin-btn').style.display = (currentUser.name === "นายนนทพัทธ์ วงค์มูล") ? 'block' : 'none'; } }
-    function saveData(isManual = false) { if(globalData.currentUserIndex !== null) globalData.users[globalData.currentUserIndex] = currentUser; localStorage.setItem('GradeSystemV30', JSON.stringify(globalData)); if(isManual) { document.getElementById('save-details').innerHTML = `บันทึกสำเร็จเวลา ${new Date().toLocaleTimeString('th-TH')}`; document.getElementById('save-modal').style.display = 'flex'; } renderApp(); }
-    function manualSave() { saveData(true); }
-    function toggleCloudEdit() { let urlInput = document.getElementById('cloud-url'); urlInput.disabled = !urlInput.disabled; if (!urlInput.disabled) urlInput.focus(); }
-    function saveCloudUrl() { globalData.cloudUrl = document.getElementById('cloud-url').value.trim(); localStorage.setItem('GradeSystemV30', JSON.stringify(globalData)); }
-    function showFetchError(err) { document.getElementById('save-modal').style.display = 'none'; alert(`เกิดข้อผิดพลาดในการเชื่อมต่อ (Failed to fetch)\n\nสาเหตุที่เป็นไปได้:\n1. URL ผิด (ต้องลงท้ายด้วย /exec)\n2. การเผยแพร่ Apps Script ยังไม่ได้ตั้งค่า "ผู้มีสิทธิ์เข้าถึง: ทุกคน (Anyone)"\n3. อินเทอร์เน็ตหลุด\n\nรายละเอียด Error:\n${err}`); }
     
-    function syncToCloudWithConfirm() {
-        let url = globalData.cloudUrl || document.getElementById('cloud-url').value.trim(); 
-        if (!url) { alert('กรุณากรอก Google Sheets Web App URL'); return; }
-        if (!url.includes('/exec')) { alert('⚠️ ลิงก์ไม่ถูกต้อง! ต้องลงท้ายด้วย /exec'); return; }
+    function saveData(isManual = false) { 
+        if(globalData.currentUserIndex !== null) globalData.users[globalData.currentUserIndex] = currentUser; 
+        localStorage.setItem('GradeSystemV30', JSON.stringify(globalData)); 
         
-        if (confirm('⚠️ ต้องการซิงค์ข้อมูลทั้งหมดขึ้น Cloud ทับข้อมูลเดิมบนเซิร์ฟเวอร์ใช่หรือไม่?')) {
-            document.getElementById('save-title').innerText = '⏳ กำลังอัปโหลด...';
-            document.getElementById('save-loader').style.display = 'block';
-            document.getElementById('save-details').innerText = '';
-            document.getElementById('save-ok-btn').style.display = 'none';
-            document.getElementById('save-modal').style.display = 'flex';
-
-            fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(globalData) })
-            .then(res => res.text())
-            .then(text => {
-                try {
-                    let data = JSON.parse(text);
-                    if(data.status === 'success') {
-                        document.getElementById('save-title').innerText = '✅ สำเร็จ';
-                        document.getElementById('save-loader').style.display = 'none';
-                        document.getElementById('save-details').innerText = 'ซิงค์ข้อมูลขึ้น Cloud เรียบร้อย!';
-                        document.getElementById('save-ok-btn').style.display = 'inline-block';
-                    } else {
-                        throw new Error(data.message || 'Unknown error');
-                    }
-                } catch(e) {
-                    throw new Error("เซิร์ฟเวอร์ตอบกลับผิดพลาด: " + text.substring(0, 100));
+        if (window.firebaseDb && window.firebaseUserId) {
+            if(isManual) { 
+                document.getElementById('save-title').innerText = '⏳ กำลังอัปโหลด...'; 
+                document.getElementById('save-loader').style.display = 'block'; 
+                document.getElementById('save-details').innerText = ''; 
+                document.getElementById('save-ok-btn').style.display = 'none'; 
+                document.getElementById('save-modal').style.display = 'flex'; 
+            }
+            const docRef = window.firebaseDoc(window.firebaseDb, 'users', window.firebaseUserId, 'appData', 'MainSystem');
+            window.firebaseSetDoc(docRef, { globalData: globalData })
+            .then(() => {
+                if(isManual) {
+                    document.getElementById('save-title').innerText = '✅ สำเร็จ'; 
+                    document.getElementById('save-loader').style.display = 'none'; 
+                    document.getElementById('save-details').innerText = `บันทึกข้อมูลขึ้น Firebase สำเร็จเวลา ${new Date().toLocaleTimeString('th-TH')}`; 
+                    document.getElementById('save-ok-btn').style.display = 'inline-block';
                 }
             })
             .catch(err => {
-                document.getElementById('save-title').innerText = '❌ ผิดพลาด';
-                document.getElementById('save-loader').style.display = 'none';
-                document.getElementById('save-details').innerHTML = `<span style="color:red; font-size:14px;">การเชื่อมต่อถูกบล็อก หรือเกิดข้อผิดพลาด: ${err.message}</span>`;
-                document.getElementById('save-ok-btn').style.display = 'inline-block';
+                if(isManual) {
+                    document.getElementById('save-title').innerText = '❌ ผิดพลาด'; 
+                    document.getElementById('save-loader').style.display = 'none'; 
+                    document.getElementById('save-details').innerHTML = `<span style="color:red; font-size:14px;">${err.message}</span>`; 
+                    document.getElementById('save-ok-btn').style.display = 'inline-block';
+                }
             });
+        } else {
+            if(isManual) {
+                document.getElementById('save-title').innerText = '✅ สำเร็จ (โหมดออฟไลน์)'; 
+                document.getElementById('save-loader').style.display = 'none'; 
+                document.getElementById('save-details').innerText = `บันทึกข้อมูลลงเครื่องสำเร็จเวลา ${new Date().toLocaleTimeString('th-TH')}`; 
+                document.getElementById('save-modal').style.display = 'flex'; 
+                document.getElementById('save-ok-btn').style.display = 'inline-block';
+            }
         }
+        renderApp(); 
     }
+    
+    function manualSave() { saveData(true); }
 
-    function loadFromCloud() {
-        let url = globalData.cloudUrl || document.getElementById('cloud-url').value.trim(); 
-        if (!url) { alert('กรุณากรอก URL'); return; }
-        if (!url.includes('/exec')) { alert('⚠️ ลิงก์ไม่ถูกต้อง! ต้องลงท้ายด้วย /exec'); return; }
-        
-        if(confirm('ดึงข้อมูลจาก Cloud ทับเครื่องปัจจุบัน ข้อมูลที่ยังไม่บันทึกอาจสูญหาย ยืนยัน?')) {
-            document.getElementById('save-title').innerText = '⏳ กำลังดึงข้อมูล...';
-            document.getElementById('save-loader').style.display = 'block';
-            document.getElementById('save-details').innerText = '';
-            document.getElementById('save-ok-btn').style.display = 'none';
-            document.getElementById('save-modal').style.display = 'flex';
-
-            let fetchUrl = url + (url.includes('?') ? '&' : '?') + 't=' + Date.now();
-            fetch(fetchUrl, { method: 'GET', redirect: 'follow' })
-            .then(res => {
-                if(!res.ok) throw new Error("การเชื่อมต่อเซิร์ฟเวอร์ล้มเหลว (HTTP " + res.status + ")");
-                return res.text();
-            })
-            .then(text => {
-                try {
-                    if (text.startsWith("<!DOCTYPE") || text.startsWith("<html")) { throw new Error("ลิงก์ไม่ได้รับอนุญาต (ถูกบล็อกด้วยหน้าล็อกอิน)"); }
-                    let data = JSON.parse(text);
-                    if(data && data.users) { 
-                        globalData = data; localStorage.setItem('GradeSystemV30', JSON.stringify(globalData)); 
-                        if (globalData.currentUserIndex !== null && globalData.users[globalData.currentUserIndex]) {
-                            currentUser = globalData.users[globalData.currentUserIndex];
-                        } else { globalData.currentUserIndex = 0; currentUser = globalData.users[0]; }
-                        if(globalData.cloudUrl) { document.getElementById('cloud-url').value = globalData.cloudUrl; document.getElementById('cloud-url').disabled = true; }
-                        document.getElementById('login-screen').style.display = 'none'; updateTeacherUI(); renderApp();
-                        document.getElementById('save-title').innerText = '✅ สำเร็จ'; document.getElementById('save-loader').style.display = 'none'; document.getElementById('save-details').innerText = 'ดึงข้อมูลสำเร็จเรียบร้อย!'; document.getElementById('save-ok-btn').style.display = 'inline-block';
-                    } else { throw new Error("รูปแบบข้อมูลในฐานข้อมูลไม่ถูกต้อง"); }
-                } catch(e) { throw new Error(e.message + "\n\n💡 สาเหตุที่เป็นไปได้:\n1. ยังไม่เคย ซิงค์ ข้อมูลขึ้นคลาวด์เลย (ชีตว่างเปล่า)\n2. ลิงก์ตอน Deploy ไม่ได้ตั้งค่า ผู้มีสิทธิ์เข้าถึง: ทุกคน (Anyone)"); }
-            })
-            .catch(err => { document.getElementById('save-title').innerText = '❌ ล้มเหลว'; document.getElementById('save-loader').style.display = 'none'; document.getElementById('save-details').innerHTML = `<span style="color:red; font-size:14px;">${err.message}</span>`; document.getElementById('save-ok-btn').style.display = 'inline-block'; });
-        }
-    }
+    // Dummy functions for UI compatibility
+    function toggleCloudEdit() { alert("ระบบเชื่อมต่อด้วย Firebase แล้ว ไม่จำเป็นต้องตั้งค่า Apps Script"); }
+    function saveCloudUrl() { }
+    function syncToCloudWithConfirm() { manualSave(); }
+    function loadFromCloud() { alert("ข้อมูลบนเครื่องนี้จะ Sync กับคลาวด์อัตโนมัติเมื่อรีเฟรชหน้าเว็บ"); }
 
     function exportBackup() { let link = document.createElement('a'); link.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(globalData)); link.download = `GradeSystem_Backup.json`; link.click(); }
-    function importBackup(e) { let file = e.target.files[0]; if (!file) return; let reader = new FileReader(); reader.onload = function(e) { try { globalData = JSON.parse(e.target.result); localStorage.setItem('GradeSystemV30', JSON.stringify(globalData)); initLoginScreen(); alert('กู้คืนข้อมูลสำเร็จ!'); } catch (err) { alert('ไฟล์ไม่ถูกต้อง'); } }; reader.readAsText(file); }
+    
+    // ==========================================
+    // REWRITTEN FIX FOR BACKUP IMPORT & MEMORY
+    // ==========================================
+    function importBackup(e) { 
+        let file = e.target.files[0]; 
+        if (!file) return; 
+        
+        let reader = new FileReader(); 
+        reader.onload = async function(e) { 
+            try { 
+                let parsed = JSON.parse(e.target.result); 
+                
+                // 1. นำข้อมูลใหม่ใส่ globalData ทันที
+                globalData = parsed; 
+                
+                // 2. บันทึกลงเครื่องแบบบังคับ
+                localStorage.setItem('GradeSystemV30', JSON.stringify(globalData)); 
+                
+                // 3. ยิงขึ้น Firebase ทันทีแบบบังคับ โดยไม่เรียก saveData() ที่จะเขียนทับด้วย currentUser ตัวเก่า
+                if(window.firebaseDb && window.firebaseUserId) {
+                    const docRef = window.firebaseDoc(window.firebaseDb, 'users', window.firebaseUserId, 'appData', 'MainSystem');
+                    await window.firebaseSetDoc(docRef, { globalData: globalData });
+                }
+                
+                // 4. บังคับออกจากระบบ (เคลียร์ค่าตัวแปรในหน่วยความจำที่ตกค้าง)
+                logout(); 
+                
+                alert('📥 กู้คืนข้อมูลสำเร็จเรียบร้อย!\nกรุณาเข้าสู่ระบบใหม่อีกครั้งเพื่อโหลดข้อมูลล่าสุด'); 
+            } catch (err) { 
+                alert('⚠️ ไฟล์ไม่ถูกต้อง หรือเกิดข้อผิดพลาด: ' + err.message); 
+            } 
+        }; 
+        reader.readAsText(file); 
+        
+        // Reset input type file
+        e.target.value = '';
+    }
+
     function openAdminModal() { if (!currentUser || currentUser.name !== "นายนนทพัทธ์ วงค์มูล") return; renderAdminUserList(); document.getElementById('admin-modal').style.display = 'flex'; }
     function renderAdminUserList() { let tbody = ''; globalData.users.forEach((u, idx) => { tbody += `<tr><td><input type="text" class="input-text" style="margin:0;" value="${u.name}" onchange="adminUpdateUser(${idx}, 'name', this.value)"></td><td><input type="text" class="input-text" style="margin:0;" value="${u.position}" onchange="adminUpdateUser(${idx}, 'position', this.value)"></td><td><input type="text" class="input-text" style="margin:0;" value="${u.school}" onchange="adminUpdateUser(${idx}, 'school', this.value)"></td><td><input type="text" class="input-text" style="margin:0; text-align:center;" value="${u.pin}" maxlength="4" onchange="adminUpdateUser(${idx}, 'pin', this.value)"></td><td><button class="btn btn-red" style="padding:4px 10px; font-size:13px;" onclick="adminDeleteUser(${idx})">ลบ</button></td></tr>`; }); document.getElementById('admin-user-tbody').innerHTML = tbody; }
-    function adminUpdateUser(idx, f, v) { globalData.users[idx][f] = v.trim(); localStorage.setItem('GradeSystemV30', JSON.stringify(globalData)); updateTeacherUI(); }
-    function adminDeleteUser(idx) { if (globalData.users.length <= 1) return; if (confirm('ลบผู้ใช้งานนี้?')) { globalData.users.splice(idx, 1); localStorage.setItem('GradeSystemV30', JSON.stringify(globalData)); renderAdminUserList(); } }
+    function adminUpdateUser(idx, f, v) { globalData.users[idx][f] = v.trim(); saveData(); updateTeacherUI(); }
+    function adminDeleteUser(idx) { if (globalData.users.length <= 1) return; if (confirm('ลบผู้ใช้งานนี้?')) { globalData.users.splice(idx, 1); saveData(); renderAdminUserList(); } }
 </script>
-<button id="undo-import-btn" class="btn btn-red no-print" style="display:none; position:fixed; bottom:20px; right:20px; z-index:500; box-shadow:0 4px 12px rgba(0,0,0,0.3);" onclick="undoLastImport()">↩️ เลิกทำการนำเข้าคะแนนล่าสุด</button>
 </body>
 </html>
