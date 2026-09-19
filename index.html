@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <!-- STREAMING_CHUNK:Configuring Meta and PWA -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
@@ -13,14 +12,13 @@
     <link rel="apple-touch-icon" href="icon-192x192.png">
     <link rel="manifest" href="manifest.json">
     
-    <title>Smart Teacher OS - Cloud Edition v3.4.1</title>
+    <title>Smart Teacher OS - Cloud Edition v3.4.2</title>
     
     <!-- Fonts and Libraries -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
-    <!-- STREAMING_CHUNK:Main CSS Styles -->
     <style>
         :root { 
             --primary: #581C87; 
@@ -152,7 +150,6 @@
         
         .input-text, textarea, select { width: 100%; padding: 8px 10px; margin-top: 4px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #CBD5E1; font-family: 'Sarabun'; font-size: 14px; }
         
-        /* STREAMING_CHUNK:Table and Mobile Responsive CSS */
         .table-container { 
             width: 100%; 
             overflow-x: auto; 
@@ -190,59 +187,16 @@
         
         /* Responsive Mobile Layout Fixes (For iPhone/Android) */
         @media (max-width: 768px) { 
-            body { 
-                flex-direction: column; 
-                overflow: hidden; 
-            } 
-            .sidebar { 
-                width: 100%; 
-                height: auto; 
-                border-right: none; 
-                border-bottom: 2px solid var(--primary); 
-                max-height: 35vh; 
-                padding: 15px; 
-                flex-shrink: 0;
-            } 
-            .class-list { 
-                max-height: 15vh; 
-            }
-            .main-content { 
-                width: 100%; 
-                padding: 15px; 
-                flex-grow: 1; 
-                overflow-y: auto; 
-                padding-bottom: 50px;
-            } 
-            .form-grid { 
-                grid-template-columns: 1fr; 
-                gap: 10px; 
-            } 
-            .header-bar { 
-                flex-direction: column; 
-                align-items: flex-start; 
-            }
-            .tabs { 
-                overflow-x: auto; 
-                flex-wrap: nowrap; 
-                white-space: nowrap; 
-                padding-bottom: 5px; 
-                width: 100%;
-                -webkit-overflow-scrolling: touch;
-            }
-            .tab-btn { 
-                flex: 0 0 auto; 
-                font-size: 14px; 
-                padding: 8px 12px;
-            }
-            th:nth-child(3), td:nth-child(3) { 
-                width: 120px; 
-                min-width: 120px; 
-                font-size: 13px; 
-                white-space: normal;
-            }
-            .table-container { 
-                max-height: 55vh; 
-            }
+            body { flex-direction: column; overflow: hidden; } 
+            .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 2px solid var(--primary); max-height: 35vh; padding: 15px; flex-shrink: 0;} 
+            .class-list { max-height: 15vh; }
+            .main-content { width: 100%; padding: 15px; flex-grow: 1; overflow-y: auto; padding-bottom: 50px;} 
+            .form-grid { grid-template-columns: 1fr; gap: 10px; } 
+            .header-bar { flex-direction: column; align-items: flex-start; }
+            .tabs { overflow-x: auto; flex-wrap: nowrap; white-space: nowrap; padding-bottom: 5px; width: 100%; -webkit-overflow-scrolling: touch;}
+            .tab-btn { flex: 0 0 auto; font-size: 14px; padding: 8px 12px;}
+            th:nth-child(3), td:nth-child(3) { width: 120px; min-width: 120px; font-size: 13px; white-space: normal;}
+            .table-container { max-height: 55vh; }
         }
         
         /* Print Styles */
@@ -252,34 +206,13 @@
             .print-only { display: block !important; } 
             .print-only-text { display: inline !important; } 
             
-            body { 
-                padding: 0; 
-                display: block; 
-                overflow: visible; 
-                background: white; 
-                color: black; 
-                font-size: 10pt; 
-                height: auto;
-            } 
+            body { padding: 0; display: block; overflow: visible; background: white; color: black; font-size: 10pt; height: auto;} 
             .main-content { padding: 0; overflow: visible; width: 100%; height: auto; } 
             .table-container { border: none; overflow: visible; max-height: none; width: 100%;}
             
-            table { 
-                width: 100%; 
-                min-width: auto; 
-                border-collapse: collapse; 
-                border: 1px solid #000 !important; 
-                font-size: 10pt; 
-                page-break-inside: auto; 
-            } 
+            table { width: 100%; min-width: auto; border-collapse: collapse; border: 1px solid #000 !important; font-size: 10pt; page-break-inside: auto; } 
             tr { page-break-inside: avoid; page-break-after: auto; }
-            th, td { 
-                padding: 4px !important; 
-                border: 1px solid #000 !important; 
-                position: static !important; 
-                box-shadow: none !important; 
-                color: #000 !important; 
-            } 
+            th, td { padding: 4px !important; border: 1px solid #000 !important; position: static !important; box-shadow: none !important; color: #000 !important; } 
             th { background-color: #f0f0f0 !important; color: #000 !important; -webkit-print-color-adjust: exact; font-weight: bold; } 
             input[type="number"], input[type="text"] { border: none !important; background: transparent !important; width: 100%; text-align: center; font-size: 10pt; color: #000; padding: 0; font-family: 'Sarabun'; }
             
@@ -300,7 +233,8 @@
 <!-- Login Screen -->
 <div id="login-screen">
     <div class="login-card">
-        <h2 style="color: var(--primary); margin-top:0;">เข้าสู่ระบบจัดการคะแนน<br><span style="font-size:14px; color:var(--text-muted);">Smart Teacher OS Cloud v3.4.1</span></h2>
+        <img src="icon-192x192.png" alt="App Logo" style="width: 80px; height: 80px; border-radius: 16px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23581C87\'><path d=\'M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72l5 2.73 5-2.73v3.72z\'/></svg>'">
+        <h2 style="color: var(--primary); margin-top:0;">เข้าสู่ระบบจัดการคะแนน<br><span style="font-size:14px; color:var(--text-muted);">Smart Teacher OS Cloud v3.4.2</span></h2>
         <div style="text-align: left;">
             <label>อีเมล (Email):</label>
             <input type="email" id="login-email" class="input-text" placeholder="teacher@school.com" autocomplete="email">
@@ -309,6 +243,40 @@
             <button class="btn btn-gold" style="width: 100%; margin-top: 10px; padding: 12px;" onclick="window.doLogin()">เข้าสู่ระบบ (Sign In)</button>
             <button class="btn btn-outline" style="width: 100%; margin-top: 10px; padding: 12px;" onclick="window.doRegister()">สร้างบัญชีใหม่ (Sign Up)</button>
             <div id="login-error" style="color: var(--red); font-size: 13px; margin-top: 10px; text-align: center;"></div>
+            
+            <div style="margin-top: 15px; font-size: 12px; color: var(--text-muted); text-align: center; border-top: 1px solid #eee; padding-top: 10px;">
+                💡 <b>เข้าสู่ระบบแอดมิน:</b> ใช้อีเมล admin@school.com
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Super Admin Dashboard -->
+<div id="super-admin-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9500; overflow-y: auto;">
+    <div style="max-width: 1000px; margin: 0 auto; padding: 40px 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+            <h1 style="margin: 0; color: var(--primary);">👨‍💻 ระบบจัดการผู้ใช้งาน (Super Admin)</h1>
+            <button class="btn btn-red" onclick="window.logout()">🚪 ออกจากระบบ</button>
+        </div>
+        
+        <div class="card">
+            <h3 style="margin-top: 0;">บัญชีผู้ใช้งาน (คุณครู) ทั้งหมดในระบบ</h3>
+            <div class="table-container">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>อีเมลบัญชี</th>
+                            <th>ชื่อคุณครู</th>
+                            <th>โรงเรียน</th>
+                            <th>จำนวนรายวิชา</th>
+                            <th>เครื่องมือจัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-teacher-tbody">
+                        <tr><td colspan="5" class="text-center">กำลังโหลด...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -340,7 +308,7 @@
         <input type="file" id="import-legacy-file" style="display: none;" accept=".json" onchange="window.importLegacyJSON(event)">
         <button class="btn btn-outline" style="width: 100%; margin-bottom: 6px; font-size: 12px; padding: 4px; background: #e0f2fe; color: #0369a1; border-color: #0369a1;" onclick="window.openAutoBackupModal()">⏱️ ย้อนเวลา (Local)</button>
         <button class="btn btn-red" style="width: 100%; font-size: 12px; padding: 4px; margin-bottom: 10px;" onclick="window.logout()">🚪 ลงชื่อออก</button>
-        <span class="version-badge" onclick="window.checkUpdate()">v3.4.1 (Check Update)</span>
+        <span class="version-badge" onclick="window.checkUpdate()">v3.4.2 (Check Update)</span>
     </div>
 </div>
 
@@ -379,7 +347,6 @@
             <button class="tab-btn" onclick="window.switchTab('tab-settings', event)">ตั้งค่าวิชา</button>
         </div>
 
-        <!-- STREAMING_CHUNK:Building Content Tabs (Students, Grades, Settings) -->
         <!-- TAB: STUDENTS -->
         <div id="tab-students" class="tab-content active">
             <div class="card no-print" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -457,7 +424,6 @@
     </div>
 </div>
 
-<!-- STREAMING_CHUNK:Building Modals -->
 <!-- ================= ALL MODALS ================= -->
 <div id="profile-modal" class="modal">
     <div class="modal-content" style="max-width: 500px;">
@@ -888,11 +854,10 @@
 
 <button id="undo-import-btn" class="btn btn-red no-print" style="display:none; position:fixed; bottom:20px; right:20px; z-index:500; box-shadow:0 4px 12px rgba(0,0,0,0.3);" onclick="window.undoLastImport()">↩️ เลิกทำ: คืนค่าการนำเข้าล่าสุด</button>
 
-<!-- STREAMING_CHUNK:Initializing Firebase and App Logic -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // ==========================================
     // Firebase Config 
@@ -914,7 +879,7 @@
     // ==========================================
     // Global Variables
     // ==========================================
-    const APP_VERSION = "3.4.1";
+    const APP_VERSION = "3.4.2";
     window.currentUser = null;
     window.currentEditingWeek = null; 
     window.pendingBatchData = null; 
@@ -926,7 +891,7 @@
     const defaultHolidays = `2026-05-01\n2026-05-04\n2026-05-31\n2026-06-03\n2026-07-28\n2026-07-30\n2026-08-12\n2026-10-13\n2026-10-23\n2026-12-05\n2026-12-10`;
 
     window.checkUpdate = function() {
-        alert(`เวอร์ชั่นปัจจุบันของคุณคือ v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- แก้ไขระบบพื้นหลังโปร่งใสสำหรับรูป PNG โลโก้\n- เพิ่มความแม่นยำในการนำเข้าไฟล์ JSON จากระบบสอบ`);
+        alert(`เวอร์ชั่นปัจจุบันของคุณคือ v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- เพิ่มระบบ Super Admin\n- เพิ่มโลโก้ที่หน้าล็อกอิน\n- แก้ไขบั๊กหน้าต่างล็อกอินเด้งขณะสั่งพิมพ์รายงานความเสี่ยง`);
     };
 
     // ==========================================
@@ -1115,10 +1080,9 @@
                     }
                     canvas.width = width; 
                     canvas.height = height; 
-                    ctx.clearRect(0, 0, width, height); // Ensure background is clear
+                    ctx.clearRect(0, 0, width, height); 
                     ctx.drawImage(img, 0, 0, width, height);
                     
-                    // Fixed: Use image/png to preserve transparency for logo/png files
                     let dataUrl = canvas.toDataURL('image/png'); 
                     document.getElementById(previewId).src = dataUrl;
                 }; 
@@ -1199,7 +1163,7 @@
     };
 
     // ==========================================
-    // Firebase Auth 
+    // Firebase Auth & Super Admin Logic
     // ==========================================
     window.doLogin = async function() {
         window.showLoading("กำลังเข้าสู่ระบบ...");
@@ -1256,6 +1220,11 @@
     };
 
     async function loadTeacherProfile(user) {
+        if (user.email === 'admin@school.com') {
+            window.loadAdminDashboard();
+            return;
+        }
+
         const docSnap = await getDoc(doc(db, "teachers", user.uid));
         if (docSnap.exists()) { 
             window.currentUser = docSnap.data(); 
@@ -1280,6 +1249,7 @@
     function loginSuccess() {
         window.hideLoading();
         document.getElementById('login-screen').style.display = 'none'; 
+        document.getElementById('super-admin-screen').style.display = 'none';
         window.updateTeacherUI(); 
         window.renderApp(); 
         processAutoBackup();
@@ -1289,7 +1259,73 @@
         await signOut(auth); 
         window.currentUser = null; 
         document.getElementById('login-screen').style.display = 'flex'; 
+        document.getElementById('super-admin-screen').style.display = 'none';
+        document.getElementById('class-workspace').style.display = 'none';
+        document.querySelector('.sidebar').style.display = 'flex';
         document.getElementById('login-pass').value=''; 
+    };
+
+    window.loadAdminDashboard = async function() {
+        window.showLoading("กำลังโหลดข้อมูลผู้ใช้งานทั้งหมด...");
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('class-workspace').style.display = 'none';
+        document.querySelector('.sidebar').style.display = 'none';
+        document.getElementById('super-admin-screen').style.display = 'block';
+
+        try {
+            const querySnapshot = await getDocs(collection(db, "teachers"));
+            let tbody = '';
+            querySnapshot.forEach((doc) => {
+                let t = doc.data();
+                tbody += `<tr>
+                    <td>${t.email}</td>
+                    <td>${t.name || '-'}</td>
+                    <td>${t.school || '-'}</td>
+                    <td><b style="color:var(--primary);">${t.classes ? t.classes.length : 0}</b> วิชา</td>
+                    <td>
+                        <button class="btn btn-green btn-small" style="padding: 6px 12px; font-size: 13px;" onclick="window.impersonateTeacher('${t.uid}')">🔍 สวมรอยเข้าไปจัดการ</button>
+                        <button class="btn btn-red btn-small" style="padding: 6px 12px; font-size: 13px;" onclick="window.deleteTeacherAccount('${t.uid}')">🗑️ ลบทิ้ง</button>
+                    </td>
+                </tr>`;
+            });
+            if(tbody === '') tbody = '<tr><td colspan="5" class="text-center">ไม่มีข้อมูลคุณครูในระบบ</td></tr>';
+            document.getElementById('admin-teacher-tbody').innerHTML = tbody;
+        } catch (e) {
+            console.error(e);
+            alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก Cloud");
+        }
+        window.hideLoading();
+    };
+
+    window.impersonateTeacher = async function(uid) {
+        window.showLoading("กำลังเชื่อมต่อบัญชี...");
+        try {
+            const docSnap = await getDoc(doc(db, "teachers", uid));
+            if(docSnap.exists()) {
+                window.currentUser = docSnap.data();
+                document.getElementById('super-admin-screen').style.display = 'none';
+                document.querySelector('.sidebar').style.display = 'flex';
+                loginSuccess();
+                window.showToast(`เข้าสู่ระบบในฐานะบัญชี: ${window.currentUser.name}`);
+            }
+        } catch(e) {
+            alert("ไม่สามารถสวมรอยบัญชีได้");
+            window.hideLoading();
+        }
+    };
+
+    window.deleteTeacherAccount = async function(uid) {
+        if(confirm('⚠️ คำเตือนขั้นสูงสุด!\n\nคุณต้องการลบข้อมูลบัญชีของครูท่านนี้ "รวมถึงคะแนนเด็กทั้งหมด" ใช่หรือไม่?\n(ข้อมูลจะไม่สามารถกู้คืนได้อีก)')) {
+            window.showLoading("กำลังลบข้อมูลอย่างถาวร...");
+            try {
+                await deleteDoc(doc(db, "teachers", uid));
+                alert("ลบข้อมูลสำเร็จ!");
+                window.loadAdminDashboard(); 
+            } catch(e) {
+                alert("เกิดข้อผิดพลาดในการลบ");
+                window.hideLoading();
+            }
+        }
     };
 
     window.updateTeacherUI = function() {
@@ -1312,7 +1348,6 @@
         document.getElementById('print-teacher-meta').innerText = `ตำแหน่ง ${window.currentUser.position || '-'} ${window.currentUser.school || '-'}`;
     };
 
-    // STREAMING_CHUNK:App Core Rendering (Full Unminified with Undo Updates)
     // ==========================================
     // Core Application Logic
     // ==========================================
@@ -1453,7 +1488,6 @@
         window.renderTables(activeC);
     };
 
-    // STREAMING_CHUNK:Grade Calculation and Table Rendering
     window.calculateStudentTotalObj = function(std, activeC) {
         let affectiveMax = parseFloat(activeC.affectiveMax) || 10; 
         let weightMid = parseFloat(activeC.weightMid) || 80; 
@@ -1635,7 +1669,6 @@
         document.getElementById('grades-table').innerHTML = `<thead>${gThead}</thead><tbody>${gTbody}</tbody>`;
     };
 
-    // STREAMING_CHUNK:Event Logic and Updates
     window.updateScore = function(stdId, colId, val, inputEl) { 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         let col = activeC.gradeColumns.find(cc => cc.id === colId); 
@@ -1773,7 +1806,6 @@
         window.showToast(); 
     };
 
-    // STREAMING_CHUNK:Missing Features Restored (Date, Student, Missing Work, Risk, Behavior)
     window.openDateModal = function(periodIndex) { 
         window.currentEditingWeek = periodIndex; 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
@@ -2193,14 +2225,23 @@
         let clone = document.getElementById(elId).cloneNode(true); 
         clone.id = 'temp-print'; 
         clone.style.display = 'block'; 
+        
+        // แก้ไขบั๊กหน้าล็อกอินเด้ง ด้วยการบันทึกสถานะเดิมไว้ก่อนซ่อน
         Array.from(document.body.children).forEach(c => { 
-            if(c.tagName!=='SCRIPT' && c.tagName!=='STYLE') c.style.display='none'; 
+            if(c.tagName!=='SCRIPT' && c.tagName!=='STYLE') {
+                c.dataset.oldDisplay = c.style.display;
+                c.style.display='none'; 
+            }
         }); 
+        
         document.body.appendChild(clone); 
         window.print(); 
         document.body.removeChild(clone); 
+        
         Array.from(document.body.children).forEach(c => { 
-            if(c.tagName!=='SCRIPT' && c.tagName!=='STYLE') c.style.display=''; 
+            if(c.tagName!=='SCRIPT' && c.tagName!=='STYLE' && c.id !== 'temp-print') {
+                c.style.display = c.dataset.oldDisplay || ''; 
+            }
         }); 
     };
 
@@ -2232,7 +2273,6 @@
         }); 
     };
 
-    // STREAMING_CHUNK:Other Remaining Logic (Rubric, Batch, Classroom AI, Group AI)
     // Batch Paste (Smart Match AI)
     window.openBatchPasteModal = function(colId = 'new') { 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
@@ -2398,7 +2438,6 @@
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         let select = document.getElementById('raw-target-column'); 
         
-        // เพิ่มตัวเลือก Final Score เข้าไปใน Dropdown การนำเข้าข้อมูลดิบ
         select.innerHTML = `<option value="FINAL_SCORE" style="color:var(--primary); font-weight:bold;">🌟 คะแนนสอบปลายภาค (เต็ม ${activeC.weightFinal || 20})</option>`; 
         
         if (activeC.gradeColumns && activeC.gradeColumns.length > 0) { 
@@ -2417,7 +2456,6 @@
         
         let possibleHeader = "งานจากระบบออนไลน์"; 
         
-        // Try to parse if it's JSON from Exam System
         try {
             let parsed = JSON.parse(rawText);
             if (Array.isArray(parsed) && parsed.length > 0) {
@@ -2446,11 +2484,9 @@
         let rawText = document.getElementById('raw-data-textarea').value.trim(); 
         if (!rawText) return; 
         
-        // Auto-detect JSON array format from TeacherOS exam system
         try {
             let parsed = JSON.parse(rawText);
             if (Array.isArray(parsed)) {
-                // Extract strings from array
                 rawText = parsed.join('\n');
             }
         } catch(e) { }
@@ -2461,10 +2497,8 @@
         let skippedNoScore = 0; 
         
         lines.forEach(line => { 
-            // Clean up JSON remnants if user blindly pasted
             line = line.replace(/",?$/, '').replace(/^"/, '').trim();
 
-            // 1. Try Tab-Separated format first (Highly accurate for Excel/Exam System)
             let cols = line.split(/\\t|\t/);
             if (cols.length >= 3) {
                 let studentId = cols[0].trim().match(/\d{5,6}/) ? cols[0].trim().match(/\d{5,6}/)[0] : cols[0].trim();
@@ -2474,11 +2508,10 @@
                 
                 if (!isNaN(score) && (studentId.length >= 4 || rawName.length > 2)) {
                     window.parsedRawDataCache.push({ studentId, rawName, score });
-                    return; // Successfully parsed this line
+                    return;
                 }
             }
 
-            // 2. Fallback to Regex (For Classroom & messy text)
             let scoreMatch = line.match(/\b\d+(\.\d+)?\b/g); 
             if (!scoreMatch) { skippedNoScore++; return; } 
             
