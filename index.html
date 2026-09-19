@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+    <!-- STREAMING_CHUNK:Configuring Meta and PWA -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
@@ -12,13 +13,14 @@
     <link rel="apple-touch-icon" href="icon-192x192.png">
     <link rel="manifest" href="manifest.json">
     
-    <title>Smart Teacher OS - Cloud Edition v3.4</title>
+    <title>Smart Teacher OS - Cloud Edition v3.4.1</title>
     
     <!-- Fonts and Libraries -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
+    <!-- STREAMING_CHUNK:Main CSS Styles -->
     <style>
         :root { 
             --primary: #581C87; 
@@ -150,7 +152,7 @@
         
         .input-text, textarea, select { width: 100%; padding: 8px 10px; margin-top: 4px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #CBD5E1; font-family: 'Sarabun'; font-size: 14px; }
         
-        /* Table and Mobile Responsive CSS */
+        /* STREAMING_CHUNK:Table and Mobile Responsive CSS */
         .table-container { 
             width: 100%; 
             overflow-x: auto; 
@@ -183,7 +185,7 @@
         .status-syncing { background: #fef08a; color: #854d0e; } .status-saved { background: #d1fae5; color: #065f46; }
         
         /* Profile Image Styles */
-        .profile-pic { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-gold); background: #eee;}
+        .profile-pic { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-gold); background: transparent;}
         .version-badge { background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 12px; font-size: 11px; cursor: pointer; font-weight: bold; }
         
         /* Responsive Mobile Layout Fixes (For iPhone/Android) */
@@ -298,7 +300,7 @@
 <!-- Login Screen -->
 <div id="login-screen">
     <div class="login-card">
-        <h2 style="color: var(--primary); margin-top:0;">เข้าสู่ระบบจัดการคะแนน<br><span style="font-size:14px; color:var(--text-muted);">Smart Teacher OS Cloud v3.4</span></h2>
+        <h2 style="color: var(--primary); margin-top:0;">เข้าสู่ระบบจัดการคะแนน<br><span style="font-size:14px; color:var(--text-muted);">Smart Teacher OS Cloud v3.4.1</span></h2>
         <div style="text-align: left;">
             <label>อีเมล (Email):</label>
             <input type="email" id="login-email" class="input-text" placeholder="teacher@school.com" autocomplete="email">
@@ -338,7 +340,7 @@
         <input type="file" id="import-legacy-file" style="display: none;" accept=".json" onchange="window.importLegacyJSON(event)">
         <button class="btn btn-outline" style="width: 100%; margin-bottom: 6px; font-size: 12px; padding: 4px; background: #e0f2fe; color: #0369a1; border-color: #0369a1;" onclick="window.openAutoBackupModal()">⏱️ ย้อนเวลา (Local)</button>
         <button class="btn btn-red" style="width: 100%; font-size: 12px; padding: 4px; margin-bottom: 10px;" onclick="window.logout()">🚪 ลงชื่อออก</button>
-        <span class="version-badge" onclick="window.checkUpdate()">v3.4.0 (Check Update)</span>
+        <span class="version-badge" onclick="window.checkUpdate()">v3.4.1 (Check Update)</span>
     </div>
 </div>
 
@@ -377,6 +379,7 @@
             <button class="tab-btn" onclick="window.switchTab('tab-settings', event)">ตั้งค่าวิชา</button>
         </div>
 
+        <!-- STREAMING_CHUNK:Building Content Tabs (Students, Grades, Settings) -->
         <!-- TAB: STUDENTS -->
         <div id="tab-students" class="tab-content active">
             <div class="card no-print" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -454,6 +457,7 @@
     </div>
 </div>
 
+<!-- STREAMING_CHUNK:Building Modals -->
 <!-- ================= ALL MODALS ================= -->
 <div id="profile-modal" class="modal">
     <div class="modal-content" style="max-width: 500px;">
@@ -658,7 +662,7 @@
             </div>
             <button class="btn btn-gold" style="height: 41px;" onclick="window.detectHeaderAndCreateColumn()">✨ สร้างชิ้นงานอัตโนมัติ</button>
         </div>
-        <textarea id="raw-data-textarea" rows="7" class="input-text" placeholder="วางข้อมูลที่คัดลอกมา..."></textarea>
+        <textarea id="raw-data-textarea" rows="7" class="input-text" placeholder="วางข้อมูล JSON หรือข้อความตารางที่คัดลอกมา..."></textarea>
         <div style="text-align: right; margin-top: 15px;">
             <button class="btn btn-red" onclick="document.getElementById('raw-data-modal').style.display='none'">ยกเลิก</button>
             <button class="btn btn-gold" onclick="window.parseRawClassroomDataAdvancedAI()">🤖 ให้ระบบวิเคราะห์</button>
@@ -910,7 +914,7 @@
     // ==========================================
     // Global Variables
     // ==========================================
-    const APP_VERSION = "3.4.0";
+    const APP_VERSION = "3.4.1";
     window.currentUser = null;
     window.currentEditingWeek = null; 
     window.pendingBatchData = null; 
@@ -922,7 +926,7 @@
     const defaultHolidays = `2026-05-01\n2026-05-04\n2026-05-31\n2026-06-03\n2026-07-28\n2026-07-30\n2026-08-12\n2026-10-13\n2026-10-23\n2026-12-05\n2026-12-10`;
 
     window.checkUpdate = function() {
-        alert(`เวอร์ชั่นปัจจุบันของคุณคือ v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- เพิ่มปุ่มนำเข้าคะแนนช่อง 'ปลายภาค'\n- แก้ไขระบบ Undo ให้รองรับปลายภาค`);
+        alert(`เวอร์ชั่นปัจจุบันของคุณคือ v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- แก้ไขระบบพื้นหลังโปร่งใสสำหรับรูป PNG โลโก้\n- เพิ่มความแม่นยำในการนำเข้าไฟล์ JSON จากระบบสอบ`);
     };
 
     // ==========================================
@@ -1076,7 +1080,7 @@
     };
 
     // ==========================================
-    // Profile & Logo Setup
+    // Profile & Logo Setup (PNG Transparency Fix)
     // ==========================================
     window.openProfileModal = function() {
         document.getElementById('edit-profile-name').value = window.currentUser.name || "";
@@ -1111,8 +1115,11 @@
                     }
                     canvas.width = width; 
                     canvas.height = height; 
+                    ctx.clearRect(0, 0, width, height); // Ensure background is clear
                     ctx.drawImage(img, 0, 0, width, height);
-                    let dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                    
+                    // Fixed: Use image/png to preserve transparency for logo/png files
+                    let dataUrl = canvas.toDataURL('image/png'); 
                     document.getElementById(previewId).src = dataUrl;
                 }; 
                 img.src = event.target.result;
@@ -1329,7 +1336,7 @@
         btn.innerText = `↩️ เลิกทำ: คืนค่า "${col.name}"`; 
     };
 
-    // อัปเกรดให้ Undo รองรับ Final Score
+    // Undo สำหรับ Final Score
     window.saveFinalScoreSnapshot = function(activeC) { 
         let oldScores = {}; 
         activeC.students.forEach(s => oldScores[s.id] = s.finalScore || 0); 
@@ -1571,7 +1578,7 @@
             </th>`;
         });
         
-        // เพิ่มปุ่ม นำเข้า ลงในช่องปลายภาค
+        // ปุ่มนำเข้าสอบปลายภาค
         gThead += `
             <th class="hide-partial" style="background:#fef3c7;">รวมดิบ<br><small>(${sumColumnMax})</small></th>
             <th style="background:#d1fae5;">หารเก็บ<br><small>(${(activeC.weightMid||80) - (activeC.affectiveMax||10)})</small></th>
@@ -2386,7 +2393,7 @@
         alert(`✅ ประมวลผลสำเร็จ ${matchedCount} คน`); 
     };
 
-    // (Classroom AI & Final Score Import)
+    // Classroom AI & Perfect Match JSON Handler
     window.openRawDataImportModal = function(preSelect = '') { 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         let select = document.getElementById('raw-target-column'); 
@@ -2408,12 +2415,21 @@
         let rawText = document.getElementById('raw-data-textarea').value.trim(); 
         if (!rawText) return; 
         
-        let lines = rawText.split('\n'); 
-        let possibleHeader = "งานจาก Classroom"; 
-        for (let l of lines) { 
-            l = l.trim(); 
-            if (l && !l.match(/^\d+$/) && !l.includes('@') && l.length > 3) { possibleHeader = l; break; } 
-        } 
+        let possibleHeader = "งานจากระบบออนไลน์"; 
+        
+        // Try to parse if it's JSON from Exam System
+        try {
+            let parsed = JSON.parse(rawText);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                possibleHeader = parsed[0];
+            }
+        } catch(e) {
+            let lines = rawText.split('\n'); 
+            for (let l of lines) { 
+                l = l.trim(); 
+                if (l && !l.match(/^\d+$/) && !l.includes('@') && l.length > 3) { possibleHeader = l; break; } 
+            } 
+        }
         
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         let newCol = { id: 'col_' + Date.now(), name: possibleHeader.substring(0, 35), type: 'single', max: 10, scores: {}, groups: {} }; 
@@ -2427,8 +2443,17 @@
     };
 
     window.parseRawClassroomDataAdvancedAI = function() { 
-        let rawText = document.getElementById('raw-data-textarea').value; 
-        if (!rawText.trim()) return; 
+        let rawText = document.getElementById('raw-data-textarea').value.trim(); 
+        if (!rawText) return; 
+        
+        // Auto-detect JSON array format from TeacherOS exam system
+        try {
+            let parsed = JSON.parse(rawText);
+            if (Array.isArray(parsed)) {
+                // Extract strings from array
+                rawText = parsed.join('\n');
+            }
+        } catch(e) { }
         
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         let lines = rawText.split('\n'); 
@@ -2436,6 +2461,24 @@
         let skippedNoScore = 0; 
         
         lines.forEach(line => { 
+            // Clean up JSON remnants if user blindly pasted
+            line = line.replace(/",?$/, '').replace(/^"/, '').trim();
+
+            // 1. Try Tab-Separated format first (Highly accurate for Excel/Exam System)
+            let cols = line.split(/\\t|\t/);
+            if (cols.length >= 3) {
+                let studentId = cols[0].trim().match(/\d{5,6}/) ? cols[0].trim().match(/\d{5,6}/)[0] : cols[0].trim();
+                let rawName = cols[1].trim();
+                let scoreStr = cols[cols.length - 1].trim();
+                let score = parseFloat(scoreStr);
+                
+                if (!isNaN(score) && (studentId.length >= 4 || rawName.length > 2)) {
+                    window.parsedRawDataCache.push({ studentId, rawName, score });
+                    return; // Successfully parsed this line
+                }
+            }
+
+            // 2. Fallback to Regex (For Classroom & messy text)
             let scoreMatch = line.match(/\b\d+(\.\d+)?\b/g); 
             if (!scoreMatch) { skippedNoScore++; return; } 
             
@@ -2443,10 +2486,18 @@
             let idMatch = line.match(/\b\d{5,6}\b/); 
             let studentId = idMatch ? idMatch[0] : ''; 
             let rawName = line.replace(studentId, '').replace(scoreMatch[scoreMatch.length - 1], '').replace(/@.*\.com|@.*\.th/g, '').replace(/[0-9]/g, '').trim(); 
-            window.parsedRawDataCache.push({ studentId, rawName, score }); 
+            
+            if(!isNaN(score) && (rawName.length > 2 || studentId !== '')) {
+                window.parsedRawDataCache.push({ studentId, rawName, score }); 
+            } else {
+                skippedNoScore++;
+            }
         }); 
         
-        if (window.parsedRawDataCache.length === 0) return; 
+        if (window.parsedRawDataCache.length === 0) {
+            alert('ไม่พบข้อมูลคะแนนในข้อความที่วาง โปรดตรวจสอบรูปแบบให้ถูกต้อง');
+            return; 
+        }
         
         let tbody = ''; 
         window.parsedRawDataCache.forEach((item, idx) => { 
