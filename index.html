@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <!-- STREAMING_CHUNK:Configuring Meta and PWA -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
@@ -20,7 +19,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
-    <!-- STREAMING_CHUNK:Main CSS Styles -->
     <style>
         :root { 
             --primary: #581C87; 
@@ -153,7 +151,6 @@
         
         .input-text, textarea, select { width: 100%; padding: 8px 10px; margin-top: 4px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #CBD5E1; font-family: 'Sarabun'; font-size: 14px; }
         
-        /* STREAMING_CHUNK:Table and Mobile Responsive CSS */
         .table-container { 
             width: 100%; 
             overflow-x: auto; 
@@ -292,7 +289,6 @@
 </head>
 <body>
 
-<!-- STREAMING_CHUNK:Building Loading & Login UI -->
 <!-- Loading Overlay -->
 <div id="app-loading-overlay">
     <img src="icon-192x192.png" alt="Logo" class="loading-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23581C87\'><path d=\'M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72l5 2.73 5-2.73v3.72z\'/></svg>'">
@@ -314,7 +310,8 @@
             <div id="login-error" style="color: var(--red); font-size: 13px; margin-top: 10px; text-align: center;"></div>
             
             <div style="margin-top: 15px; font-size: 12px; color: var(--text-muted); text-align: center; border-top: 1px solid #eee; padding-top: 10px;">
-                💡 <b>เข้าสู่ระบบแอดมิน:</b> ใช้อีเมล admin@school.com
+                💡 <b>เข้าสู่ระบบแอดมิน:</b> ใช้อีเมล admin@school.com<br>
+                <div style="margin-top: 10px; color: #9CA3AF;">&copy; 2026 พัฒนาโดย นายนนทพัทธ์ วงค์มูล</div>
             </div>
         </div>
     </div>
@@ -352,7 +349,6 @@
 
 <div id="cloud-status" class="status-saved" style="display:none;">☁️ ซิงค์ข้อมูลล่าสุดแล้ว</div>
 
-<!-- STREAMING_CHUNK:Building App Structure (Sidebar & Main Workspace) -->
 <!-- Sidebar -->
 <div class="sidebar no-print">
     <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
@@ -380,7 +376,7 @@
         <button class="btn btn-outline" style="width: 100%; margin-bottom: 6px; font-size: 12px; padding: 4px; background: #e0f2fe; color: #0369a1; border-color: #0369a1;" onclick="window.openAutoBackupModal()">⏱️ ย้อนเวลา (Local)</button>
         <button class="btn btn-red" style="width: 100%; font-size: 12px; padding: 4px; margin-bottom: 10px;" onclick="window.logout()">🚪 ลงชื่อออก</button>
         <span class="version-badge" onclick="window.checkUpdate()">v3.5.0 (Check Update)</span>
-        <div style="font-size: 10px; color: #9CA3AF; margin-top: 5px;">&copy; (2026) พัฒนาโดย นายนนทพัทธ์ วงค์มูล</div>
+        <div style="font-size: 10px; color: #9CA3AF; margin-top: 5px;">&copy; 2026 พัฒนาโดย นายนนทพัทธ์ วงค์มูล</div>
     </div>
 </div>
 
@@ -419,17 +415,16 @@
             <button class="tab-btn" onclick="window.switchTab('tab-settings', event)">ตั้งค่าวิชา</button>
         </div>
 
-        <!-- STREAMING_CHUNK:Building Content Tabs (Students, Grades, Settings) -->
         <!-- TAB: STUDENTS -->
         <div id="tab-students" class="tab-content active">
             <div class="card no-print" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                 <div><h3 style="margin:0; color: var(--primary);">จัดการเวลาเรียน</h3></div>
                 <div style="display: flex; gap: 8px;">
                     <button class="btn btn-gold" onclick="window.openAttendanceTextModal()">📥 นำเข้าเวลาเรียนดิบ</button>
-                    <button class="btn btn-outline" onclick="window.openCentralStudentDB()">⚙️ แก้ไขรายชื่อนักเรียนส่วนกลาง</button>
+                    <button class="btn btn-outline" onclick="window.openCentralStudentDB()">⚙️ แก้ไขรายชื่อส่วนกลาง</button>
                 </div>
             </div>
-            <p class="no-print" style="font-size: 13px; color: var(--text-muted);">* คลิกที่สถานะในตารางเพื่อสลับ (มา ➡️ สาย ➡️ ลา ➡️ ขาด)<br>* หากต้องการเพิ่มลบนักเรียน กรุณาไปที่เมนู <b style="color:var(--primary);">"ฐานข้อมูลนักเรียน (ส่วนกลาง)"</b> ที่แถบด้านซ้าย</p>
+            <p class="no-print" style="font-size: 13px; color: var(--text-muted);">* คลิกที่สถานะในตารางเพื่อสลับ (มา ➡️ สาย ➡️ ลา ➡️ ขาด)<br>* หากต้องการเพิ่ม/ลบนักเรียน กรุณาไปที่เมนู <b style="color:var(--primary);">"ฐานข้อมูลนักเรียน (ส่วนกลาง)"</b> ที่แถบด้านซ้าย</p>
             <div class="table-container"><table id="attendance-table"></table></div>
         </div>
 
@@ -497,7 +492,6 @@
     </div>
 </div>
 
-<!-- STREAMING_CHUNK:Building Modals -->
 <!-- ================= ALL MODALS ================= -->
 
 <!-- NEW: Central Student Database Modal -->
@@ -970,9 +964,34 @@
     </div>
 </div>
 
+<!-- STUDENT MANAGER FROM TAB (OLD/SPECIFIC CLASS) -->
+<div id="student-manager-modal" class="modal">
+    <div class="modal-content" style="max-width: 700px;">
+        <h2 style="margin-top:0; color: var(--primary);">จัดการรายชื่อนักเรียน (เฉพาะวิชานี้)</h2>
+        <p style="font-size: 12px; color: var(--red);">แนะนำให้จัดการรายชื่อที่เมนู <b>"ฐานข้อมูลนักเรียน (ส่วนกลาง)"</b> แทน เพื่อให้รายชื่อเชื่อมโยงกันทุกวิชา</p>
+        <div style="margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <input type="text" id="single-add-id" class="input-text" placeholder="รหัสประจำตัว" style="width: 130px; margin:0;" maxlength="6">
+            <input type="text" id="single-add-name" class="input-text" placeholder="ชื่อ-นามสกุล..." style="margin:0; flex-grow:1;">
+            <button class="btn btn-green" onclick="window.addSingleStudent()">+ เพิ่ม</button>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <textarea id="import-names" rows="2" class="input-text" placeholder="หรือ วางรายชื่อจาก Excel (รหัส + ชื่อ) คั่นด้วย Tab"></textarea>
+            <button class="btn btn-outline" style="width: 100%;" onclick="window.importStudents()">นำเข้าจากข้อความ</button>
+        </div>
+        <div style="max-height: 300px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; padding: 10px;">
+            <table style="margin: 0; font-size: 14px;">
+                <thead><tr><th style="width: 50px;">เลขที่</th><th style="width: 120px;">รหัส</th><th>ชื่อ-นามสกุล</th><th style="width: 80px;">จัดการ</th></tr></thead>
+                <tbody id="student-manager-tbody"></tbody>
+            </table>
+        </div>
+        <div style="text-align: right; margin-top: 20px;">
+            <button class="btn" onclick="document.getElementById('student-manager-modal').style.display='none'; window.renderApp();">เสร็จสิ้น</button>
+        </div>
+    </div>
+</div>
+
 <button id="undo-import-btn" class="btn btn-red no-print" style="display:none; position:fixed; bottom:20px; right:20px; z-index:500; box-shadow:0 4px 12px rgba(0,0,0,0.3);" onclick="window.undoLastImport()">↩️ เลิกทำ: คืนค่าการนำเข้าล่าสุด</button>
 
-<!-- STREAMING_CHUNK:Initializing Firebase and Central Student DB Logic -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -1007,11 +1026,11 @@
     window.parsedGroupDataCache = []; 
     window.pendingGroupScore = 0; 
     window.lastImportSnapshot = null;
-    window.csTempStudents = []; // สำหรับพักข้อมูลในฐานข้อมูลกลางชั่วคราว
+    window.csTempStudents = []; 
     const defaultHolidays = `2026-05-01\n2026-05-04\n2026-05-31\n2026-06-03\n2026-07-28\n2026-07-30\n2026-08-12\n2026-10-13\n2026-10-23\n2026-12-05\n2026-12-10`;
 
     window.checkUpdate = function() {
-        alert(`เวอร์ชั่นปัจจุบันของคุณคือ v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- ระบบจำสถานะล็อกอินอัตโนมัติ (แก้ไขบั๊ก Error)\n- เพิ่มฐานข้อมูลนักเรียนส่วนกลาง (จัดการข้ามรายวิชาได้)\n- เพิ่มช่องอีเมลนักเรียน\n- แสดงเครดิตผู้พัฒนา`);
+        alert(`เวอร์ชั่นปัจจุบันของคุณคือ v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- โค้ดฉบับเต็ม 100% แก้ปัญหาเครื่องหมายละไว้\n- ระบบจำสถานะล็อกอินอัตโนมัติ (แก้ไขบั๊ก Error)\n- เพิ่มฐานข้อมูลนักเรียนส่วนกลาง (จัดการข้ามรายวิชาได้)\n- แสดงเครดิตผู้พัฒนา`);
     };
 
     // ==========================================
@@ -1025,16 +1044,13 @@
         let select = document.getElementById('cs-room-select');
         select.innerHTML = '<option value="">-- เลือกระดับชั้นและห้อง --</option>';
         
-        // หาระดับชั้นและห้องทั้งหมดแบบไม่ซ้ำ
         let uniqueRooms = [];
         window.currentUser.classes.forEach(c => {
             let rStr = `ม.${c.level}/${c.room}`;
             if(!uniqueRooms.includes(rStr)) uniqueRooms.push(rStr);
         });
         
-        uniqueRooms.sort().forEach(rStr => {
-            select.innerHTML += `<option value="${rStr}">${rStr}</option>`;
-        });
+        uniqueRooms.sort().forEach(rStr => { select.innerHTML += `<option value="${rStr}">${rStr}</option>`; });
         
         document.getElementById('cs-student-tbody').innerHTML = '<tr><td colspan="5" style="color:gray;">กรุณาเลือกห้องเรียนจากด้านบน</td></tr>';
         document.getElementById('cs-linked-subjects').innerText = 'รายวิชาที่ลิงก์กับห้องนี้: -';
@@ -1047,27 +1063,19 @@
         if(!roomStr) {
             document.getElementById('cs-student-tbody').innerHTML = '<tr><td colspan="5" style="color:gray;">กรุณาเลือกห้องเรียนจากด้านบน</td></tr>';
             document.getElementById('cs-linked-subjects').innerText = 'รายวิชาที่ลิงก์กับห้องนี้: -';
-            window.csTempStudents = [];
-            return;
+            window.csTempStudents = []; return;
         }
 
-        // หาวิชาทั้งหมดที่ใช้ห้องนี้
-        let linkedSubjects = [];
-        let masterClass = null;
+        let linkedSubjects = []; let masterClass = null;
         window.currentUser.classes.forEach(c => {
             if(`ม.${c.level}/${c.room}` === roomStr) {
                 linkedSubjects.push(`${c.subjectName} (${c.subjectCode})`);
-                if(!masterClass) masterClass = c; // ยึดรายชื่อจากวิชาแรกที่เจอเป็นหลัก
+                if(!masterClass) masterClass = c; 
             }
         });
         
         document.getElementById('cs-linked-subjects').innerText = 'รายวิชาที่ใช้ข้อมูลนี้ร่วมกัน: ' + linkedSubjects.join(', ');
-        
-        // ถ้าเพิ่งเปิดเข้ามา ให้ก๊อปปี้รายชื่อจาก Master Class มาพักไว้ที่ Temp
-        // ถ้าเรียงหรือแก้ไขอยู่แล้ว จะใช้ของ Temp
-        if(!window.csTempStudents.length && masterClass && masterClass.students) {
-            window.csTempStudents = JSON.parse(JSON.stringify(masterClass.students));
-        }
+        if(window.csTempStudents.length === 0 && masterClass && masterClass.students) { window.csTempStudents = JSON.parse(JSON.stringify(masterClass.students)); }
 
         let tbody = '';
         window.csTempStudents.forEach((std, idx) => {
@@ -1076,279 +1084,124 @@
                 <td><input type="text" class="input-text" style="margin:0; text-align:center; padding:4px;" value="${std.studentId || ''}" maxlength="6" onchange="window.csUpdateField(${idx}, 'studentId', this.value)"></td>
                 <td style="text-align: left;"><input type="text" class="input-text" style="margin:0; padding:4px;" value="${std.name}" onchange="window.csUpdateField(${idx}, 'name', this.value)"></td>
                 <td style="text-align: left;"><input type="email" class="input-text" style="margin:0; padding:4px; font-size:12px;" value="${std.email || ''}" placeholder="example@school.com" onchange="window.csUpdateField(${idx}, 'email', this.value)"></td>
-                <td>
-                    <div style="display:flex; justify-content:center; gap:2px;">
+                <td><div style="display:flex; justify-content:center; gap:2px;">
                         <button class="btn btn-outline" style="padding:4px; font-size:12px;" onclick="window.csMoveUp(${idx})" ${idx===0?'disabled':''}>🔼</button>
                         <button class="btn btn-outline" style="padding:4px; font-size:12px;" onclick="window.csMoveDown(${idx})" ${idx===window.csTempStudents.length-1?'disabled':''}>🔽</button>
                         <button class="btn btn-red" style="padding:4px 8px; font-size:12px;" onclick="window.csDelete(${idx})">ลบ</button>
-                    </div>
-                </td>
-            </tr>`;
+                    </div></td></tr>`;
         });
-        
         if(window.csTempStudents.length === 0) tbody = '<tr><td colspan="5" style="color:gray;">ยังไม่มีรายชื่อนักเรียนในห้องนี้</td></tr>';
         document.getElementById('cs-student-tbody').innerHTML = tbody;
     };
 
-    window.csUpdateField = function(idx, field, value) {
-        if(window.csTempStudents[idx]) {
-            window.csTempStudents[idx][field] = value.trim();
-        }
-    };
-
-    window.csMoveUp = function(idx) {
-        if(idx > 0) {
-            let temp = window.csTempStudents[idx];
-            window.csTempStudents[idx] = window.csTempStudents[idx - 1];
-            window.csTempStudents[idx - 1] = temp;
-            window.renderCentralStudentDB();
-        }
-    };
-
-    window.csMoveDown = function(idx) {
-        if(idx < window.csTempStudents.length - 1) {
-            let temp = window.csTempStudents[idx];
-            window.csTempStudents[idx] = window.csTempStudents[idx + 1];
-            window.csTempStudents[idx + 1] = temp;
-            window.renderCentralStudentDB();
-        }
-    };
-
-    window.csDelete = function(idx) {
-        if(confirm('ลบนักเรียนคนนี้ออกจากฐานข้อมูล? (จะหายไปจากทุกวิชา)')) {
-            window.csTempStudents.splice(idx, 1);
-            window.renderCentralStudentDB();
-        }
-    };
-
+    window.csUpdateField = function(idx, field, value) { if(window.csTempStudents[idx]) { window.csTempStudents[idx][field] = value.trim(); } };
+    window.csMoveUp = function(idx) { if(idx > 0) { let temp = window.csTempStudents[idx]; window.csTempStudents[idx] = window.csTempStudents[idx - 1]; window.csTempStudents[idx - 1] = temp; window.renderCentralStudentDB(); } };
+    window.csMoveDown = function(idx) { if(idx < window.csTempStudents.length - 1) { let temp = window.csTempStudents[idx]; window.csTempStudents[idx] = window.csTempStudents[idx + 1]; window.csTempStudents[idx + 1] = temp; window.renderCentralStudentDB(); } };
+    window.csDelete = function(idx) { if(confirm('ลบนักเรียนคนนี้ออกจากฐานข้อมูล? (จะหายไปจากทุกวิชา)')) { window.csTempStudents.splice(idx, 1); window.renderCentralStudentDB(); } };
     window.csAutoSort = function(type) {
-        if(type === 'id') {
-            window.csTempStudents.sort((a,b) => {
-                let aid = parseInt(a.studentId) || 0;
-                let bid = parseInt(b.studentId) || 0;
-                return aid - bid;
-            });
-        } else if(type === 'name') {
-            window.csTempStudents.sort((a,b) => a.name.localeCompare(b.name, 'th'));
-        }
+        if(type === 'id') { window.csTempStudents.sort((a,b) => { let aid = parseInt(a.studentId) || 0; let bid = parseInt(b.studentId) || 0; return aid - bid; }); } 
+        else if(type === 'name') { window.csTempStudents.sort((a,b) => a.name.localeCompare(b.name, 'th')); }
         window.renderCentralStudentDB();
     };
-
-    window.csRenumber = function() {
-        if(!confirm('คุณแน่ใจหรือไม่ว่าต้องการรันเลขที่ใหม่ทั้งหมดตามลำดับที่ปรากฏอยู่ตอนนี้?')) return;
-        window.renderCentralStudentDB(); // Re-render forces the # numbers to update based on array index
-        window.showToast("รันเลขที่ใหม่เรียบร้อย (กดบันทึกเพื่อยืนยัน)");
-    };
+    window.csRenumber = function() { if(!confirm('คุณแน่ใจหรือไม่ว่าต้องการรันเลขที่ใหม่ทั้งหมดตามลำดับที่ปรากฏอยู่ตอนนี้?')) return; window.renderCentralStudentDB(); window.showToast("รันเลขที่ใหม่เรียบร้อย (กดบันทึกเพื่อยืนยัน)"); };
 
     window.csAddStudent = function() {
-        let roomStr = document.getElementById('cs-room-select').value;
-        if(!roomStr) return alert("กรุณาเลือกห้องก่อนเพิ่มนักเรียน");
-        
-        let id = document.getElementById('cs-add-id').value.trim();
-        let name = document.getElementById('cs-add-name').value.trim();
-        let email = document.getElementById('cs-add-email').value.trim();
+        let roomStr = document.getElementById('cs-room-select').value; if(!roomStr) return alert("กรุณาเลือกห้องก่อนเพิ่มนักเรียน");
+        let id = document.getElementById('cs-add-id').value.trim(); let name = document.getElementById('cs-add-name').value.trim(); let email = document.getElementById('cs-add-email').value.trim();
         if(!name) return;
-        
-        window.csTempStudents.push({ 
-            id: 'std_' + Date.now() + Math.random().toString(36).substr(2, 5), 
-            studentId: id, 
-            name: name,
-            email: email,
-            attendanceStatus: Array(40).fill('มา'), 
-            finalScore: 0 
-        });
-        
-        document.getElementById('cs-add-id').value = '';
-        document.getElementById('cs-add-name').value = '';
-        document.getElementById('cs-add-email').value = '';
-        window.renderCentralStudentDB();
+        window.csTempStudents.push({ id: 'std_' + Date.now() + Math.random().toString(36).substr(2, 5), studentId: id, name: name, email: email, attendanceStatus: Array(40).fill('มา'), finalScore: 0 });
+        document.getElementById('cs-add-id').value = ''; document.getElementById('cs-add-name').value = ''; document.getElementById('cs-add-email').value = ''; window.renderCentralStudentDB();
     };
 
     window.csImportStudentsText = function() {
-        let roomStr = document.getElementById('cs-room-select').value;
-        if(!roomStr) return alert("กรุณาเลือกห้องก่อนนำเข้า");
-        
-        const text = document.getElementById('cs-import-names').value.trim();
-        if(!text) return;
-        
+        let roomStr = document.getElementById('cs-room-select').value; if(!roomStr) return alert("กรุณาเลือกห้องก่อนนำเข้า");
+        const text = document.getElementById('cs-import-names').value.trim(); if(!text) return;
         let added = 0;
         text.split('\n').forEach(line => {
             line = line.trim(); if (!line) return;
-            // รองรับรูปแบบ: รหัส \t ชื่อ \t อีเมล
-            let cols = line.split(/\\t|\t/);
-            let id = '', name = '', email = '';
-            
-            if(cols.length >= 2) {
-                id = cols[0].trim().match(/\d+/) ? cols[0].trim() : '';
-                name = cols[1].trim();
-                email = cols[2] ? cols[2].trim() : '';
-            } else {
-                let parsed = window.parseStudentLine(line);
-                if(parsed) { id = parsed.studentId; name = parsed.name; }
-            }
-            
-            if(name && name.length > 2) {
-                window.csTempStudents.push({ 
-                    id: 'std_' + Date.now() + Math.random().toString(36).substr(2, 5), 
-                    studentId: id, 
-                    name: name,
-                    email: email,
-                    attendanceStatus: Array(40).fill('มา'), 
-                    finalScore: 0 
-                });
-                added++;
-            }
+            let cols = line.split(/\\t|\t/); let id = '', name = '', email = '';
+            if(cols.length >= 2) { id = cols[0].trim().match(/\d+/) ? cols[0].trim() : ''; name = cols[1].trim(); email = cols[2] ? cols[2].trim() : ''; } 
+            else { let parsed = window.parseStudentLine(line); if(parsed) { id = parsed.studentId; name = parsed.name; } }
+            if(name && name.length > 2) { window.csTempStudents.push({ id: 'std_' + Date.now() + Math.random().toString(36).substr(2, 5), studentId: id, name: name, email: email, attendanceStatus: Array(40).fill('มา'), finalScore: 0 }); added++; }
         });
-        
-        document.getElementById('cs-import-names').value = '';
-        window.renderCentralStudentDB();
-        alert(`ดึงข้อมูลลงตารางสำเร็จ ${added} รายการ (อย่าลืมกดบันทึกเพื่อนำไปใช้จริง)`);
+        document.getElementById('cs-import-names').value = ''; window.renderCentralStudentDB(); alert(`ดึงข้อมูลลงตารางสำเร็จ ${added} รายการ (อย่าลืมกดบันทึกเพื่อนำไปใช้จริง)`);
     };
 
     window.saveCentralStudentDB = function() {
-        let roomStr = document.getElementById('cs-room-select').value;
-        if(!roomStr) return;
-        
+        let roomStr = document.getElementById('cs-room-select').value; if(!roomStr) return;
         window.showLoading("กำลังซิงค์รายชื่อไปยังทุกวิชา...");
-        
-        // นำ csTempStudents ไปเขียนทับในทุกวิชาที่ตรงกับ roomStr
         window.currentUser.classes.forEach(c => {
             if(`ม.${c.level}/${c.room}` === roomStr) {
-                // อัปเดตรายชื่อ แต่เก็บ score เดิมไว้ถ้า ID ตรงกัน
                 let newStudentsList = [];
                 window.csTempStudents.forEach(newStd => {
-                    // หาระเบียนเดิมในวิชานี้
                     let existingStd = c.students.find(old => old.id === newStd.id);
-                    if(existingStd) {
-                        // คงข้อมูลเก่าที่มีเฉพาะวิชานี้ (เช่น attendance, finalScore)
-                        existingStd.studentId = newStd.studentId;
-                        existingStd.name = newStd.name;
-                        existingStd.email = newStd.email;
-                        newStudentsList.push(existingStd);
-                    } else {
-                        // นักเรียนใหม่ 100% ต้องใส่คะแนนให้เป็น 0 สำหรับทุกคอลัมน์ของวิชานี้
+                    if(existingStd) { existingStd.studentId = newStd.studentId; existingStd.name = newStd.name; existingStd.email = newStd.email; newStudentsList.push(existingStd); } 
+                    else {
                         let stdToAdd = JSON.parse(JSON.stringify(newStd));
-                        if(c.gradeColumns) {
-                            c.gradeColumns.forEach(col => { col.scores[stdToAdd.id] = 0; });
-                        }
+                        if(c.gradeColumns) { c.gradeColumns.forEach(col => { col.scores[stdToAdd.id] = 0; }); }
                         newStudentsList.push(stdToAdd);
                     }
                 });
                 c.students = newStudentsList;
             }
         });
-        
-        window.saveDataSilent();
-        window.renderApp();
-        document.getElementById('central-student-modal').style.display = 'none';
-        window.hideLoading();
-        setTimeout(() => alert('✅ บันทึกรายชื่อเรียบร้อย ข้อมูลเชื่อมโยงไปยังทุกวิชาแล้ว'), 500);
+        window.saveDataSilent(); window.renderApp(); document.getElementById('central-student-modal').style.display = 'none'; window.hideLoading(); setTimeout(() => alert('✅ บันทึกรายชื่อเรียบร้อย ข้อมูลเชื่อมโยงไปยังทุกวิชาแล้ว'), 500);
     };
 
-    // STREAMING_CHUNK:Firebase Auth with Observer
     // ==========================================
     // Firebase Auth (Updated with onAuthStateChanged)
     // ==========================================
     window.doLogin = async function() {
-        const btn = document.getElementById('btn-login');
-        btn.disabled = true; btn.innerText = "กำลังเข้าสู่ระบบ...";
-        const email = document.getElementById('login-email').value.trim(); 
-        const pass = document.getElementById('login-pass').value.trim(); 
-        const errEl = document.getElementById('login-error');
-        errEl.innerText = "";
-        
-        if(!email || !pass) { 
-            errEl.innerText = "กรุณากรอกข้อมูลให้ครบ"; 
-            btn.disabled = false; btn.innerText = "เข้าสู่ระบบ (Sign In)";
-            return; 
-        } 
-        
+        const btn = document.getElementById('btn-login'); btn.disabled = true; btn.innerText = "กำลังเข้าสู่ระบบ...";
+        const email = document.getElementById('login-email').value.trim(); const pass = document.getElementById('login-pass').value.trim(); const errEl = document.getElementById('login-error'); errEl.innerText = "";
+        if(!email || !pass) { errEl.innerText = "กรุณากรอกข้อมูลให้ครบ"; btn.disabled = false; btn.innerText = "เข้าสู่ระบบ (Sign In)"; return; } 
         try { 
-            const userCredential = await signInWithEmailAndPassword(auth, email, pass); 
-            // onAuthStateChanged จะทำงานต่ออัตโนมัติ ไม่ต้องเรียกซ้ำ
+            window.showLoading("กำลังตรวจสอบการเข้าสู่ระบบ..."); 
+            await signInWithEmailAndPassword(auth, email, pass); 
         } catch (error) { 
-            errEl.innerText = "ล้มเหลว: อีเมลหรือรหัสผ่านไม่ถูกต้อง"; 
-            console.error(error);
-            btn.disabled = false; btn.innerText = "เข้าสู่ระบบ (Sign In)";
+            errEl.innerText = "ล้มเหลว: อีเมลหรือรหัสผ่านไม่ถูกต้อง"; console.error(error); btn.disabled = false; btn.innerText = "เข้าสู่ระบบ (Sign In)"; window.hideLoading(); 
         }
     };
 
     window.doRegister = async function() {
-        const btn = document.getElementById('btn-register');
-        btn.disabled = true; btn.innerText = "กำลังสร้างบัญชี...";
-        const email = document.getElementById('login-email').value.trim(); 
-        const pass = document.getElementById('login-pass').value.trim(); 
-        const errEl = document.getElementById('login-error');
-        errEl.innerText = "";
-        
-        if(!email || pass.length < 6) { 
-            errEl.innerText = "กรุณากรอกอีเมลและรหัสผ่านขั้นต่ำ 6 ตัว"; 
-            btn.disabled = false; btn.innerText = "สร้างบัญชีใหม่ (Sign Up)";
-            return; 
-        } 
-        
+        const btn = document.getElementById('btn-register'); btn.disabled = true; btn.innerText = "กำลังสร้างบัญชี...";
+        const email = document.getElementById('login-email').value.trim(); const pass = document.getElementById('login-pass').value.trim(); const errEl = document.getElementById('login-error'); errEl.innerText = "";
+        if(!email || pass.length < 6) { errEl.innerText = "กรุณากรอกอีเมลและรหัสผ่านขั้นต่ำ 6 ตัว"; btn.disabled = false; btn.innerText = "สร้างบัญชีใหม่ (Sign Up)"; return; } 
         try {
+            window.showLoading("กำลังสร้างบัญชี...");
             const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-            window.currentUser = { 
-                uid: userCredential.user.uid, 
-                email: email, 
-                name: email.split('@')[0], 
-                position: "ครู", 
-                school: "โรงเรียน", 
-                classes: [], 
-                activeClassId: null, 
-                profilePic: "", 
-                schoolLogo: "" 
-            };
+            window.currentUser = { uid: userCredential.user.uid, email: email, name: email.split('@')[0], position: "ครู", school: "โรงเรียน", classes: [], activeClassId: null, profilePic: "", schoolLogo: "" };
             await setDoc(doc(db, "teachers", userCredential.user.uid), window.currentUser); 
-            // onAuthStateChanged จะทำงานต่ออัตโนมัติ
         } catch (error) { 
-            errEl.innerText = "ล้มเหลว: " + error.message; 
-            btn.disabled = false; btn.innerText = "สร้างบัญชีใหม่ (Sign Up)";
+            errEl.innerText = "ล้มเหลว: " + error.message; btn.disabled = false; btn.innerText = "สร้างบัญชีใหม่ (Sign Up)"; window.hideLoading(); 
         }
     };
 
     async function loadTeacherProfile(user) {
-        if (user.email === 'admin@school.com') {
-            window.loadAdminDashboard();
-            return;
-        }
-        window.showLoading("ดึงข้อมูลโปรไฟล์...");
+        if (user.email === 'admin@school.com') { window.loadAdminDashboard(); return; }
+        window.showLoading("กำลังดึงข้อมูลโปรไฟล์...");
         try {
             const docSnap = await getDoc(doc(db, "teachers", user.uid));
-            if (docSnap.exists()) { 
-                window.currentUser = docSnap.data(); 
-                loginSuccess(); 
-            } else { 
-                window.currentUser = { 
-                    uid: user.uid, email: user.email, name: user.email.split('@')[0], position: "ครู", school: "โรงเรียน", classes: [], activeClassId: null, profilePic: "", schoolLogo: "" 
-                }; 
-                await setDoc(doc(db, "teachers", user.uid), window.currentUser); 
-                loginSuccess(); 
-            }
+            if (docSnap.exists()) { window.currentUser = docSnap.data(); loginSuccess(); } 
+            else { window.currentUser = { uid: user.uid, email: user.email, name: user.email.split('@')[0], position: "ครู", school: "โรงเรียน", classes: [], activeClassId: null, profilePic: "", schoolLogo: "" }; await setDoc(doc(db, "teachers", user.uid), window.currentUser); loginSuccess(); }
         } catch (e) {
-            console.error("Error loading profile:", e);
-            document.getElementById('login-error').innerText = "เชื่อมต่อฐานข้อมูลล้มเหลว กรุณาลองใหม่";
-            window.hideLoading();
+            console.error("Error loading profile:", e); document.getElementById('login-error').innerText = "เชื่อมต่อฐานข้อมูลล้มเหลว กรุณาลองใหม่"; window.hideLoading();
             if(document.getElementById('btn-login')) { document.getElementById('btn-login').disabled = false; document.getElementById('btn-login').innerText = "เข้าสู่ระบบ (Sign In)"; }
         }
     }
 
-    // ฟังก์ชันตรวจสอบสถานะตลอดเวลา (แก้ปัญหา Error ล็อกอินครั้งแรก)
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            // ถ้ามี user อยู่แล้ว และยังไม่ได้โหลดโปรไฟล์ (เช่น รีเฟรชหน้า)
-            if(!window.currentUser || window.currentUser.uid !== user.uid) {
-                loadTeacherProfile(user);
-            }
+            if(!window.currentUser || window.currentUser.uid !== user.uid) { loadTeacherProfile(user); }
         } else {
-            // ไม่มี user ให้โชว์หน้าล็อกอิน
             window.currentUser = null;
             document.getElementById('login-screen').style.display = 'flex';
             document.getElementById('super-admin-screen').style.display = 'none';
             document.getElementById('class-workspace').style.display = 'none';
             document.querySelector('.sidebar').style.display = 'none';
             window.hideLoading();
+            if(document.getElementById('btn-login')) { document.getElementById('btn-login').disabled = false; document.getElementById('btn-login').innerText = "เข้าสู่ระบบ (Sign In)"; }
+            if(document.getElementById('btn-register')) { document.getElementById('btn-register').disabled = false; document.getElementById('btn-register').innerText = "สร้างบัญชีใหม่ (Sign Up)"; }
         }
     });
 
@@ -1357,81 +1210,31 @@
         document.getElementById('login-screen').style.display = 'none'; 
         document.getElementById('super-admin-screen').style.display = 'none';
         document.querySelector('.sidebar').style.display = 'flex';
-        window.updateTeacherUI(); 
-        window.renderApp(); 
-        processAutoBackup();
+        window.updateTeacherUI(); window.renderApp(); processAutoBackup();
     }
 
-    window.logout = async function() { 
-        window.showLoading("กำลังออกจากระบบ...");
-        await signOut(auth); 
-    };
+    window.logout = async function() { window.showLoading("กำลังออกจากระบบ..."); await signOut(auth); };
 
-    // STREAMING_CHUNK:Admin and Helper Functions
     window.loadAdminDashboard = async function() {
         window.showLoading("กำลังโหลดข้อมูลผู้ใช้งานทั้งหมด...");
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('class-workspace').style.display = 'none';
-        document.querySelector('.sidebar').style.display = 'none';
-        document.getElementById('super-admin-screen').style.display = 'block';
-
+        document.getElementById('login-screen').style.display = 'none'; document.getElementById('class-workspace').style.display = 'none'; document.querySelector('.sidebar').style.display = 'none'; document.getElementById('super-admin-screen').style.display = 'block';
         try {
             const querySnapshot = await getDocs(collection(db, "teachers"));
             let tbody = '';
-            querySnapshot.forEach((doc) => {
-                let t = doc.data();
-                tbody += `<tr>
-                    <td>${t.email}</td>
-                    <td>${t.name || '-'}</td>
-                    <td>${t.school || '-'}</td>
-                    <td><b style="color:var(--primary);">${t.classes ? t.classes.length : 0}</b> วิชา</td>
-                    <td>
-                        <button class="btn btn-green btn-small" style="padding: 6px 12px; font-size: 13px;" onclick="window.impersonateTeacher('${t.uid}')">🔍 เข้าไปจัดการบัญชี้นี้</button>
-                        <button class="btn btn-red btn-small" style="padding: 6px 12px; font-size: 13px;" onclick="window.deleteTeacherAccount('${t.uid}')">🗑️ ลบทิ้ง</button>
-                    </td>
-                </tr>`;
-            });
-            if(tbody === '') tbody = '<tr><td colspan="5" class="text-center">ไม่มีข้อมูลคุณครูในระบบ</td></tr>';
-            document.getElementById('admin-teacher-tbody').innerHTML = tbody;
-        } catch (e) {
-            console.error(e);
-            alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก Cloud");
-        }
-        window.hideLoading();
+            querySnapshot.forEach((doc) => { let t = doc.data(); tbody += `<tr><td>${t.email}</td><td>${t.name || '-'}</td><td>${t.school || '-'}</td><td><b style="color:var(--primary);">${t.classes ? t.classes.length : 0}</b> วิชา</td><td><button class="btn btn-green btn-small" style="padding: 6px 12px; font-size: 13px;" onclick="window.impersonateTeacher('${t.uid}')">🔍 สวมรอยเข้าไปจัดการ</button> <button class="btn btn-red btn-small" style="padding: 6px 12px; font-size: 13px;" onclick="window.deleteTeacherAccount('${t.uid}')">🗑️ ลบทิ้ง</button></td></tr>`; });
+            if(tbody === '') tbody = '<tr><td colspan="5" class="text-center">ไม่มีข้อมูลคุณครูในระบบ</td></tr>'; document.getElementById('admin-teacher-tbody').innerHTML = tbody;
+        } catch (e) { console.error(e); alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก Cloud"); } window.hideLoading();
     };
 
     window.impersonateTeacher = async function(uid) {
         window.showLoading("กำลังเชื่อมต่อบัญชี...");
-        try {
-            const docSnap = await getDoc(doc(db, "teachers", uid));
-            if(docSnap.exists()) {
-                window.currentUser = docSnap.data();
-                document.getElementById('super-admin-screen').style.display = 'none';
-                document.querySelector('.sidebar').style.display = 'flex';
-                loginSuccess();
-                window.showToast(`เข้าสู่ระบบในฐานะบัญชี: ${window.currentUser.name}`);
-            }
-        } catch(e) {
-            alert("ไม่สามารถจัดการบัญชีนี้ได้");
-            window.hideLoading();
-        }
+        try { const docSnap = await getDoc(doc(db, "teachers", uid)); if(docSnap.exists()) { window.currentUser = docSnap.data(); document.getElementById('super-admin-screen').style.display = 'none'; document.querySelector('.sidebar').style.display = 'flex'; loginSuccess(); window.showToast(`เข้าสู่ระบบในฐานะบัญชี: ${window.currentUser.name}`); } } catch(e) { alert("ไม่สามารถสวมรอยบัญชีได้"); window.hideLoading(); }
     };
 
     window.deleteTeacherAccount = async function(uid) {
-        if(confirm('⚠️ คำเตือนขั้นสูงสุด!\n\nคุณต้องการลบข้อมูลบัญชีของครูท่านนี้ "รวมถึงคะแนนเด็กทั้งหมด" ใช่หรือไม่?\n(ข้อมูลจะไม่สามารถกู้คืนได้อีก)')) {
-            window.showLoading("กำลังลบข้อมูลอย่างถาวร...");
-            try {
-                await deleteDoc(doc(db, "teachers", uid));
-                alert("ลบข้อมูลสำเร็จ!");
-                window.loadAdminDashboard(); 
-            } catch(e) {
-                alert("เกิดข้อผิดพลาดในการลบ");
-                window.hideLoading();
-            }
-        }
+        if(confirm('⚠️ คำเตือนขั้นสูงสุด!\n\nคุณต้องการลบข้อมูลบัญชีของครูท่านนี้ "รวมถึงคะแนนเด็กทั้งหมด" ใช่หรือไม่?\n(ข้อมูลจะไม่สามารถกู้คืนได้อีก)')) { window.showLoading("กำลังลบข้อมูลอย่างถาวร..."); try { await deleteDoc(doc(db, "teachers", uid)); alert("ลบข้อมูลสำเร็จ!"); window.loadAdminDashboard(); } catch(e) { alert("เกิดข้อผิดพลาดในการลบ"); window.hideLoading(); } }
     };
 
 </script>
 </body>
 </html>
-```eof
