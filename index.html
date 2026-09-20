@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="icon-192x192.png">
     <link rel="manifest" href="manifest.json">
     
-    <title>Smart Teacher OS - Cloud Edition v3.6.3</title>
+    <title>Smart Teacher OS - Cloud Edition v3.4.2</title>
     
     <!-- Fonts and Libraries -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -136,7 +136,6 @@
         /* Buttons & Inputs */
         .btn { padding: 8px 16px; background: var(--primary); color: var(--white); border: none; border-radius: 6px; cursor: pointer; font-family: 'Sarabun'; font-size: 14px; font-weight: 500; transition: 0.2s; white-space: nowrap; }
         .btn:hover { background: var(--primary-light); }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn-green { background: var(--green); } 
         .btn-red { background: var(--red); }
         .btn-gold { background: var(--accent-gold); color: #1F2937; font-weight: bold; } 
@@ -151,7 +150,6 @@
         
         .input-text, textarea, select { width: 100%; padding: 8px 10px; margin-top: 4px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #CBD5E1; font-family: 'Sarabun'; font-size: 14px; }
         
-        /* Table and Mobile Responsive CSS */
         .table-container { 
             width: 100%; 
             overflow-x: auto; 
@@ -184,64 +182,21 @@
         .status-syncing { background: #fef08a; color: #854d0e; } .status-saved { background: #d1fae5; color: #065f46; }
         
         /* Profile Image Styles */
-        .profile-pic { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-gold); background: #eee;}
-        .version-badge { background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 12px; font-size: 11px; cursor: pointer; font-weight: bold; margin-bottom: 5px; display: inline-block;}
+        .profile-pic { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-gold); background: transparent;}
+        .version-badge { background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 12px; font-size: 11px; cursor: pointer; font-weight: bold; }
         
         /* Responsive Mobile Layout Fixes (For iPhone/Android) */
         @media (max-width: 768px) { 
-            body { 
-                flex-direction: column; 
-                overflow: hidden; 
-            } 
-            .sidebar { 
-                width: 100%; 
-                height: auto; 
-                border-right: none; 
-                border-bottom: 2px solid var(--primary); 
-                max-height: 35vh; 
-                padding: 15px; 
-                flex-shrink: 0;
-            } 
-            .class-list { 
-                max-height: 15vh; 
-            }
-            .main-content { 
-                width: 100%; 
-                padding: 15px; 
-                flex-grow: 1; 
-                overflow-y: auto; 
-                padding-bottom: 50px;
-            } 
-            .form-grid { 
-                grid-template-columns: 1fr; 
-                gap: 10px; 
-            } 
-            .header-bar { 
-                flex-direction: column; 
-                align-items: flex-start; 
-            }
-            .tabs { 
-                overflow-x: auto; 
-                flex-wrap: nowrap; 
-                white-space: nowrap; 
-                padding-bottom: 5px; 
-                width: 100%;
-                -webkit-overflow-scrolling: touch;
-            }
-            .tab-btn { 
-                flex: 0 0 auto; 
-                font-size: 14px; 
-                padding: 8px 12px;
-            }
-            th:nth-child(3), td:nth-child(3) { 
-                width: 120px; 
-                min-width: 120px; 
-                font-size: 13px; 
-                white-space: normal;
-            }
-            .table-container { 
-                max-height: 55vh; 
-            }
+            body { flex-direction: column; overflow: hidden; } 
+            .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 2px solid var(--primary); max-height: 35vh; padding: 15px; flex-shrink: 0;} 
+            .class-list { max-height: 15vh; }
+            .main-content { width: 100%; padding: 15px; flex-grow: 1; overflow-y: auto; padding-bottom: 50px;} 
+            .form-grid { grid-template-columns: 1fr; gap: 10px; } 
+            .header-bar { flex-direction: column; align-items: flex-start; }
+            .tabs { overflow-x: auto; flex-wrap: nowrap; white-space: nowrap; padding-bottom: 5px; width: 100%; -webkit-overflow-scrolling: touch;}
+            .tab-btn { flex: 0 0 auto; font-size: 14px; padding: 8px 12px;}
+            th:nth-child(3), td:nth-child(3) { width: 120px; min-width: 120px; font-size: 13px; white-space: normal;}
+            .table-container { max-height: 55vh; }
         }
         
         /* Print Styles */
@@ -251,34 +206,13 @@
             .print-only { display: block !important; } 
             .print-only-text { display: inline !important; } 
             
-            body { 
-                padding: 0; 
-                display: block; 
-                overflow: visible; 
-                background: white; 
-                color: black; 
-                font-size: 10pt; 
-                height: auto;
-            } 
+            body { padding: 0; display: block; overflow: visible; background: white; color: black; font-size: 10pt; height: auto;} 
             .main-content { padding: 0; overflow: visible; width: 100%; height: auto; } 
             .table-container { border: none; overflow: visible; max-height: none; width: 100%;}
             
-            table { 
-                width: 100%; 
-                min-width: auto; 
-                border-collapse: collapse; 
-                border: 1px solid #000 !important; 
-                font-size: 10pt; 
-                page-break-inside: auto; 
-            } 
+            table { width: 100%; min-width: auto; border-collapse: collapse; border: 1px solid #000 !important; font-size: 10pt; page-break-inside: auto; } 
             tr { page-break-inside: avoid; page-break-after: auto; }
-            th, td { 
-                padding: 4px !important; 
-                border: 1px solid #000 !important; 
-                position: static !important; 
-                box-shadow: none !important; 
-                color: #000 !important; 
-            } 
+            th, td { padding: 4px !important; border: 1px solid #000 !important; position: static !important; box-shadow: none !important; color: #000 !important; } 
             th { background-color: #f0f0f0 !important; color: #000 !important; -webkit-print-color-adjust: exact; font-weight: bold; } 
             input[type="number"], input[type="text"] { border: none !important; background: transparent !important; width: 100%; text-align: center; font-size: 10pt; color: #000; padding: 0; font-family: 'Sarabun'; }
             
@@ -300,18 +234,17 @@
 <div id="login-screen">
     <div class="login-card">
         <img src="icon-192x192.png" alt="App Logo" style="width: 80px; height: 80px; border-radius: 16px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23581C87\'><path d=\'M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72l5 2.73 5-2.73v3.72z\'/></svg>'">
-        <h2 style="color: var(--primary); margin-top:0;">เข้าสู่ระบบจัดการคะแนน<br><span style="font-size:14px; color:var(--text-muted);">Smart Teacher OS Cloud v3.6.3</span></h2>
+        <h2 style="color: var(--primary); margin-top:0;">เข้าสู่ระบบจัดการคะแนน<br><span style="font-size:14px; color:var(--text-muted);">Smart Teacher OS Cloud v3.4.2</span></h2>
         <div style="text-align: left;">
             <label>อีเมล (Email):</label>
             <input type="email" id="login-email" class="input-text" placeholder="teacher@school.com" autocomplete="email">
             <label>รหัสผ่าน (Password):</label>
             <input type="password" id="login-pass" class="input-text" placeholder="รหัสผ่านอย่างน้อย 6 ตัว">
-            <button id="btn-login" class="btn btn-gold" style="width: 100%; margin-top: 10px; padding: 12px;" onclick="window.doLogin()">เข้าสู่ระบบ (Sign In)</button>
-            <button id="btn-register" class="btn btn-outline" style="width: 100%; margin-top: 10px; padding: 12px;" onclick="window.doRegister()">สร้างบัญชีใหม่ (Sign Up)</button>
+            <button class="btn btn-gold" style="width: 100%; margin-top: 10px; padding: 12px;" onclick="window.doLogin()">เข้าสู่ระบบ (Sign In)</button>
+            <button class="btn btn-outline" style="width: 100%; margin-top: 10px; padding: 12px;" onclick="window.doRegister()">สร้างบัญชีใหม่ (Sign Up)</button>
             <div id="login-error" style="color: var(--red); font-size: 13px; margin-top: 10px; text-align: center;"></div>
             
             <div style="margin-top: 15px; font-size: 12px; color: var(--text-muted); text-align: center; border-top: 1px solid #eee; padding-top: 10px;">
-                &copy; 2026 พัฒนาโดย นายนนทพัทธ์ วงค์มูล<br><br>
                 💡 <b>เข้าสู่ระบบแอดมิน:</b> ใช้อีเมล admin@school.com
             </div>
         </div>
@@ -361,7 +294,6 @@
     </div>
     
     <div style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
-        <button class="btn btn-outline" style="width: 100%; margin-bottom: 8px; background:#f0fdf4; color:#166534; border-color:#166534; font-weight:bold;" onclick="window.openCentralStudentDB()">👥 ฐานข้อมูลนักเรียน (ส่วนกลาง)</button>
         <button class="btn btn-outline" style="width: 100%; background:#fee2e2; color:#991b1b; border-color:#991b1b; font-weight:bold;" onclick="window.openGlobalRiskDashboard()">🚨 ศูนย์คัดกรองเด็กเสี่ยง</button>
     </div>
 
@@ -376,9 +308,7 @@
         <input type="file" id="import-legacy-file" style="display: none;" accept=".json" onchange="window.importLegacyJSON(event)">
         <button class="btn btn-outline" style="width: 100%; margin-bottom: 6px; font-size: 12px; padding: 4px; background: #e0f2fe; color: #0369a1; border-color: #0369a1;" onclick="window.openAutoBackupModal()">⏱️ ย้อนเวลา (Local)</button>
         <button class="btn btn-red" style="width: 100%; font-size: 12px; padding: 4px; margin-bottom: 10px;" onclick="window.logout()">🚪 ลงชื่อออก</button>
-        <span class="version-badge" onclick="window.checkUpdate()">v3.6.3 (Stable)</span>
-        <!-- เพิ่มข้อมูลลิขสิทธิ์ใน Sidebar -->
-        <div style="font-size: 10px; color: #9CA3AF; margin-top: 5px;">&copy; 2026 พัฒนาโดย นายนนทพัทธ์ วงค์มูล</div>
+        <span class="version-badge" onclick="window.checkUpdate()">v3.4.2 (Check Update)</span>
     </div>
 </div>
 
@@ -405,6 +335,7 @@
         </div>
 
         <div class="print-header print-only">
+            <!-- โลโก้โรงเรียน แสดงตอนสั่งพิมพ์เท่านั้น -->
             <img id="print-school-logo" src="" style="height:80px; object-fit:contain; display:none; margin: 0 auto 10px auto;">
             <h2 id="print-header-title" style="margin: 0 0 5px 0;">แบบบันทึกผลการเรียนรายวิชา</h2>
             <h3 id="print-class-info" style="margin: 0; color: #444; font-weight: normal;"></h3>
@@ -419,13 +350,13 @@
         <!-- TAB: STUDENTS -->
         <div id="tab-students" class="tab-content active">
             <div class="card no-print" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                <div><h3 style="margin:0; color: var(--primary);">จัดการเวลาเรียน</h3></div>
+                <div><h3 style="margin:0; color: var(--primary);">จัดการรายชื่อและเวลาเรียน</h3></div>
                 <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-gold" onclick="window.openAttendanceTextModal()">📥 นำเข้าเวลาเรียนดิบ</button>
-                    <button class="btn btn-outline" onclick="window.openCentralStudentDB()">⚙️ แก้ไขรายชื่อส่วนกลาง</button>
+                    <button class="btn btn-gold" onclick="window.openAttendanceTextModal()">📥 นำเข้าเวลาเรียน</button>
+                    <button class="btn" onclick="window.openStudentManager()">⚙️ จัดการรายชื่อ</button>
                 </div>
             </div>
-            <p class="no-print" style="font-size: 13px; color: var(--text-muted);">* คลิกที่สถานะในตารางเพื่อสลับ (มา ➡️ สาย ➡️ ลา ➡️ ขาด)<br>* หากต้องการเพิ่มลบนักเรียน กรุณาไปที่เมนู <b style="color:var(--primary);">"ฐานข้อมูลนักเรียน (ส่วนกลาง)"</b> ที่แถบด้านซ้าย</p>
+            <p class="no-print" style="font-size: 13px; color: var(--text-muted);">* คลิกที่สถานะในตารางเพื่อสลับ (มา ➡️ สาย ➡️ ลา ➡️ ขาด)</p>
             <div class="table-container"><table id="attendance-table"></table></div>
         </div>
 
@@ -494,73 +425,6 @@
 </div>
 
 <!-- ================= ALL MODALS ================= -->
-<!-- Central Student Database Modal -->
-<div id="central-student-modal" class="modal">
-    <div class="modal-content" style="max-width: 900px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h2 style="margin:0; color: #166534;">👥 ฐานข้อมูลนักเรียน (ส่วนกลาง)</h2>
-            <button class="btn btn-outline" style="background:#f1f5f9;" onclick="document.getElementById('central-student-modal').style.display='none'">ปิด</button>
-        </div>
-        
-        <p style="font-size:13px; color:var(--text-muted); margin-bottom: 15px;">การแก้ไขข้อมูลในหน้านี้ จะส่งผลต่อทุกรายวิชาที่มีนักเรียนห้องนี้เรียนอยู่ (คะแนนเดิมของนักเรียนจะถูกรักษาไว้)</p>
-        
-        <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #bbf7d0; margin-bottom: 15px; display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
-            <div style="flex: 1; min-width: 200px;">
-                <label style="font-weight: bold; color: #166534;">เลือกห้องเรียน:</label>
-                <select id="cs-room-select" class="input-text" style="margin:0; border-color: #86efac; font-size: 16px; font-weight: bold;" onchange="window.renderCentralStudentDB()">
-                    <option value="">-- กรุณาสร้างวิชาและกำหนดห้องเรียนก่อน --</option>
-                </select>
-            </div>
-            <div style="flex: 2; font-size: 13px; color: #166534;" id="cs-linked-subjects">
-                รายวิชาที่ลิงก์กับห้องนี้: -
-            </div>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
-            <div style="display: flex; gap: 8px;">
-                <button class="btn btn-outline" style="font-size: 12px; padding: 4px 8px;" onclick="window.csAutoSort('id')">↕️ เรียงรหัสใหม่</button>
-                <button class="btn btn-outline" style="font-size: 12px; padding: 4px 8px;" onclick="window.csAutoSort('name')">↕️ เรียงชื่อใหม่</button>
-                <button class="btn btn-outline" style="font-size: 12px; padding: 4px 8px; color:#b45309; border-color:#b45309;" onclick="window.csRenumber()">🔢 รันเลขที่ใหม่</button>
-            </div>
-        </div>
-
-        <div style="max-height: 350px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; padding: 10px; background: #fff;">
-            <table style="margin: 0; font-size: 13px; width: 100%;">
-                <thead>
-                    <tr>
-                        <th style="width: 50px;">เลขที่</th>
-                        <th style="width: 100px;">รหัส</th>
-                        <th>ชื่อ-นามสกุล</th>
-                        <th>อีเมลโรงเรียน (ตัวเลือก)</th>
-                        <th style="width: 120px;">จัดเรียง / ลบ</th>
-                    </tr>
-                </thead>
-                <tbody id="cs-student-tbody">
-                    <tr><td colspan="5" style="color:gray;">เลือกระดับชั้น/ห้อง ด้านบน</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid var(--border); margin-top: 15px;">
-            <h4 style="margin-top:0; margin-bottom: 10px;">เพิ่มนักเรียนใหม่</h4>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <input type="text" id="cs-add-id" class="input-text" placeholder="รหัส" style="width: 100px; margin:0;" maxlength="6">
-                <input type="text" id="cs-add-name" class="input-text" placeholder="ชื่อ-นามสกุล..." style="flex: 2; margin:0;">
-                <input type="email" id="cs-add-email" class="input-text" placeholder="อีเมล (ถ้ามี)..." style="flex: 2; margin:0;">
-                <button class="btn btn-green" onclick="window.csAddStudent()">+ เพิ่มเดี่ยว</button>
-            </div>
-            <div style="margin-top: 10px;">
-                <textarea id="cs-import-names" rows="2" class="input-text" placeholder="หรือ วางข้อมูลจาก Excel: [รหัส] (Tab) [ชื่อ-นามสกุล] (Tab) [อีเมล-ไม่บังคับ]"></textarea>
-                <button class="btn btn-outline" style="width: 100%;" onclick="window.csImportStudentsText()">วางข้อมูลหลายคน</button>
-            </div>
-        </div>
-
-        <div style="text-align: right; margin-top: 20px;">
-            <button class="btn btn-green" style="padding: 12px 24px; font-size: 16px;" onclick="window.saveCentralStudentDB()">💾 บันทึกการเปลี่ยนแปลงไปทุกรายวิชา</button>
-        </div>
-    </div>
-</div>
-
 <div id="profile-modal" class="modal">
     <div class="modal-content" style="max-width: 500px;">
         <h2 style="margin-top:0; color: var(--primary);">⚙️ ตั้งค่าโปรไฟล์และโลโก้</h2>
@@ -634,8 +498,7 @@
 
 <div id="student-manager-modal" class="modal">
     <div class="modal-content" style="max-width: 700px;">
-        <h2 style="margin-top:0; color: var(--primary);">จัดการรายชื่อนักเรียน (แบบเดิม)</h2>
-        <p style="font-size: 12px; color: var(--red);">คำแนะนำ: ให้ไปใช้ <b>"ฐานข้อมูลนักเรียน (ส่วนกลาง)"</b> ที่แถบด้านซ้ายแทน จะดีกว่าครับ</p>
+        <h2 style="margin-top:0; color: var(--primary);">จัดการรายชื่อนักเรียน</h2>
         <div style="margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
             <input type="text" id="single-add-id" class="input-text" placeholder="รหัสประจำตัว" style="width: 130px; margin:0;" maxlength="6">
             <input type="text" id="single-add-name" class="input-text" placeholder="ชื่อ-นามสกุล..." style="margin:0; flex-grow:1;">
@@ -659,7 +522,7 @@
 
 <div id="column-modal" class="modal">
     <div class="modal-content" style="max-width: 500px;">
-        <h2 id="column-modal-title" style="margin-top:0; color: var(--primary);">เพิ่ม/แก้ไข ช่องคะแนน</h2>
+        <h2 id="column-modal-title" style="margin-top:0; color: var(--primary);">เพิ่มช่องคะแนน</h2>
         <input type="hidden" id="edit-col-id">
         <label>ชื่องาน / ชื่อการสอบ:</label>
         <input type="text" id="col-name" class="input-text">
@@ -996,27 +859,6 @@
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // ประกาศฟังก์ชันโหลดดิ้งให้เป็นโกลบอล ก่อนที่ Auth จะเรียกใช้
-    window.showLoading = function(text = "กำลังโหลดข้อมูล...") {
-        let el = document.getElementById('loading-overlay-text');
-        if(el) el.innerText = text;
-        let overlay = document.getElementById('app-loading-overlay');
-        if(overlay) overlay.style.display = 'flex';
-    };
-    
-    window.hideLoading = function() {
-        let overlay = document.getElementById('app-loading-overlay');
-        if(overlay) overlay.style.display = 'none';
-    };
-
-    window.showToast = function(msg = "บันทึกข้อมูลเรียบร้อย") { 
-        let x = document.getElementById("toast"); 
-        if(!x) return;
-        x.innerText = msg; 
-        x.className = "toast show"; 
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 1500); 
-    };
-
     // ==========================================
     // Firebase Config 
     // ==========================================
@@ -1037,7 +879,7 @@
     // ==========================================
     // Global Variables
     // ==========================================
-    const APP_VERSION = "3.6.3";
+    const APP_VERSION = "3.4.2";
     window.currentUser = null;
     window.currentEditingWeek = null; 
     window.pendingBatchData = null; 
@@ -1046,256 +888,282 @@
     window.parsedGroupDataCache = []; 
     window.pendingGroupScore = 0; 
     window.lastImportSnapshot = null;
-    window.csTempStudents = null; // สำหรับพักข้อมูลในฐานข้อมูลกลางชั่วคราว
     const defaultHolidays = `2026-05-01\n2026-05-04\n2026-05-31\n2026-06-03\n2026-07-28\n2026-07-30\n2026-08-12\n2026-10-13\n2026-10-23\n2026-12-05\n2026-12-10`;
 
     window.checkUpdate = function() {
-        alert(`เวอร์ชั่นปัจจุบันของคุณคือ v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- ✅ แก้ปัญหาปุ่มแก้ไขโปรไฟล์ไม่ตอบสนอง\n- ✅ ป้องกันหน้าต่างค้างเมื่อลบนักเรียน\n- ✅ มีระบบรักษาความปลอดภัย (Error Handling) แบบใหม่\n- โค้ดกลับมาเต็มรูปแบบ 100%`);
+        alert(`เวอร์ชั่นปัจจุบันของคุณคือ v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- เพิ่มระบบ Super Admin\n- เพิ่มโลโก้ที่หน้าล็อกอิน\n- แก้ไขบั๊กหน้าต่างล็อกอินเด้งขณะสั่งพิมพ์รายงานความเสี่ยง`);
     };
 
     // ==========================================
-    // Central Student Database Logic
+    // Loading UI
     // ==========================================
-    window.openCentralStudentDB = function() {
-        if(!window.currentUser || !window.currentUser.classes || window.currentUser.classes.length === 0) {
-            alert('กรุณาสร้างวิชาเรียนอย่างน้อย 1 วิชาก่อนครับ');
-            return;
-        }
-        let select = document.getElementById('cs-room-select');
-        select.innerHTML = '<option value="">-- เลือกระดับชั้นและห้อง --</option>';
-        
-        let uniqueRooms = [];
-        window.currentUser.classes.forEach(c => {
-            let rStr = `ม.${c.level}/${c.room}`;
-            if(!uniqueRooms.includes(rStr)) uniqueRooms.push(rStr);
-        });
-        
-        uniqueRooms.sort().forEach(rStr => {
-            select.innerHTML += `<option value="${rStr}">${rStr}</option>`;
-        });
-        
-        document.getElementById('cs-student-tbody').innerHTML = '<tr><td colspan="5" style="color:gray;">กรุณาเลือกห้องเรียนจากด้านบน</td></tr>';
-        document.getElementById('cs-linked-subjects').innerText = 'รายวิชาที่ลิงก์กับห้องนี้: -';
-        
-        window.csTempStudents = null; // รีเซ็ตทุกครั้งที่เปิด
-        document.getElementById('central-student-modal').style.display = 'flex';
+    window.showLoading = function(text = "กำลังประมวลผล...") {
+        document.getElementById('loading-overlay-text').innerText = text;
+        document.getElementById('app-loading-overlay').style.display = 'flex';
+    };
+    
+    window.hideLoading = function() {
+        document.getElementById('app-loading-overlay').style.display = 'none';
     };
 
-    window.renderCentralStudentDB = function() {
-        let roomStr = document.getElementById('cs-room-select').value;
-        if(!roomStr) {
-            document.getElementById('cs-student-tbody').innerHTML = '<tr><td colspan="5" style="color:gray;">กรุณาเลือกห้องเรียนจากด้านบน</td></tr>';
-            document.getElementById('cs-linked-subjects').innerText = 'รายวิชาที่ลิงก์กับห้องนี้: -';
-            window.csTempStudents = [];
-            return;
-        }
+    // ==========================================
+    // Sync & Backup Logic
+    // ==========================================
+    let syncTimeout = null;
+    window.saveDataSilent = function() {
+        if(!window.currentUser || !window.currentUser.uid) return;
+        let cloudUI = document.getElementById('cloud-status');
+        cloudUI.style.display = 'block'; 
+        cloudUI.className = 'status-syncing'; 
+        cloudUI.innerText = '☁️ กำลังเตรียมซิงค์...';
 
-        let linkedSubjects = [];
-        let masterClass = null;
-        window.currentUser.classes.forEach(c => {
-            if(`ม.${c.level}/${c.room}` === roomStr) {
-                linkedSubjects.push(`${c.subjectName} (${c.subjectCode})`);
-                if(!masterClass) masterClass = c; 
+        clearTimeout(syncTimeout);
+        syncTimeout = setTimeout(async () => {
+            try {
+                cloudUI.innerText = '☁️ กำลังบันทึกขึ้น Cloud...';
+                await setDoc(doc(db, "teachers", window.currentUser.uid), window.currentUser);
+                cloudUI.className = 'status-saved'; 
+                cloudUI.innerText = '☁️ ซิงค์ข้อมูลล่าสุดแล้ว';
+                setTimeout(() => { cloudUI.style.display = 'none'; }, 2000);
+            } catch(e) {
+                console.error("Firebase Sync Error:", e);
+                cloudUI.style.background = "var(--red)"; 
+                cloudUI.style.color = "white"; 
+                cloudUI.innerText = '⚠️ บันทึกขึ้น Cloud ล้มเหลว';
             }
-        });
-        
-        document.getElementById('cs-linked-subjects').innerText = 'รายวิชาที่ใช้ข้อมูลนี้ร่วมกัน: ' + linkedSubjects.join(', ');
-        
-        // โหลดข้อมูลครั้งแรกเท่านั้น
-        if(window.csTempStudents === null) {
-            if (masterClass && masterClass.students) {
-                window.csTempStudents = JSON.parse(JSON.stringify(masterClass.students));
-            } else {
-                window.csTempStudents = [];
+        }, 1500); 
+    };
+
+    window.manualSave = function() { 
+        window.saveDataSilent(); 
+        window.showToast("ซิงค์ขึ้นคลาวด์เรียบร้อย"); 
+    };
+
+    const BACKUP_KEY = 'SmartTeacher_AutoBackups';
+    function processAutoBackup() {
+        if(!window.currentUser || !window.currentUser.uid) return;
+        let backups = JSON.parse(localStorage.getItem(BACKUP_KEY)) || {};
+        let now = Date.now();
+        let intervals = { '3m': 3*60000, '30m': 30*60000, '1h': 3600000, '3h': 10800000, '1d': 86400000 };
+        for(let k in backups) { 
+            if(now - backups[k].timestamp > 86400000) delete backups[k]; 
+        }
+        let stateString = JSON.stringify(window.currentUser);
+        for(let key in intervals) { 
+            if(!backups[key] || (now - backups[key].timestamp >= intervals[key])) {
+                backups[key] = { timestamp: now, data: stateString }; 
             }
         }
+        try { localStorage.setItem(BACKUP_KEY, JSON.stringify(backups)); } catch(e) {}
+    }
+    setInterval(processAutoBackup, 60000);
 
-        window.csTempStudents = (window.csTempStudents || []).filter(std => std !== null && typeof std === 'object');
-
-        let tbody = '';
-        window.csTempStudents.forEach((std, idx) => {
-            tbody += `<tr id="cs-row-${idx}">
-                <td style="font-weight:bold; color:var(--primary);">${idx+1}</td>
-                <td><input type="text" class="input-text" style="margin:0; text-align:center; padding:4px;" value="${std.studentId || ''}" maxlength="6" onchange="window.csUpdateField(${idx}, 'studentId', this.value)"></td>
-                <td style="text-align: left;"><input type="text" class="input-text" style="margin:0; padding:4px;" value="${std.name || ''}" onchange="window.csUpdateField(${idx}, 'name', this.value)"></td>
-                <td style="text-align: left;"><input type="email" class="input-text" style="margin:0; padding:4px; font-size:12px;" value="${std.email || ''}" placeholder="example@school.com" onchange="window.csUpdateField(${idx}, 'email', this.value)"></td>
-                <td>
-                    <div style="display:flex; justify-content:center; gap:2px;">
-                        <button class="btn btn-outline" style="padding:4px; font-size:12px;" onclick="window.csMoveUp(${idx})" ${idx===0?'disabled':''}>🔼</button>
-                        <button class="btn btn-outline" style="padding:4px; font-size:12px;" onclick="window.csMoveDown(${idx})" ${idx===window.csTempStudents.length-1?'disabled':''}>🔽</button>
-                        <button class="btn btn-red" style="padding:4px 8px; font-size:12px;" onclick="window.csDelete(${idx})">ลบ</button>
+    window.openAutoBackupModal = function() {
+        let backups = JSON.parse(localStorage.getItem(BACKUP_KEY)) || {};
+        let container = document.getElementById('backup-list-container'); 
+        container.innerHTML = '';
+        let keys = Object.keys(backups).sort((a,b) => backups[b].timestamp - backups[a].timestamp);
+        
+        if(keys.length === 0) { 
+            container.innerHTML = '<div style="padding:20px; text-align:center; color:gray;">ยังไม่มีข้อมูลสำรอง</div>'; 
+        } else {
+            let labels = {'3m':'3 นาที', '30m':'30 นาที', '1h':'1 ชั่วโมง', '3h':'3 ชั่วโมง', '1d':'1 วัน'};
+            keys.forEach(k => {
+                let d = new Date(backups[k].timestamp);
+                container.innerHTML += `
+                <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:10px; border-radius:6px; border:1px solid #cbd5e1;">
+                    <div>
+                        <div style="font-weight:bold; color:var(--primary);">รอบ ${labels[k]} ที่แล้ว</div>
+                        <div style="font-size:12px; color:gray;">${d.toLocaleString('th-TH')}</div>
                     </div>
-                </td>
-            </tr>`;
-        });
-        
-        if(window.csTempStudents.length === 0) tbody = '<tr><td colspan="5" style="color:gray;">ยังไม่มีรายชื่อนักเรียนในห้องนี้</td></tr>';
-        document.getElementById('cs-student-tbody').innerHTML = tbody;
-    };
-
-    window.csUpdateField = function(idx, field, value) {
-        if(window.csTempStudents && window.csTempStudents[idx]) {
-            window.csTempStudents[idx][field] = value.trim();
-        }
-    };
-
-    window.csMoveUp = function(idx) {
-        if(idx > 0 && window.csTempStudents) {
-            let temp = window.csTempStudents[idx];
-            window.csTempStudents[idx] = window.csTempStudents[idx - 1];
-            window.csTempStudents[idx - 1] = temp;
-            window.renderCentralStudentDB();
-        }
-    };
-
-    window.csMoveDown = function(idx) {
-        if(window.csTempStudents && idx < window.csTempStudents.length - 1) {
-            let temp = window.csTempStudents[idx];
-            window.csTempStudents[idx] = window.csTempStudents[idx + 1];
-            window.csTempStudents[idx + 1] = temp;
-            window.renderCentralStudentDB();
-        }
-    };
-
-    window.csDelete = function(idx) {
-        if(confirm('ลบนักเรียนคนนี้ออกจากฐานข้อมูล? (จะหายไปจากทุกวิชา)')) {
-            if(window.csTempStudents) {
-                window.csTempStudents.splice(idx, 1);
-                window.renderCentralStudentDB();
-            }
-        }
-    };
-
-    window.csAutoSort = function(type) {
-        if(!window.csTempStudents) return;
-        if(type === 'id') {
-            window.csTempStudents.sort((a,b) => {
-                let aid = parseInt(a.studentId) || 0;
-                let bid = parseInt(b.studentId) || 0;
-                return aid - bid;
+                    <button class="btn btn-green" style="padding:6px 12px; font-size:13px;" onclick="window.restoreAutoBackup('${k}')">กู้คืนจุดนี้</button>
+                </div>`;
             });
-        } else if(type === 'name') {
-            window.csTempStudents.sort((a,b) => (a.name||"").localeCompare(b.name||"", 'th'));
         }
-        window.renderCentralStudentDB();
+        document.getElementById('auto-backup-modal').style.display = 'flex';
     };
 
-    window.csRenumber = function() {
-        if(!confirm('คุณแน่ใจหรือไม่ว่าต้องการรันเลขที่ใหม่ทั้งหมดตามลำดับที่ปรากฏอยู่ตอนนี้?')) return;
-        window.renderCentralStudentDB(); 
-        window.showToast("รันเลขที่ใหม่เรียบร้อย (กดบันทึกเพื่อยืนยัน)");
-    };
-
-    window.csAddStudent = function() {
-        let roomStr = document.getElementById('cs-room-select').value;
-        if(!roomStr) return alert("กรุณาเลือกห้องก่อนเพิ่มนักเรียน");
-        
-        let id = document.getElementById('cs-add-id').value.trim();
-        let name = document.getElementById('cs-add-name').value.trim();
-        let email = document.getElementById('cs-add-email').value.trim();
-        if(!name) return;
-        
-        if(!window.csTempStudents) window.csTempStudents = [];
-        window.csTempStudents.push({ 
-            id: 'std_' + Date.now() + Math.random().toString(36).substr(2, 5), 
-            studentId: id, 
-            name: name,
-            email: email,
-            attendanceStatus: Array(40).fill('มา'), 
-            finalScore: 0 
-        });
-        
-        document.getElementById('cs-add-id').value = '';
-        document.getElementById('cs-add-name').value = '';
-        document.getElementById('cs-add-email').value = '';
-        window.renderCentralStudentDB();
-    };
-
-    window.csImportStudentsText = function() {
-        let roomStr = document.getElementById('cs-room-select').value;
-        if(!roomStr) return alert("กรุณาเลือกห้องก่อนนำเข้า");
-        
-        const text = document.getElementById('cs-import-names').value.trim();
-        if(!text) return;
-        
-        let added = 0;
-        if(!window.csTempStudents) window.csTempStudents = [];
-        text.split('\n').forEach(line => {
-            line = line.trim(); if (!line) return;
-            let cols = line.split(/\\t|\t/);
-            let id = '', name = '', email = '';
-            
-            if(cols.length >= 2) {
-                id = cols[0].trim().match(/\d+/) ? cols[0].trim() : '';
-                name = cols[1].trim();
-                email = cols[2] ? cols[2].trim() : '';
-            } else {
-                let parsed = window.parseStudentLine(line);
-                if(parsed) { id = parsed.studentId; name = parsed.name; }
-            }
-            
-            if(name && name.length > 2) {
-                window.csTempStudents.push({ 
-                    id: 'std_' + Date.now() + Math.random().toString(36).substr(2, 5), 
-                    studentId: id, 
-                    name: name,
-                    email: email,
-                    attendanceStatus: Array(40).fill('มา'), 
-                    finalScore: 0 
-                });
-                added++;
-            }
-        });
-        
-        document.getElementById('cs-import-names').value = '';
-        window.renderCentralStudentDB();
-        alert(`ดึงข้อมูลลงตารางสำเร็จ ${added} รายการ (อย่าลืมกดบันทึกเพื่อนำไปใช้จริง)`);
-    };
-
-    window.saveCentralStudentDB = function() {
-        let roomStr = document.getElementById('cs-room-select').value;
-        if(!roomStr) return;
-        
-        window.showLoading("กำลังซิงค์รายชื่อไปยังทุกวิชา...");
-        
-        try {
-            window.currentUser.classes.forEach(c => {
-                if(`ม.${c.level}/${c.room}` === roomStr) {
-                    let newStudentsList = [];
-                    (window.csTempStudents || []).forEach(newStd => {
-                        if(!newStd) return;
-                        let existingStd = (c.students || []).find(old => old && old.id === newStd.id);
-                        if(existingStd) {
-                            existingStd.studentId = newStd.studentId || "";
-                            existingStd.name = newStd.name || "";
-                            existingStd.email = newStd.email || "";
-                            newStudentsList.push(existingStd);
-                        } else {
-                            let stdToAdd = JSON.parse(JSON.stringify(newStd));
-                            if(c.gradeColumns) {
-                                c.gradeColumns.forEach(col => { if(col && col.scores) col.scores[stdToAdd.id] = 0; });
-                            }
-                            newStudentsList.push(stdToAdd);
-                        }
-                    });
-                    c.students = newStudentsList;
-                }
-            });
-            
-            window.saveDataSilent();
-            window.renderApp();
-            document.getElementById('central-student-modal').style.display = 'none';
-            window.hideLoading();
-            setTimeout(() => alert('✅ บันทึกรายชื่อเรียบร้อย ข้อมูลเชื่อมโยงไปยังทุกวิชาแล้ว'), 500);
-        } catch (e) {
-            console.error("Save Error: ", e);
-            window.hideLoading();
-            alert("เกิดข้อผิดพลาดระหว่างการบันทึก: " + e.message);
+    window.restoreAutoBackup = function(key) {
+        if(!confirm('⚠️ ยืนยันการกู้คืน? ข้อมูลปัจจุบันที่ยังไม่ได้ซิงค์จะถูกทับ')) return;
+        let backups = JSON.parse(localStorage.getItem(BACKUP_KEY)) || {};
+        if(backups[key]) { 
+            window.currentUser = JSON.parse(backups[key].data); 
+            window.saveDataSilent(); 
+            window.renderApp(); 
+            document.getElementById('auto-backup-modal').style.display = 'none'; 
+            window.showToast("✅ กู้คืนสำเร็จ"); 
         }
     };
 
     // ==========================================
-    // Firebase Auth (Reverted to specific working logic)
+    // Legacy V30 Import (JSON)
+    // ==========================================
+    window.importLegacyJSON = async function(event) {
+        const file = event.target.files[0]; 
+        if (!file) return;
+        if(!window.currentUser || !window.currentUser.uid) {
+            alert("กรุณาเข้าสู่ระบบก่อนนำเข้า"); 
+            return; 
+        }
+        if(!confirm("⚠️ คำเตือน: ข้อมูลจากไฟล์ จะถูกเขียนทับลงในบัญชีคลาวด์ปัจจุบัน ยืนยัน?")) { 
+            document.getElementById('import-legacy-file').value = ''; 
+            return; 
+        }
+        
+        window.showLoading("กำลังประมวลผลไฟล์ JSON V30...");
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+                if (!data.users || data.users.length === 0) throw new Error("โครงสร้างไม่ถูกต้อง");
+                
+                const legacyUser = data.users[data.currentUserIndex !== null ? data.currentUserIndex : 0];
+                if(!legacyUser.classes || legacyUser.classes.length === 0) { 
+                    window.hideLoading(); 
+                    alert("ไม่พบข้อมูลห้องเรียนในไฟล์นี้"); 
+                    return; 
+                }
+
+                window.currentUser.classes = legacyUser.classes;
+                window.currentUser.activeClassId = legacyUser.classes[0].id;
+                
+                await setDoc(doc(db, "teachers", window.currentUser.uid), window.currentUser);
+                
+                window.hideLoading();
+                alert("กู้คืนข้อมูล V30 สำเร็จ!"); 
+                window.renderApp();
+                
+            } catch (err) { 
+                window.hideLoading(); 
+                alert("เกิดข้อผิดพลาด: " + err.message); 
+            } finally { 
+                document.getElementById('import-legacy-file').value = ''; 
+            }
+        };
+        reader.readAsText(file);
+    };
+
+    // ==========================================
+    // Profile & Logo Setup (PNG Transparency Fix)
+    // ==========================================
+    window.openProfileModal = function() {
+        document.getElementById('edit-profile-name').value = window.currentUser.name || "";
+        document.getElementById('edit-profile-position').value = window.currentUser.position || "";
+        document.getElementById('edit-profile-school').value = window.currentUser.school || "";
+        
+        document.getElementById('edit-profile-pic-preview').src = window.currentUser.profilePic || document.getElementById('sidebar-profile-pic').src;
+        document.getElementById('edit-logo-pic-preview').src = window.currentUser.schoolLogo || "";
+        
+        document.getElementById('edit-profile-file').value = '';
+        document.getElementById('edit-logo-file').value = '';
+        
+        document.getElementById('profile-modal').style.display = 'flex';
+    };
+
+    function handleImageUpload(inputId, previewId) {
+        document.getElementById(inputId).addEventListener('change', function(e) {
+            let file = e.target.files[0]; 
+            if(!file) return; 
+            let reader = new FileReader();
+            reader.onload = function(event) {
+                let img = new Image();
+                img.onload = function() {
+                    let canvas = document.createElement('canvas'); 
+                    let ctx = canvas.getContext('2d');
+                    let MAX_WIDTH = 200, MAX_HEIGHT = 200, width = img.width, height = img.height;
+                    
+                    if (width > height) { 
+                        if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } 
+                    } else { 
+                        if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; } 
+                    }
+                    canvas.width = width; 
+                    canvas.height = height; 
+                    ctx.clearRect(0, 0, width, height); 
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    let dataUrl = canvas.toDataURL('image/png'); 
+                    document.getElementById(previewId).src = dataUrl;
+                }; 
+                img.src = event.target.result;
+            }; 
+            reader.readAsDataURL(file);
+        });
+    }
+    
+    handleImageUpload('edit-profile-file', 'edit-profile-pic-preview');
+    handleImageUpload('edit-logo-file', 'edit-logo-pic-preview');
+
+    window.saveProfile = function() {
+        window.currentUser.name = document.getElementById('edit-profile-name').value.trim();
+        window.currentUser.position = document.getElementById('edit-profile-position').value.trim();
+        window.currentUser.school = document.getElementById('edit-profile-school').value.trim();
+        window.currentUser.profilePic = document.getElementById('edit-profile-pic-preview').src;
+        window.currentUser.schoolLogo = document.getElementById('edit-logo-pic-preview').src;
+        
+        window.saveDataSilent(); 
+        window.updateTeacherUI();
+        document.getElementById('profile-modal').style.display = 'none';
+        window.showToast("บันทึกโปรไฟล์และโลโก้เรียบร้อย");
+    };
+
+    // ==========================================
+    // Smart Column Merge (Clone Class)
+    // ==========================================
+    window.openCloneModal = function() {
+        let select = document.getElementById('clone-class-select'); 
+        select.innerHTML = '';
+        let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId);
+        
+        window.currentUser.classes.forEach(c => {
+            if(c.id !== activeC.id) {
+                select.innerHTML += `<option value="${c.id}">${c.subjectName} ม.${c.level}/${c.room}</option>`;
+            }
+        });
+        
+        if(select.innerHTML === '') { alert("ไม่มีห้องเรียนอื่นให้คัดลอก"); return; }
+        document.getElementById('clone-class-modal').style.display = 'flex';
+    };
+    
+    window.executeCloneClass = function() {
+        let srcId = document.getElementById('clone-class-select').value;
+        let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId);
+        let srcC = window.currentUser.classes.find(c => c.id === srcId);
+        
+        if(!srcC || !srcC.gradeColumns) return;
+        
+        let addedCount = 0; 
+        let skippedCount = 0;
+        if(!activeC.gradeColumns) activeC.gradeColumns = [];
+        
+        srcC.gradeColumns.forEach(srcCol => {
+            let existingCol = activeC.gradeColumns.find(c => c.name === srcCol.name);
+            if(existingCol) {
+                skippedCount++;
+            } else {
+                let newCol = { 
+                    id: 'col_clone_' + Date.now() + Math.random(), 
+                    name: srcCol.name, 
+                    type: srcCol.type, 
+                    max: srcCol.max, 
+                    scores: {}, 
+                    groups: {} 
+                };
+                activeC.students.forEach(std => newCol.scores[std.id] = 0);
+                activeC.gradeColumns.push(newCol);
+                addedCount++;
+            }
+        });
+        
+        window.saveDataSilent(); 
+        window.renderApp(); 
+        document.getElementById('clone-class-modal').style.display = 'none';
+        window.showToast(`ดึงโครงสร้างสำเร็จ! เพิ่มใหม่ ${addedCount} ช่อง (ข้าม ${skippedCount} ช่องที่ชื่อซ้ำ)`);
+    };
+
+    // ==========================================
+    // Firebase Auth & Super Admin Logic
     // ==========================================
     window.doLogin = async function() {
         window.showLoading("กำลังเข้าสู่ระบบ...");
@@ -1357,30 +1225,24 @@
             return;
         }
 
-        try {
-            const docSnap = await getDoc(doc(db, "teachers", user.uid));
-            if (docSnap.exists()) { 
-                window.currentUser = docSnap.data(); 
-                loginSuccess(); 
-            } else { 
-                window.currentUser = { 
-                    uid: user.uid, 
-                    email: user.email, 
-                    name: user.email.split('@')[0], 
-                    position: "ครู", 
-                    school: "โรงเรียน", 
-                    classes: [], 
-                    activeClassId: null, 
-                    profilePic: "", 
-                    schoolLogo: "" 
-                }; 
-                await setDoc(doc(db, "teachers", user.uid), window.currentUser); 
-                loginSuccess(); 
-            }
-        } catch (e) {
-            console.error(e);
-            document.getElementById('login-error').innerText = "เชื่อมต่อฐานข้อมูลขัดข้อง ลองใหม่อีกครั้ง";
-            window.hideLoading();
+        const docSnap = await getDoc(doc(db, "teachers", user.uid));
+        if (docSnap.exists()) { 
+            window.currentUser = docSnap.data(); 
+            loginSuccess(); 
+        } else { 
+            window.currentUser = { 
+                uid: user.uid, 
+                email: user.email, 
+                name: user.email.split('@')[0], 
+                position: "ครู", 
+                school: "โรงเรียน", 
+                classes: [], 
+                activeClassId: null, 
+                profilePic: "", 
+                schoolLogo: "" 
+            }; 
+            await setDoc(doc(db, "teachers", user.uid), window.currentUser); 
+            loginSuccess(); 
         }
     }
 
@@ -1388,22 +1250,19 @@
         window.hideLoading();
         document.getElementById('login-screen').style.display = 'none'; 
         document.getElementById('super-admin-screen').style.display = 'none';
-        document.querySelector('.sidebar').style.display = 'flex';
         window.updateTeacherUI(); 
         window.renderApp(); 
         processAutoBackup();
     }
 
     window.logout = async function() { 
-        window.showLoading("กำลังออกจากระบบ...");
         await signOut(auth); 
         window.currentUser = null; 
         document.getElementById('login-screen').style.display = 'flex'; 
         document.getElementById('super-admin-screen').style.display = 'none';
         document.getElementById('class-workspace').style.display = 'none';
-        document.querySelector('.sidebar').style.display = 'none';
+        document.querySelector('.sidebar').style.display = 'flex';
         document.getElementById('login-pass').value=''; 
-        window.hideLoading();
     };
 
     window.loadAdminDashboard = async function() {
@@ -1468,46 +1327,35 @@
             }
         }
     };
-    
+
     window.updateTeacherUI = function() {
         if(!window.currentUser) return;
+        
         document.getElementById('sidebar-teacher-name').innerText = window.currentUser.name || window.currentUser.email;
-        if(window.currentUser.profilePic && window.currentUser.profilePic !== "") { document.getElementById('sidebar-profile-pic').src = window.currentUser.profilePic; }
-        if(window.currentUser.schoolLogo && window.currentUser.schoolLogo !== "") { document.getElementById('print-school-logo').src = window.currentUser.schoolLogo; document.getElementById('print-school-logo').style.display = 'block'; } else { document.getElementById('print-school-logo').style.display = 'none'; }
-        document.getElementById('print-teacher-name').innerText = `(${window.currentUser.name || '-'})`; document.getElementById('print-teacher-meta').innerText = `ตำแหน่ง ${window.currentUser.position || '-'} ${window.currentUser.school || '-'}`;
+        
+        if(window.currentUser.profilePic && window.currentUser.profilePic !== "") {
+            document.getElementById('sidebar-profile-pic').src = window.currentUser.profilePic;
+        }
+        
+        if(window.currentUser.schoolLogo && window.currentUser.schoolLogo !== "") {
+            document.getElementById('print-school-logo').src = window.currentUser.schoolLogo;
+            document.getElementById('print-school-logo').style.display = 'block';
+        } else {
+            document.getElementById('print-school-logo').style.display = 'none';
+        }
+        
+        document.getElementById('print-teacher-name').innerText = `(${window.currentUser.name || '-'})`;
+        document.getElementById('print-teacher-meta').innerText = `ตำแหน่ง ${window.currentUser.position || '-'} ${window.currentUser.school || '-'}`;
     };
 
-    window.saveDataSilent = function() {
-        if(!window.currentUser || !window.currentUser.uid) return;
-        let cloudUI = document.getElementById('cloud-status');
-        cloudUI.style.display = 'block'; 
-        cloudUI.className = 'status-syncing'; 
-        cloudUI.innerText = '☁️ กำลังเตรียมซิงค์...';
-
-        clearTimeout(syncTimeout);
-        syncTimeout = setTimeout(async () => {
-            try {
-                cloudUI.innerText = '☁️ กำลังบันทึกขึ้น Cloud...';
-                
-                // ใช้การ Parse ปกติ เพื่อละทิ้ง property ที่เป็น undefined หรือพัง
-                const cleanData = JSON.parse(JSON.stringify(window.currentUser));
-
-                await setDoc(doc(db, "teachers", window.currentUser.uid), cleanData);
-                cloudUI.className = 'status-saved'; 
-                cloudUI.innerText = '☁️ ซิงค์ข้อมูลล่าสุดแล้ว';
-                setTimeout(() => { cloudUI.style.display = 'none'; }, 2000);
-            } catch(e) {
-                console.error("Firebase Sync Error:", e);
-                cloudUI.style.background = "var(--red)"; 
-                cloudUI.style.color = "white"; 
-                cloudUI.innerText = '⚠️ บันทึกขึ้น Cloud ล้มเหลว';
-            }
-        }, 1500); 
-    };
-
-    window.manualSave = function() { 
-        window.saveDataSilent(); 
-        window.showToast("ซิงค์ขึ้นคลาวด์เรียบร้อย"); 
+    // ==========================================
+    // Core Application Logic
+    // ==========================================
+    window.showToast = function(msg = "บันทึกข้อมูลเรียบร้อย") { 
+        let x = document.getElementById("toast"); 
+        x.innerText = msg; 
+        x.className = "toast show"; 
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 1500); 
     };
 
     window.saveImportSnapshot = function(activeC, col) { 
@@ -1523,6 +1371,7 @@
         btn.innerText = `↩️ เลิกทำ: คืนค่า "${col.name}"`; 
     };
 
+    // Undo สำหรับ Final Score
     window.saveFinalScoreSnapshot = function(activeC) { 
         let oldScores = {}; 
         activeC.students.forEach(s => oldScores[s.id] = s.finalScore || 0); 
@@ -1577,11 +1426,66 @@
     };
     
     window.toggleSecondPeriod = function() { 
-        let el = document.getElementById('periods-per-week');
-        if(!el) return;
-        let val = el.value; 
-        let cont = document.getElementById('period-2-container');
-        if(cont) cont.style.display = val == "2" ? 'flex' : 'none'; 
+        let val = document.getElementById('periods-per-week').value; 
+        document.getElementById('period-2-container').style.display = val == "2" ? 'flex' : 'none'; 
+    };
+    
+    window.renderApp = function() {
+        let listContainer = document.getElementById('class-list-container'); 
+        listContainer.innerHTML = '';
+        
+        if(!window.currentUser.classes || window.currentUser.classes.length === 0) { 
+            document.getElementById('welcome-screen').style.display = 'block'; 
+            document.getElementById('class-workspace').style.display = 'none'; 
+            return; 
+        }
+        
+        document.getElementById('welcome-screen').style.display = 'none'; 
+        document.getElementById('class-workspace').style.display = 'block';
+        
+        window.currentUser.classes.forEach(c => { 
+            let isActive = c.id === window.currentUser.activeClassId ? 'active' : ''; 
+            listContainer.innerHTML += `
+            <div class="class-item ${isActive}" onclick="window.setActiveClass('${c.id}')">
+                <div style="font-weight: bold;">${c.subjectName}</div>
+                <div class="class-meta">ชั้น ${c.level}/${c.room}</div>
+            </div>`; 
+        });
+        
+        let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
+        if(!activeC) return;
+        
+        document.getElementById('workspace-title').innerText = `${activeC.subjectName} (ชั้น ${activeC.level}/${activeC.room})`;
+        document.getElementById('workspace-subtitle').innerText = `รหัสวิชา: ${activeC.subjectCode} | นักเรียน: ${activeC.students.length} คน`;
+        document.getElementById('print-class-info').innerText = `รายวิชา ${activeC.subjectName} (${activeC.subjectCode}) ชั้น ${activeC.level}/${activeC.room}`;
+        
+        let inputs = ['weight-mid', 'weight-final', 'affective-max', 'min-attendance', 'grade-cut-4', 'grade-cut-35', 'grade-cut-3', 'start-date', 'holidays', 'periods-per-week', 'schedule-day', 'schedule-period', 'schedule-day-2', 'schedule-period-2'];
+        inputs.forEach(id => { 
+            let el = document.getElementById(id); 
+            let key = id.replace(/-([a-z])/g, g => g[1].toUpperCase());
+            if(el && activeC[key] !== undefined) {
+                el.value = activeC[key]; 
+            }
+        });
+        
+        if(!activeC.holidays) document.getElementById('holidays').value = defaultHolidays;
+        document.getElementById('enable-attendance-rule').checked = activeC.enableAttendanceRule !== undefined ? activeC.enableAttendanceRule : true;
+        window.toggleSecondPeriod();
+
+        let maxP = (activeC.periodsPerWeek == 2) ? 40 : 20;
+        activeC.students.forEach(std => { 
+            if (!std.attendanceStatus) std.attendanceStatus = Array(maxP).fill('มา'); 
+            while(std.attendanceStatus.length < maxP) std.attendanceStatus.push('มา'); 
+            if (std.finalScore === undefined) std.finalScore = 0; 
+        });
+        
+        if(!activeC.gradeColumns) activeC.gradeColumns = [];
+        activeC.gradeColumns.forEach(col => { 
+            if (!col.scores) col.scores = {}; 
+            if (!col.groups) col.groups = {}; 
+        });
+        
+        window.renderTables(activeC);
     };
 
     window.calculateStudentTotalObj = function(std, activeC) {
@@ -1598,11 +1502,9 @@
         
         let totalRaw = 0; 
         let sumColumnMax = 0;
-        (activeC.gradeColumns || []).forEach(col => { 
-            if(col) {
-                totalRaw += (parseFloat(col.scores[std.id]) || 0); 
-                sumColumnMax += (parseFloat(col.max) || 10); 
-            }
+        activeC.gradeColumns.forEach(col => { 
+            totalRaw += (parseFloat(col.scores[std.id]) || 0); 
+            sumColumnMax += (parseFloat(col.max) || 10); 
         });
         
         let scaledAssignmentScore = sumColumnMax > 0 ? (totalRaw / sumColumnMax) * maxAssignmentAllowed : 0;
@@ -1644,83 +1546,6 @@
         return { dateStr, isHoliday: holidaysArr.includes(dateStr), isMakeup: false }; 
     };
 
-    window.renderApp = function() {
-        try {
-            let listContainer = document.getElementById('class-list-container'); 
-            if(!listContainer) return;
-            listContainer.innerHTML = '';
-            
-            if(!window.currentUser.classes || window.currentUser.classes.length === 0) { 
-                document.getElementById('welcome-screen').style.display = 'block'; 
-                document.getElementById('class-workspace').style.display = 'none'; 
-                return; 
-            }
-            
-            document.getElementById('welcome-screen').style.display = 'none'; 
-            document.getElementById('class-workspace').style.display = 'block';
-            
-            window.currentUser.classes.forEach(c => { 
-                let isActive = c.id === window.currentUser.activeClassId ? 'active' : ''; 
-                listContainer.innerHTML += `
-                <div class="class-item ${isActive}" onclick="window.setActiveClass('${c.id}')">
-                    <div style="font-weight: bold;">${c.subjectName}</div>
-                    <div class="class-meta">ชั้น ${c.level}/${c.room}</div>
-                </div>`; 
-            });
-            
-            let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
-            
-            // ป้องกัน Error หากไม่มี activeC ให้เลือกอันแรก
-            if(!activeC) {
-                if(window.currentUser.classes.length > 0) {
-                    window.currentUser.activeClassId = window.currentUser.classes[0].id;
-                    activeC = window.currentUser.classes[0];
-                } else {
-                    return;
-                }
-            }
-
-            // กรองข้อมูลเสียออกจากฐานข้อมูลทันที
-            activeC.students = (activeC.students || []).filter(std => std !== null && typeof std === 'object');
-            activeC.gradeColumns = (activeC.gradeColumns || []).filter(col => col !== null && typeof col === 'object');
-
-            document.getElementById('workspace-title').innerText = `${activeC.subjectName} (ชั้น ${activeC.level}/${activeC.room})`;
-            document.getElementById('workspace-subtitle').innerText = `รหัสวิชา: ${activeC.subjectCode} | นักเรียน: ${activeC.students.length} คน`;
-            document.getElementById('print-class-info').innerText = `รายวิชา ${activeC.subjectName} (${activeC.subjectCode}) ชั้น ${activeC.level}/${activeC.room}`;
-            
-            let inputs = ['weight-mid', 'weight-final', 'affective-max', 'min-attendance', 'grade-cut-4', 'grade-cut-35', 'grade-cut-3', 'start-date', 'holidays', 'periods-per-week', 'schedule-day', 'schedule-period', 'schedule-day-2', 'schedule-period-2'];
-            inputs.forEach(id => { 
-                let el = document.getElementById(id); 
-                let key = id.replace(/-([a-z])/g, g => g[1].toUpperCase());
-                if(el && activeC[key] !== undefined && activeC[key] !== null) {
-                    el.value = activeC[key]; 
-                }
-            });
-            
-            if(!activeC.holidays) document.getElementById('holidays').value = defaultHolidays;
-            let attCb = document.getElementById('enable-attendance-rule');
-            if(attCb) attCb.checked = activeC.enableAttendanceRule !== undefined ? activeC.enableAttendanceRule : true;
-            window.toggleSecondPeriod();
-
-            let maxP = (activeC.periodsPerWeek == 2) ? 40 : 20;
-            activeC.students.forEach(std => { 
-                if (!std.attendanceStatus || !Array.isArray(std.attendanceStatus)) std.attendanceStatus = Array(maxP).fill('มา'); 
-                while(std.attendanceStatus.length < maxP) std.attendanceStatus.push('มา'); 
-                if (std.finalScore === undefined || std.finalScore === null || isNaN(std.finalScore)) std.finalScore = 0; 
-                if (!std.name) std.name = "";
-            });
-            
-            activeC.gradeColumns.forEach(col => { 
-                if (!col.scores) col.scores = {}; 
-                if (!col.groups) col.groups = {}; 
-            });
-            
-            window.renderTables(activeC);
-        } catch(e) {
-            console.error("Render Error: ", e);
-        }
-    };
-
     window.renderTables = function(activeC) {
         let displayStudents = [...activeC.students];
         
@@ -1730,6 +1555,7 @@
         
         let maxP = (activeC.periodsPerWeek == 2) ? 40 : 20;
 
+        // == Attendance Table ==
         let thead = `<tr><th style="width:40px">ที่</th><th style="width:80px">รหัส</th><th style="width:160px">ชื่อ-นามสกุล</th>`;
         for(let i=0; i<maxP; i++) { 
             let dInfo = window.getWeekDate(activeC, i); 
@@ -1767,6 +1593,7 @@
         });
         document.getElementById('attendance-table').innerHTML = `<thead>${thead}</thead><tbody>${tbody}</tbody>`;
 
+        // == Grades Table ==
         let sumColumnMax = 0; 
         activeC.gradeColumns.forEach(c => sumColumnMax += parseFloat(c.max));
         
@@ -1785,6 +1612,7 @@
             </th>`;
         });
         
+        // ปุ่มนำเข้าสอบปลายภาค
         gThead += `
             <th class="hide-partial" style="background:#fef3c7;">รวมดิบ<br><small>(${sumColumnMax})</small></th>
             <th style="background:#d1fae5;">หารเก็บ<br><small>(${(activeC.weightMid||80) - (activeC.affectiveMax||10)})</small></th>
@@ -1978,79 +1806,6 @@
         window.showToast(); 
     };
 
-    // STREAMING_CHUNK:Profile & Settings Modals
-    window.openProfileModal = function() {
-        try {
-            document.getElementById('edit-profile-name').value = window.currentUser?.name || "";
-            document.getElementById('edit-profile-position').value = window.currentUser?.position || "";
-            document.getElementById('edit-profile-school').value = window.currentUser?.school || "";
-            
-            let curPic = window.currentUser?.profilePic;
-            let sidebarPic = document.getElementById('sidebar-profile-pic');
-            document.getElementById('edit-profile-pic-preview').src = curPic ? curPic : (sidebarPic ? sidebarPic.src : "");
-            
-            let curLogo = window.currentUser?.schoolLogo;
-            document.getElementById('edit-logo-pic-preview').src = curLogo ? curLogo : "";
-            
-            let pf = document.getElementById('edit-profile-file'); if(pf) pf.value = '';
-            let lf = document.getElementById('edit-logo-file'); if(lf) lf.value = '';
-            
-            document.getElementById('profile-modal').style.display = 'flex';
-        } catch(e) {
-            console.error("Open Profile Error:", e);
-        }
-    };
-
-    function handleImageUpload(inputId, previewId) {
-        let el = document.getElementById(inputId);
-        if(!el) return;
-        el.addEventListener('change', function(e) {
-            let file = e.target.files[0]; 
-            if(!file) return; 
-            let reader = new FileReader();
-            reader.onload = function(event) {
-                let img = new Image();
-                img.onload = function() {
-                    let canvas = document.createElement('canvas'); 
-                    let ctx = canvas.getContext('2d');
-                    let MAX_WIDTH = 200, MAX_HEIGHT = 200, width = img.width, height = img.height;
-                    
-                    if (width > height) { 
-                        if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } 
-                    } else { 
-                        if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; } 
-                    }
-                    canvas.width = width; 
-                    canvas.height = height; 
-                    ctx.clearRect(0, 0, width, height); 
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    let dataUrl = canvas.toDataURL('image/png'); 
-                    document.getElementById(previewId).src = dataUrl;
-                }; 
-                img.src = event.target.result;
-            }; 
-            reader.readAsDataURL(file);
-        });
-    }
-    
-    handleImageUpload('edit-profile-file', 'edit-profile-pic-preview');
-    handleImageUpload('edit-logo-file', 'edit-logo-pic-preview');
-
-    window.saveProfile = function() {
-        if(!window.currentUser) return;
-        window.currentUser.name = document.getElementById('edit-profile-name').value.trim();
-        window.currentUser.position = document.getElementById('edit-profile-position').value.trim();
-        window.currentUser.school = document.getElementById('edit-profile-school').value.trim();
-        window.currentUser.profilePic = document.getElementById('edit-profile-pic-preview').src;
-        window.currentUser.schoolLogo = document.getElementById('edit-logo-pic-preview').src;
-        
-        window.saveDataSilent(); 
-        window.updateTeacherUI();
-        document.getElementById('profile-modal').style.display = 'none';
-        window.showToast("บันทึกโปรไฟล์และโลโก้เรียบร้อย");
-    };
-
     window.openDateModal = function(periodIndex) { 
         window.currentEditingWeek = periodIndex; 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
@@ -2076,6 +1831,7 @@
         document.getElementById('date-modal').style.display = 'none'; 
     };
 
+    // Class Creation
     window.openClassModal = function() { 
         document.getElementById('new-subj-name').value=''; 
         document.getElementById('new-subj-code').value=''; 
@@ -2136,6 +1892,7 @@
         } 
     };
 
+    // Columns Management
     window.openColumnModal = function() { 
         document.getElementById('col-name').value = ''; 
         document.getElementById('col-type').value = 'single'; 
@@ -2174,7 +1931,7 @@
         } 
     };
 
-    // STREAMING_CHUNK:Other Modals & Logic (Batch, Rubric, Missing Work, Risks)
+    // Student Management
     window.openStudentManager = function() { 
         window.renderStudentManagerList(); 
         document.getElementById('student-manager-modal').style.display = 'flex'; 
@@ -2253,6 +2010,7 @@
         alert('✅ นำเข้ารายชื่อนักเรียนสำเร็จ!'); 
     };
 
+    // Missing Work Dashboard
     window.openMissingWorkModal = function() { 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         let select = document.getElementById('missing-work-select'); 
@@ -2299,6 +2057,7 @@
         document.getElementById('missing-work-tbody').innerHTML = html; 
     };
 
+    // Global Risk Dashboard
     window.openGlobalRiskDashboard = function() { 
         if (!window.currentUser || window.currentUser.classes.length === 0) return; 
         let checklistDiv = document.getElementById('risk-class-checklist'); 
@@ -2369,6 +2128,7 @@
         document.getElementById('global-risk-tbody').innerHTML = foundAny ? tbody : `<tr><td colspan="4" style="text-align:center; color:green;">🎉 ไม่พบความเสี่ยง</td></tr>`; 
     };
 
+    // Behavior Analysis
     window.openBehaviorModal = function() { 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         document.getElementById('behavior-print-title').innerText = `รายงานวิเคราะห์พฤติกรรม: ${activeC.subjectName} ม.${activeC.level}/${activeC.room}`; 
@@ -2430,6 +2190,90 @@
         tbody.innerHTML = html; 
     };
 
+    // Print & Export
+    window.openPrintOptionsModal = function() { 
+        document.getElementById('print-options-modal').style.display = 'flex'; 
+    };
+
+    window.executePrint = function(mode) { 
+        document.getElementById('print-options-modal').style.display = 'none'; 
+        let orient = document.getElementById('print-orientation').value; 
+        
+        let style = document.createElement('style'); 
+        style.id = 'dynamic-print-style'; 
+        style.innerHTML = `@media print { @page { size: A4 ${orient}; margin: 10mm; } }`; 
+        document.head.appendChild(style); 
+        
+        if (mode === 'partial') { 
+            document.body.classList.add('print-mode-partial'); 
+            document.getElementById('print-header-title').innerText = "รายงานผลการเก็บคะแนนระหว่างเรียน (แจ้งนักเรียน)"; 
+        } else { 
+            document.body.classList.remove('print-mode-partial'); 
+            document.getElementById('print-header-title').innerText = "แบบบันทึกผลการเรียนรายวิชา"; 
+        } 
+        
+        window.print(); 
+        
+        setTimeout(() => { 
+            document.body.classList.remove('print-mode-partial'); 
+            document.getElementById('print-header-title').innerText = "แบบบันทึกผลการเรียนรายวิชา"; 
+            document.getElementById('dynamic-print-style').remove(); 
+        }, 1000); 
+    };
+
+    window.printModalArea = function(elId) { 
+        let clone = document.getElementById(elId).cloneNode(true); 
+        clone.id = 'temp-print'; 
+        clone.style.display = 'block'; 
+        
+        // แก้ไขบั๊กหน้าล็อกอินเด้ง ด้วยการบันทึกสถานะเดิมไว้ก่อนซ่อน
+        Array.from(document.body.children).forEach(c => { 
+            if(c.tagName!=='SCRIPT' && c.tagName!=='STYLE') {
+                c.dataset.oldDisplay = c.style.display;
+                c.style.display='none'; 
+            }
+        }); 
+        
+        document.body.appendChild(clone); 
+        window.print(); 
+        document.body.removeChild(clone); 
+        
+        Array.from(document.body.children).forEach(c => { 
+            if(c.tagName!=='SCRIPT' && c.tagName!=='STYLE' && c.id !== 'temp-print') {
+                c.style.display = c.dataset.oldDisplay || ''; 
+            }
+        }); 
+    };
+
+    window.openExportPreviewModal = function() { 
+        let ws = document.getElementById('class-workspace').cloneNode(true); 
+        ws.querySelectorAll('.no-print').forEach(el=>el.style.display='none'); 
+        ws.style.display='block'; 
+        ws.style.background='white'; 
+        ws.style.padding='20px'; 
+        document.getElementById('export-preview-box').innerHTML=''; 
+        document.getElementById('export-preview-box').appendChild(ws); 
+        document.getElementById('export-preview-modal').style.display='flex'; 
+    };
+
+    window.executeExportPNG = function(targetId) { 
+        document.getElementById('export-preview-modal').style.display='none'; 
+        let ws = document.getElementById(targetId); 
+        let noPrints = ws.querySelectorAll('.no-print'); 
+        noPrints.forEach(el=>el.style.display='none'); 
+        
+        window.showLoading("กำลังสร้างรูปภาพ...");
+        html2canvas(ws, {scale: 2}).then(canvas => { 
+            noPrints.forEach(el=>el.style.display=''); 
+            let link = document.createElement('a'); 
+            link.download = `Report.png`; 
+            link.href = canvas.toDataURL(); 
+            link.click(); 
+            window.hideLoading();
+        }); 
+    };
+
+    // Batch Paste (Smart Match AI)
     window.openBatchPasteModal = function(colId = 'new') { 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         if(!activeC.gradeColumns || activeC.gradeColumns.length === 0) { alert('กรุณาสร้างชิ้นงานก่อนครับ'); return; } 
@@ -2494,6 +2338,7 @@
         document.getElementById('batch-confirm-modal').style.display = 'none'; 
     };
 
+    // Quick Rubric
     window.openRubricModal = function(colId) { 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         let col = activeC.gradeColumns.find(c => c.id === colId); 
@@ -2560,6 +2405,7 @@
         window.showToast('🎯 บันทึกคะแนนเรียบร้อย!'); 
     };
 
+    // Raw Attendance Input
     window.openAttendanceTextModal = function() { document.getElementById('raw-attendance-text').value = ''; document.getElementById('attendance-text-modal').style.display = 'flex'; };
     window.processRawAttendanceText = function() { 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
@@ -2587,6 +2433,7 @@
         alert(`✅ ประมวลผลสำเร็จ ${matchedCount} คน`); 
     };
 
+    // Classroom AI & Perfect Match JSON Handler
     window.openRawDataImportModal = function(preSelect = '') { 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         let select = document.getElementById('raw-target-column'); 
@@ -2661,7 +2508,7 @@
                 
                 if (!isNaN(score) && (studentId.length >= 4 || rawName.length > 2)) {
                     window.parsedRawDataCache.push({ studentId, rawName, score });
-                    return; 
+                    return;
                 }
             }
 
@@ -2730,6 +2577,7 @@
         window.showToast('นำเข้าสำเร็จ'); 
     };
 
+    // Group AI Text
     window.openGroupAIModal = function() { 
         let activeC = window.currentUser.classes.find(c => c.id === window.currentUser.activeClassId); 
         let select = document.getElementById('group-ai-target-column'); 
