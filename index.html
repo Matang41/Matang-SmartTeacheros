@@ -251,6 +251,8 @@
         .toolbar { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
         .btn-row .is-on { background: var(--warn-bg) !important; border-color: var(--yellow) !important; color: var(--warn-fg) !important; }
 
+        .notice { display: none; margin: 0 0 12px; padding: 10px 14px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid #F7DA8A; border-radius: var(--r-md); font-size: 13.5px; }
+        .notice a { color: var(--primary); text-decoration: underline; cursor: pointer; font-weight: 600; }
         .empty-state { text-align: center; margin: 12vh auto 0; max-width: 460px; padding: 0 16px; }
         .empty-state h1 { color: var(--primary-deep); font-size: 26px; margin: 0 0 8px; }
         .empty-state p { color: var(--text-muted); margin: 0 0 20px; }
@@ -410,8 +412,8 @@
             .bn-btn.active::before { content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; background: var(--accent-gold); border-radius: 0 0 3px 3px; }
             .tabs { display: none; }
             .form-grid { grid-template-columns: 1fr; gap: 12px; }
-            .ws-actions, .btn-row { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; scrollbar-width: none; }
-            .ws-actions::-webkit-scrollbar, .btn-row::-webkit-scrollbar { display: none; }
+            .ws-actions, .btn-row { width: 100%; gap: 6px; }
+            .ws-actions .btn, .btn-row .btn { min-height: 38px; padding: 6px 12px; font-size: 13.5px; flex: 1 1 auto; }
             .toolbar { flex-direction: column; }
             .toolbar > .btn-row { width: 100%; }
             .card { padding: 16px; }
@@ -453,6 +455,7 @@
         /* =====================================================
            PRINT / EXPORT
            ===================================================== */
+        #print-root { display: none; }
         .print-header, .print-signature, .print-only-text { display: none; }
         .print-header { text-align: center; margin-bottom: 15px; }
 
@@ -463,6 +466,27 @@
         body.exporting #class-workspace { background: #fff; padding: 20px; }
 
         @media print {
+            /* ใบพิมพ์แบบเบา: ซ่อนหน้าจอทั้งหมด แล้วพิมพ์เฉพาะตารางข้อความล้วนที่สร้างตอนสั่งพิมพ์ */
+            body.printing-sheet > *:not(#print-root) { display: none !important; }
+            body.printing-sheet #print-root { display: block; }
+            #print-root { color: #000; font-variant-numeric: normal; font-size: 10pt; }
+            .ps-head { text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 10px; }
+            .ps-head img { height: 70px; object-fit: contain; display: block; margin: 0 auto 6px; }
+            .ps-head h2 { margin: 0 0 4px; font-size: 15pt; }
+            .ps-head h3 { margin: 0; font-weight: 400; font-size: 11pt; color: #333; }
+            .ps-table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+            .ps-table.fixed { table-layout: fixed; }
+            .ps-table.dense { font-size: 7.5pt; }
+            .ps-table.dense2 { font-size: 6.5pt; }
+            .ps-table thead { display: table-header-group; }
+            .ps-table tr { page-break-inside: avoid; }
+            .ps-table th, .ps-table td { border: 1px solid #000; padding: 2px 3px; text-align: center; color: #000; background: #fff; overflow: hidden; }
+            .ps-table th { background: #eee; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: 700; }
+            .ps-table td.l { text-align: left; white-space: nowrap; text-overflow: ellipsis; }
+            .ps-table.fixed td { white-space: nowrap; padding: 2px 1px; }
+            .ps-table th small, .ps-date { font-size: .8em; font-weight: 400; }
+            .ps-b { font-weight: 700; }
+            .ps-sign { margin-top: 24px; text-align: right; padding-right: 40px; font-size: 12pt; line-height: 1.6; page-break-inside: avoid; }
             .no-print, .sidebar, .topbar, .bottom-nav, .scrim, .header-bar, .tabs, .card, .btn, button, select, #cloud-status, #undo-import-btn, .toast, .summary-strip { display: none !important; }
             .print-only { display: block !important; }
             .print-only-text { display: inline !important; }
@@ -471,7 +495,13 @@
             .table-container { border: none; overflow: visible; max-height: none; width: 100%; box-shadow: none; border-radius: 0; }
             table { width: 100%; min-width: auto !important; border-collapse: collapse; border: 1px solid #000 !important; font-size: 10pt; page-break-inside: auto; }
             tr { page-break-inside: avoid; page-break-after: auto; }
-            th, td { padding: 4px !important; border: 1px solid #000 !important; position: static !important; box-shadow: none !important; color: #000 !important; min-width: 0 !important; }
+            thead { display: table-header-group; }
+            /* รายงานจากหน้าต่างป๊อปอัป: ยกเลิกกรอบเลื่อน/ความสูงสูงสุด เพื่อให้พิมพ์ครบทุกแถวและเต็มหน้า */
+            #temp-print, #temp-print * { max-height: none !important; overflow: visible !important; }
+            #temp-print { width: 100% !important; padding: 0 !important; }
+            #temp-print table { width: 100% !important; }
+            .notice { display: none !important; }
+            th, td { padding: 3px 4px !important; line-height: 1.25; border: 1px solid #000 !important; position: static !important; box-shadow: none !important; color: #000 !important; min-width: 0 !important; }
             th { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; font-weight: bold; }
             .cell-missing, .holiday, .makeup { background: transparent !important; }
             .grade-chip { background: none !important; color: #000 !important; padding: 0; min-width: 0; }
@@ -642,6 +672,7 @@
                     <button class="btn btn-outline" onclick="window.openCentralStudentDB()">⚙️ แก้ไขรายชื่อส่วนกลาง</button>
                 </div>
             </div>
+            <div id="start-date-warning" class="notice no-print">⚠️ ยังไม่ได้ตั้ง <b>วันเปิดเทอม</b> ระบบจึงคำนวณวันที่จากวันนี้ ทำให้วันที่ในตารางเปลี่ยนไปเรื่อย ๆ &nbsp;<a onclick="window.switchTab('tab-settings')">ไปตั้งค่าวิชา</a></div>
             <p class="hint no-print">แตะสถานะในตารางเพื่อสลับ (มา → สาย → ลา → ขาด) &nbsp;|&nbsp; แตะหัวคอลัมน์เพื่อแก้ไขวันที่/วันสอนชดเชย &nbsp;|&nbsp; เพิ่มหรือลบนักเรียนได้ที่ <b style="color:var(--primary);">"ฐานข้อมูลนักเรียน (ส่วนกลาง)"</b></p>
             <div class="table-container"><table id="attendance-table"></table></div>
         </div>
@@ -736,7 +767,7 @@
     <div class="modal-content" style="max-width: 900px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px;">
             <h2 style="margin:0; color: #166534;">👥 ฐานข้อมูลนักเรียน (ส่วนกลาง)</h2>
-            <button class="btn btn-outline" style="background:#f1f5f9; border-color: var(--line-strong); color: var(--text-main);" onclick="document.getElementById('central-student-modal').style.display='none'">ปิด</button>
+            <button class="btn btn-outline" style="background:#f1f5f9; border-color: var(--line-strong); color: var(--text-main);" onclick="window.closeCentralDB()">ปิด</button>
         </div>
         <p style="font-size:13px; color:var(--text-muted); margin: 0 0 14px;">การแก้ไขในหน้านี้จะส่งผลกับทุกรายวิชาที่ใช้ห้องเรียนเดียวกัน คะแนนเดิมของนักเรียนที่ยังอยู่ในรายชื่อจะถูกเก็บไว้</p>
 
@@ -1171,6 +1202,8 @@
     </div>
 </div>
 
+<div id="print-root" aria-hidden="true"></div>
+
 <button id="undo-import-btn" class="btn btn-red no-print" onclick="window.undoLastImport()">↩️ เลิกทำ: คืนค่าการนำเข้าล่าสุด</button>
 
 <script type="module">
@@ -1230,6 +1263,8 @@ const numOr = (v, d) => { const n = parseFloat(v); return isNaN(n) ? d : n; };
 const colMax = col => parseFloat(col && col.max) || 10;
 const newId = p => `${p}_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`;
 const roomLabel = c => `ม.${c.level}/${c.room}`;
+// คีย์จัดกลุ่มห้อง: วิชาที่ยังไม่กรอกระดับชั้น/ห้อง จะไม่ถูกรวมกับวิชาอื่นโดยไม่ตั้งใจ
+const roomKey = c => (c.level && c.room) ? roomLabel(c) : `${roomLabel(c)} [${c.subjectName || c.id}]`;
 const maxPeriods = c => (c.periodsPerWeek == 2 ? 40 : 20);
 const getActive = () => { const u = window.currentUser; return (u && (u.classes || []).find(c => c.id === u.activeClassId)) || null; };
 const avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
@@ -1275,6 +1310,15 @@ window.checkUpdate = function () {
 // Cloud sync (debounce + flush เมื่อออกจากหน้า)
 // ==========================================
 let syncTimeout = null, syncPending = false;
+const SESSION_ID = newId('sess');   // ใช้แยกว่าใครเป็นผู้เขียนข้อมูลล่าสุด (กันเขียนทับกันระหว่างแล็ปท็อป/iPad/iPhone)
+window._knownRev = 0;
+function adoptRemote(r, rev) {
+  const uid = window.currentUser.uid;
+  window.currentUser = r; window.currentUser.uid = uid;
+  if (!Array.isArray(r.classes)) r.classes = [];
+  window._knownRev = rev; syncPending = false;
+  window.updateTeacherUI(); window.renderApp();
+}
 const cleanObj = (obj) => {
   if (obj === null || obj === undefined) return null;
   if (typeof obj === 'number' && (isNaN(obj) || !isFinite(obj))) return 0;
@@ -1287,7 +1331,7 @@ const cleanObj = (obj) => {
   return obj;
 };
 
-async function doSync() {
+async function doSync(opts = {}) {
   clearTimeout(syncTimeout); syncTimeout = null;
   if (!syncPending) return true;
   const user = window.currentUser;
@@ -1296,13 +1340,27 @@ async function doSync() {
   const ui = $('cloud-status');
   ui.style.display = 'block'; ui.className = 'status-syncing'; ui.textContent = '☁️ กำลังบันทึกขึ้น Cloud...';
   try {
-    const data = cleanObj(user);
+    const ref = doc(db, "teachers", user.uid);
+    if (!opts.skipCheck) {
+      // ตรวจว่ามีอุปกรณ์อื่นบันทึกทับไปก่อนหรือไม่
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        const r = snap.data(); const rrev = r._rev || 0;
+        if (rrev > window._knownRev) {
+          if (r._by === SESSION_ID) window._knownRev = rrev;
+          else if (confirm('⚠️ ข้อมูลบนคลาวด์ถูกแก้ไขจากอุปกรณ์/แท็บอื่นหลังจากที่คุณเปิดหน้านี้\n\nกด "ตกลง" = ใช้ข้อมูลของหน้านี้ เขียนทับข้อมูลบนคลาวด์\nกด "ยกเลิก" = โหลดข้อมูลล่าสุดจากคลาวด์ (การแก้ไขที่ยังไม่ซิงค์ในหน้านี้จะหายไป)')) window._knownRev = rrev;
+          else { adoptRemote(r, rrev); ui.style.display = 'none'; window.showToast('โหลดข้อมูลล่าสุดจากคลาวด์แล้ว'); return true; }
+        }
+      }
+    }
+    const data = cleanObj(user); data._rev = window._knownRev + 1; data._by = SESSION_ID;
     const kb = new Blob([JSON.stringify(data)]).size / 1024;
     if (kb > 850 && !window._sizeWarned) {
       window._sizeWarned = true;
       window.showToast(`⚠️ ข้อมูลบัญชีนี้ ${kb.toFixed(0)} KB ใกล้เต็มขีดจำกัด 1,024 KB ควรลบวิชาเก่าที่ไม่ใช้แล้ว`, 'warn');
     }
-    await setDoc(doc(db, "teachers", user.uid), data);
+    await setDoc(ref, data);
+    window._knownRev = data._rev; user._rev = data._rev; user._by = SESSION_ID;
     ui.className = 'status-saved'; ui.textContent = '☁️ ซิงค์ข้อมูลล่าสุดแล้ว';
     setTimeout(() => { if (!syncPending && ui.className === 'status-saved') ui.style.display = 'none'; }, 2000);
     return true;
@@ -1328,8 +1386,24 @@ window.manualSave = async function () {
   window.showToast(ok ? "ซิงค์ขึ้นคลาวด์เรียบร้อย" : "⚠️ ซิงค์ไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่", ok ? 'ok' : 'warn');
 };
 $('cloud-status').addEventListener('click', () => { if (syncPending) doSync(); });
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && syncPending) doSync(); });
-window.addEventListener('pagehide', () => { if (syncPending) doSync(); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && syncPending) doSync({ skipCheck: true }); });
+window.addEventListener('pagehide', () => { if (syncPending) doSync({ skipCheck: true }); });
+// กลับมาเปิดแอป: ถ้ามีการแก้ไขจากอุปกรณ์อื่น ให้โหลดข้อมูลล่าสุดมาแสดงอัตโนมัติ
+let lastRemoteCheck = 0;
+async function checkRemoteNewer() {
+  const u = window.currentUser;
+  if (!u || !u.uid || window.isImpersonating || syncPending || Date.now() - lastRemoteCheck < 5000) return;
+  if ([...document.querySelectorAll('.modal')].some(m => m.style.display === 'flex')) return;
+  lastRemoteCheck = Date.now();
+  try {
+    const snap = await getDoc(doc(db, "teachers", u.uid));
+    if (!snap.exists() || syncPending) return;
+    const r = snap.data(); const rrev = r._rev || 0;
+    if (rrev > window._knownRev && r._by !== SESSION_ID) { adoptRemote(r, rrev); window.showToast('อัปเดตข้อมูลล่าสุดจากอุปกรณ์อื่นแล้ว'); }
+  } catch (e) { }
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkRemoteNewer(); });
+window.addEventListener('focus', checkRemoteNewer);
 window.addEventListener('online', () => { if (syncPending) doSync(); });
 window.addEventListener('beforeunload', e => { if (syncPending) { e.preventDefault(); e.returnValue = ''; } });
 
@@ -1410,6 +1484,7 @@ async function loadTeacherProfile(user) {
 
 function loginSuccess() {
   window.hideLoading();
+  window._knownRev = (window.currentUser && window.currentUser._rev) || 0;
   $('login-screen').style.display = 'none';
   $('super-admin-screen').style.display = 'none';
   document.querySelector('.sidebar').style.display = 'flex';
@@ -1551,7 +1626,6 @@ window.switchTab = function (tabId) {
 window.setActiveClass = function (id) {
   window.currentUser.activeClassId = id; window.isSortedByScore = false;
   window.closeSidebar(); window.renderApp();
-  window.saveDataSilent();
 };
 window.toggleSecondPeriod = function () {
   const el = $('periods-per-week'); if (!el) return;
@@ -1691,6 +1765,7 @@ window.renderApp = function () {
     Object.entries(SETTING_INPUTS).forEach(([id, key]) => { const el = $(id); if (el) el.value = activeC[key]; });
     $('enable-attendance-rule').checked = !!activeC.enableAttendanceRule;
     window.toggleSecondPeriod();
+    const sw = $('start-date-warning'); if (sw) sw.style.display = activeC.startDate ? 'none' : 'block';
     const sortBtn = $('btn-sort'); if (sortBtn) sortBtn.classList.toggle('is-on', window.isSortedByScore);
 
     window.renderTables(activeC);
@@ -1730,7 +1805,7 @@ window.renderTables = function (c) {
     const d = window.getWeekDate(c, i); const p = String(d.dateStr || '').split('-');
     const wk = c.periodsPerWeek == 2 ? `W${Math.floor(i / 2) + 1}.${(i % 2) + 1}` : `W${i + 1}`;
     thead += `<th class="${d.isHoliday ? 'holiday' : ''}${d.isMakeup ? ' makeup' : ''}" onclick="window.openDateModal(${i})" title="แตะเพื่อแก้ไขวันที่">
-      <span class="no-print">${d.isHoliday ? '⚠️' : d.isMakeup ? '🔁' : wk}<br><small>${p[2] || '-'}/${p[1] || '-'}</small></span><span class="print-only-text">${wk}</span></th>`;
+      <span class="no-print">${d.isHoliday ? '⚠️' : d.isMakeup ? '🔁' : wk}<br><small>${p[2] || '-'}/${p[1] || '-'}</small></span><span class="print-only-text">${wk}<br><small>${p[2] || '-'}/${p[1] || '-'}</small></span></th>`;
   }
   thead += `<th>ร้อยละ</th><th>สถานะ</th></tr>`;
 
@@ -1898,6 +1973,12 @@ window.cycleAttendanceStatus = function (stdId, periodIdx, btnEl) {
 // ==========================================
 window.saveSettings = function () {
   const c = getActive(); if (!c) return;
+  const oldPeriods = String(c.periodsPerWeek);
+  if ($('periods-per-week').value !== oldPeriods && c.makeupDays && Object.keys(c.makeupDays).length) {
+    // ลำดับคาบเปลี่ยนเมื่อสลับ 1↔2 คาบ/สัปดาห์ วันที่ที่เคยแก้ไข/ชดเชยไว้จะคลาดเคลื่อน
+    if (!confirm('การเปลี่ยนจำนวนคาบต่อสัปดาห์ จะทำให้วันที่ที่เคยแก้ไข/วันสอนชดเชยไว้คลาดเคลื่อน\nต้องการล้างวันที่ที่แก้ไขไว้และเปลี่ยนต่อหรือไม่?')) { $('periods-per-week').value = oldPeriods; return; }
+    c.makeupDays = {};
+  }
   Object.entries(SETTING_INPUTS).forEach(([id, key]) => {
     const el = $(id); if (!el) return;
     if (el.type === 'number') { const v = parseFloat(el.value); c[key] = isNaN(v) ? SETTING_DEFAULTS[key] : v; }
@@ -2123,14 +2204,23 @@ window.parseStudentLine = function (line) {
 window.openCentralStudentDB = function () {
   const classes = (window.currentUser && window.currentUser.classes) || [];
   if (!classes.length) return alert('กรุณาสร้างวิชาเรียนอย่างน้อย 1 วิชาก่อนครับ');
-  const rooms = []; classes.forEach(c => { const r = roomLabel(c); if (!rooms.includes(r)) rooms.push(r); });
+  const rooms = []; classes.forEach(c => { const r = roomKey(c); if (!rooms.includes(r)) rooms.push(r); });
   $('cs-room-select').innerHTML = '<option value="">-- เลือกระดับชั้นและห้อง --</option>' + rooms.sort().map(r => `<option value="${esc(r)}">${esc(r)}</option>`).join('');
   $('cs-student-tbody').innerHTML = '<tr><td colspan="5" style="color:gray;">กรุณาเลือกห้องเรียนจากด้านบน</td></tr>';
   $('cs-linked-subjects').innerText = 'รายวิชาที่ลิงก์กับห้องนี้: -';
-  window.csTempStudents = null;
+  window.csTempStudents = null; window.csDirty = false; window.csPrevRoom = '';
   $('central-student-modal').style.display = 'flex';
 };
-window.csRoomChanged = function () { window.csTempStudents = null; window.renderCentralStudentDB(); };
+window.csRoomChanged = function () {
+  const sel = $('cs-room-select');
+  if (window.csDirty && !confirm('มีการแก้ไขรายชื่อที่ยังไม่ได้บันทึก ต้องการทิ้งการแก้ไขและเปลี่ยนห้องหรือไม่?')) { sel.value = window.csPrevRoom || ''; return; }
+  window.csDirty = false; window.csPrevRoom = sel.value;
+  window.csTempStudents = null; window.renderCentralStudentDB();
+};
+window.closeCentralDB = function () {
+  if (window.csDirty && !confirm('มีการแก้ไขรายชื่อที่ยังไม่ได้บันทึก ต้องการปิดและทิ้งการแก้ไขหรือไม่?')) return;
+  window.csDirty = false; $('central-student-modal').style.display = 'none';
+};
 
 window.renderCentralStudentDB = function () {
   const roomStr = $('cs-room-select').value;
@@ -2139,7 +2229,7 @@ window.renderCentralStudentDB = function () {
     $('cs-linked-subjects').innerText = 'รายวิชาที่ลิงก์กับห้องนี้: -';
     window.csTempStudents = null; return;
   }
-  const linked = window.currentUser.classes.filter(c => roomLabel(c) === roomStr);
+  const linked = window.currentUser.classes.filter(c => roomKey(c) === roomStr);
   $('cs-linked-subjects').innerText = 'รายวิชาที่ใช้ข้อมูลนี้ร่วมกัน: ' + linked.map(c => `${c.subjectName} (${c.subjectCode})`).join(', ');
   // โหลดรายชื่อเดิมของห้องเมื่อเลือกห้อง (เดิมตั้งค่าเป็น [] ตลอด ทำให้รายชื่อเดิมไม่ขึ้น และการกดบันทึกจะล้างนักเรียนทั้งห้อง)
   if (window.csTempStudents === null) window.csTempStudents = linked.length ? JSON.parse(JSON.stringify(linked[0].students || [])) : [];
@@ -2156,18 +2246,18 @@ window.renderCentralStudentDB = function () {
       <button class="btn btn-red btn-sm" onclick="window.csDelete(${idx})">ลบ</button></div></td></tr>`).join('')
     : '<tr><td colspan="5" style="color:gray;">ยังไม่มีรายชื่อนักเรียนในห้องนี้</td></tr>';
 };
-window.csUpdateField = (idx, field, value) => { if (window.csTempStudents && window.csTempStudents[idx]) window.csTempStudents[idx][field] = value.trim(); };
-window.csMoveUp = idx => { const a = window.csTempStudents; if (a && idx > 0) { [a[idx - 1], a[idx]] = [a[idx], a[idx - 1]]; window.renderCentralStudentDB(); } };
-window.csMoveDown = idx => { const a = window.csTempStudents; if (a && idx < a.length - 1) { [a[idx + 1], a[idx]] = [a[idx], a[idx + 1]]; window.renderCentralStudentDB(); } };
+window.csUpdateField = (idx, field, value) => { if (window.csTempStudents && window.csTempStudents[idx]) { window.csTempStudents[idx][field] = value.trim(); window.csDirty = true; } };
+window.csMoveUp = idx => { const a = window.csTempStudents; if (a && idx > 0) { [a[idx - 1], a[idx]] = [a[idx], a[idx - 1]]; window.csDirty = true; window.renderCentralStudentDB(); } };
+window.csMoveDown = idx => { const a = window.csTempStudents; if (a && idx < a.length - 1) { [a[idx + 1], a[idx]] = [a[idx], a[idx + 1]]; window.csDirty = true; window.renderCentralStudentDB(); } };
 window.csDelete = idx => {
   if (!window.csTempStudents) return;
-  if (confirm('ลบนักเรียนคนนี้ออกจากรายชื่อ? (จะหายไปจากทุกวิชาเมื่อกดบันทึก)')) { window.csTempStudents.splice(idx, 1); window.renderCentralStudentDB(); }
+  if (confirm('ลบนักเรียนคนนี้ออกจากรายชื่อ? (จะหายไปจากทุกวิชาเมื่อกดบันทึก)')) { window.csTempStudents.splice(idx, 1); window.csDirty = true; window.renderCentralStudentDB(); }
 };
 window.csAutoSort = type => {
   if (!window.csTempStudents) return;
   if (type === 'id') window.csTempStudents.sort((a, b) => (parseInt(a.studentId) || 0) - (parseInt(b.studentId) || 0));
   else window.csTempStudents.sort((a, b) => (a.name || "").localeCompare(b.name || "", 'th'));
-  window.renderCentralStudentDB();
+  window.csDirty = true; window.renderCentralStudentDB();
 };
 window.csRenumber = () => { if (!window.csTempStudents) return; window.renderCentralStudentDB(); window.showToast("เลขที่เรียงตามลำดับในตารางแล้ว (กดบันทึกเพื่อยืนยัน)"); };
 
@@ -2178,7 +2268,7 @@ window.csAddStudent = function () {
   if (!name) return;
   window.csTempStudents.push(blankStudent(newId('std'), id, name, email));
   ['cs-add-id', 'cs-add-name', 'cs-add-email'].forEach(x => $(x).value = '');
-  window.renderCentralStudentDB();
+  window.csDirty = true; window.renderCentralStudentDB();
 };
 window.csImportStudentsText = function () {
   if (!$('cs-room-select').value || window.csTempStudents === null) return alert("กรุณาเลือกห้องก่อนนำเข้า");
@@ -2191,7 +2281,7 @@ window.csImportStudentsText = function () {
     else { const p = window.parseStudentLine(line); if (p) { id = p.studentId; name = p.name; } }
     if (name && name.length > 2) { window.csTempStudents.push(blankStudent(newId('std'), id, name, email)); added++; }
   });
-  $('cs-import-names').value = ''; window.renderCentralStudentDB();
+  $('cs-import-names').value = ''; window.csDirty = true; window.renderCentralStudentDB();
   alert(`ดึงข้อมูลลงตารางสำเร็จ ${added} รายการ (อย่าลืมกดบันทึกเพื่อนำไปใช้จริง)`);
 };
 
@@ -2200,7 +2290,7 @@ window.saveCentralStudentDB = function () {
   if (window.csTempStudents === null) return alert('กรุณาเลือกห้องเรียนก่อน');
   const list = window.csTempStudents.filter(Boolean);
   const norm = s => String(s || '').replace(/\s+/g, '');
-  const targets = window.currentUser.classes.filter(c => roomLabel(c) === roomStr);
+  const targets = window.currentUser.classes.filter(c => roomKey(c) === roomStr);
 
   // จับคู่นักเรียนเดิมของแต่ละวิชา: id -> รหัสประจำตัว -> ชื่อ (เพื่อรักษาคะแนนเดิม)
   const plans = targets.map(c => {
@@ -2233,6 +2323,7 @@ window.saveCentralStudentDB = function () {
         Object.keys(col.groups || {}).forEach(k => { if (!ids.has(k)) delete col.groups[k]; });
       });
     });
+    window.csDirty = false;
     window.saveDataSilent(); window.renderApp();
     $('central-student-modal').style.display = 'none';
     window.showToast('✅ บันทึกรายชื่อเรียบร้อย เชื่อมโยงไปยังทุกวิชาแล้ว');
@@ -2378,26 +2469,83 @@ window.renderBehaviorList = function () {
 // Print & Export
 // ==========================================
 window.openPrintOptionsModal = () => { $('print-options-modal').style.display = 'flex'; };
+// สร้างใบพิมพ์แบบตารางข้อความล้วน (ไม่มี input/select/ปุ่ม) เฉพาะตอนสั่งพิมพ์ เพื่อให้จัดหน้าพิมพ์เร็ว
+function buildPrintSheet(mode, orient) {
+  const c = getActive(); const u = window.currentUser || {};
+  const partial = mode === 'partial';
+  const isAtt = !!document.querySelector('#tab-students.active');
+  const list = [...c.students];
+  if (window.isSortedByScore) {
+    const t = new Map(list.map(s => [s.id, window.calculateStudentTotalObj(s, c).grandTotal]));
+    list.sort((a, b) => t.get(b.id) - t.get(a.id));
+  }
+  const title = partial && !isAtt ? "รายงานผลการเก็บคะแนนระหว่างเรียน (แจ้งนักเรียน)" : "แบบบันทึกผลการเรียนรายวิชา";
+  const head = `<div class="ps-head">${u.schoolLogo ? `<img src="${esc(u.schoolLogo)}" alt="">` : ''}<h2>${title}</h2>
+    <h3>รายวิชา ${esc(c.subjectName)} (${esc(c.subjectCode)}) ชั้น ${esc(c.level)}/${esc(c.room)}</h3></div>`;
+  let table = '';
+
+  if (isAtt) {
+    const maxP = maxPeriods(c);
+    let th = '<tr><th>ที่</th><th>รหัส</th><th>ชื่อ-นามสกุล</th>';
+    for (let i = 0; i < maxP; i++) {
+      const d = window.getWeekDate(c, i); const p = String(d.dateStr || '').split('-');
+      const wk = c.periodsPerWeek == 2 ? `W${Math.floor(i / 2) + 1}.${(i % 2) + 1}` : `W${i + 1}`;
+      th += `<th>${wk}<br><span class="ps-date">${p[2] || ''}/${p[1] || ''}</span></th>`;
+    }
+    th += '<th>ร้อยละ</th><th>สถานะ</th></tr>';
+    const rows = list.map(std => {
+      let r = `<tr><td>${c.students.indexOf(std) + 1}</td><td>${esc(std.studentId || '-')}</td><td class="l">${esc(std.name)}</td>`;
+      for (let i = 0; i < maxP; i++) { const st = std.attendanceStatus[i] || 'มา'; r += `<td${st === 'มา' ? '' : ' class="ps-b"'}>${st}</td>`; }
+      return r + `<td>${window.attendancePct(std, c).toFixed(0)}%</td><td>${window.isMsRisk(std, c) ? 'มส' : 'มีสิทธิ์'}</td></tr>`;
+    }).join('');
+    const cls = 'ps-table fixed ' + (maxP > 20 ? (orient === 'portrait' ? 'dense2' : 'dense') : '');
+    table = `<table class="${cls}"><colgroup><col style="width:7mm"><col style="width:15mm"><col style="width:42mm">${'<col>'.repeat(maxP)}<col style="width:11mm"><col style="width:15mm"></colgroup><thead>${th}</thead><tbody>${rows}</tbody></table>`;
+  } else {
+    const cols = c.gradeColumns;
+    const sumMax = cols.reduce((a, col) => a + colMax(col), 0);
+    const assignMax = Math.max(0, numOr(c.weightMid, 80) - numOr(c.affectiveMax, 10));
+    let th = '<tr><th>ที่</th><th>รหัส</th><th>ชื่อ-นามสกุล</th>' + cols.map(col => `<th>${esc(col.name)}<br><small>(${colMax(col)})</small></th>`).join('');
+    if (!partial) th += `<th>รวมดิบ<br><small>(${sumMax})</small></th>`;
+    th += `<th>หารเก็บ<br><small>(${assignMax})</small></th>`;
+    if (!partial) th += `<th>จิตพิสัย<br><small>(${numOr(c.affectiveMax, 10)})</small></th><th>ปลายภาค<br><small>(${numOr(c.weightFinal, 20)})</small></th><th>รวม 100</th><th>เกรด</th>`;
+    th += '</tr>';
+    const rows = list.map(std => {
+      const calc = window.calculateStudentTotalObj(std, c);
+      let r = `<tr><td>${c.students.indexOf(std) + 1}</td><td>${esc(std.studentId || '-')}</td><td class="l">${esc(std.name)}</td>`;
+      cols.forEach(col => { const v = col.scores[std.id]; r += `<td>${isBlank(v) ? '' : esc(v)}</td>`; });
+      if (!partial) r += `<td>${calc.totalRaw.toFixed(1)}</td>`;
+      r += `<td>${calc.scaledAssignmentScore.toFixed(1)}</td>`;
+      if (!partial) r += `<td>${calc.affectiveScore.toFixed(1)}</td><td>${calc.finalScore}</td><td class="ps-b">${calc.grandTotal.toFixed(1)}</td><td class="ps-b">${window.gradeFromTotal(calc.grandTotal, c)}${window.isMsRisk(std, c) ? ' (มส)' : ''}</td>`;
+      return r + '</tr>';
+    }).join('');
+    const n = cols.length + (partial ? 4 : 9);
+    table = `<table class="ps-table ${n > 26 ? 'dense2' : n > 16 ? 'dense' : ''}"><thead>${th}</thead><tbody>${rows}</tbody></table>`;
+  }
+  const sign = `<div class="ps-sign"><div>ลงชื่อ....................................................... ผู้ประเมิน</div><div>(${esc(u.name || '-')})</div><div>ตำแหน่ง ${esc(u.position || '-')} ${esc(u.school || '-')}</div></div>`;
+  return head + table + sign;
+}
+
 window.executePrint = function (mode) {
   $('print-options-modal').style.display = 'none';
+  const c = getActive(); if (!c) return;
   const orient = $('print-orientation').value;
   const old = $('dynamic-print-style'); if (old) old.remove();
   const style = document.createElement('style'); style.id = 'dynamic-print-style';
   style.textContent = `@media print { @page { size: A4 ${orient}; margin: 10mm; } }`;
   document.head.appendChild(style);
-  document.body.classList.toggle('print-mode-partial', mode === 'partial');
-  $('print-header-title').innerText = mode === 'partial' ? "รายงานผลการเก็บคะแนนระหว่างเรียน (แจ้งนักเรียน)" : "แบบบันทึกผลการเรียนรายวิชา";
+  const root = $('print-root');
+  root.innerHTML = buildPrintSheet(mode, orient);
+  document.body.classList.add('printing-sheet');
   let done = false;
   const cleanup = () => {
     if (done) return; done = true;
-    document.body.classList.remove('print-mode-partial');
-    $('print-header-title').innerText = "แบบบันทึกผลการเรียนรายวิชา";
+    document.body.classList.remove('printing-sheet');
+    root.innerHTML = '';
     const s = $('dynamic-print-style'); if (s) s.remove();
     window.removeEventListener('afterprint', cleanup);
   };
   window.addEventListener('afterprint', cleanup);
-  window.print();
-  setTimeout(cleanup, 3000);   // สำรอง: iOS บางรุ่นไม่ยิง afterprint
+  setTimeout(() => { window.print(); setTimeout(cleanup, 5000); }, 60);   // สำรอง: iOS บางรุ่นไม่ยิง afterprint
 };
 
 window.printModalArea = function (elId) {
@@ -2405,6 +2553,8 @@ window.printModalArea = function (elId) {
   const clone = src.cloneNode(true); clone.id = 'temp-print';
   clone.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));
   clone.style.display = 'block';
+  // ตัดกรอบเลื่อน/ความสูงสูงสุดของรายการ (เดิมพิมพ์ออกมาแค่ ~450px แรก แถวที่เหลือหายไป)
+  [clone, ...clone.querySelectorAll('*')].forEach(el => { if (el.style && (el.style.maxHeight || el.style.overflow)) { el.style.maxHeight = 'none'; el.style.overflow = 'visible'; } });
   const hidden = [];
   Array.from(document.body.children).forEach(ch => { if (['SCRIPT', 'STYLE', 'LINK'].includes(ch.tagName)) return; hidden.push([ch, ch.style.display]); ch.style.display = 'none'; });
   document.body.appendChild(clone);
@@ -2733,6 +2883,17 @@ window.confirmAndApplyGroupData = function () {
 // Init
 // ==========================================
 ['login-email', 'login-pass'].forEach(id => $(id).addEventListener('keydown', e => { if (e.key === 'Enter') window.doLogin(); }));
+// กด Enter / ลูกศรขึ้น-ลง ในช่องคะแนน เพื่อเลื่อนไปแถวถัดไปในคอลัมน์เดิม (กรอกคะแนนทั้งห้องได้เร็วขึ้น)
+$('grades-table').addEventListener('keydown', e => {
+  const el = e.target;
+  if (!el.classList || !el.classList.contains('cell-input') || el.classList.contains('wide')) return;
+  if (!['Enter', 'ArrowDown', 'ArrowUp'].includes(e.key)) return;
+  e.preventDefault();
+  const td = el.closest('td'), tr = td.parentElement, idx = [...tr.children].indexOf(td);
+  const next = e.key === 'ArrowUp' ? tr.previousElementSibling : tr.nextElementSibling;
+  const target = next && next.children[idx] && next.children[idx].querySelector('input.cell-input');
+  if (target) { target.focus(); target.select(); } else el.blur();
+});
 $('sidebar-profile-pic').src = window.DEFAULT_AVATAR;
 $('topbar-profile-pic').src = window.DEFAULT_AVATAR;
 </script>
