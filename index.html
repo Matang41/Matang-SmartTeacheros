@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" href="icon-192x192.png">
     <link rel="manifest" href="manifest.json">
 
-    <title>Smart Teacher OS - Cloud Edition v3.9</title>
+    <title>Smart Teacher OS - Cloud Edition v3.10</title>
 
     <!-- Fonts and Libraries -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -253,6 +253,16 @@
 
         .notice { display: none; margin: 0 0 12px; padding: 10px 14px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid #F7DA8A; border-radius: var(--r-md); font-size: 13.5px; }
         .notice a { color: var(--primary); text-decoration: underline; cursor: pointer; font-weight: 600; }
+        /* หน่วยการเรียนรู้ */
+        .unit-row { display: grid; grid-template-columns: 28px 1fr 100px 56px auto; gap: 8px; align-items: center; margin-bottom: 6px; }
+        .unit-row .input-text { margin: 0; }
+        .unit-no { font-weight: 600; color: var(--text-muted); text-align: center; }
+        .unit-cols { font-size: 12px; color: var(--text-muted); }
+        .unit-btns { display: flex; gap: 3px; }
+        th.unit-sum, td.unit-sum { background: #ECFDF5 !important; color: #065F46 !important; font-weight: 600; }
+        .unit-tag { display: inline-block; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 600; background: var(--brand-soft); color: var(--primary); padding: 1px 9px; border-radius: 999px; margin-bottom: 4px; }
+        th.unit-bad .unit-tag { background: var(--warn-bg); color: var(--warn-fg); }
+        .notice div { margin: 2px 0; }
         .empty-state { text-align: center; margin: 12vh auto 0; max-width: 460px; padding: 0 16px; }
         .empty-state h1 { color: var(--primary-deep); font-size: 26px; margin: 0 0 8px; }
         .empty-state p { color: var(--text-muted); margin: 0 0 20px; }
@@ -415,6 +425,9 @@
             .ws-actions, .btn-row { width: 100%; gap: 6px; }
             .ws-actions .btn, .btn-row .btn { min-height: 38px; padding: 6px 12px; font-size: 13.5px; flex: 1 1 auto; }
             .toolbar { flex-direction: column; }
+            .unit-row { grid-template-columns: 24px 1fr 84px; }
+            .unit-cols { display: none; }
+            .unit-btns { grid-column: 2 / -1; }
             .toolbar > .btn-row { width: 100%; }
             .card { padding: 16px; }
             .summary-strip { gap: 8px 18px; padding: 10px 12px; }
@@ -501,6 +514,8 @@
             #temp-print { width: 100% !important; padding: 0 !important; }
             #temp-print table { width: 100% !important; }
             .notice { display: none !important; }
+            .unit-tag { border: 1px solid #000; background: none !important; color: #000 !important; }
+            th.unit-sum, td.unit-sum { background: transparent !important; color: #000 !important; }
             th, td { padding: 3px 4px !important; line-height: 1.25; border: 1px solid #000 !important; position: static !important; box-shadow: none !important; color: #000 !important; min-width: 0 !important; }
             th { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; font-weight: bold; }
             .cell-missing, .holiday, .makeup { background: transparent !important; }
@@ -542,7 +557,7 @@
         <div class="login-card">
             <img class="lc-logo" src="icon-192x192.png" alt="" onerror="this.onerror=null;this.src=window.DEFAULT_LOGO">
             <h2>เข้าสู่ระบบจัดการคะแนน</h2>
-            <p class="lc-sub">Smart Teacher OS Cloud v3.9</p>
+            <p class="lc-sub">Smart Teacher OS Cloud v3.10</p>
             <label for="login-email">อีเมล (Email)</label>
             <input type="email" id="login-email" class="input-text" placeholder="teacher@school.com" autocomplete="email" inputmode="email" autocapitalize="off">
             <label for="login-pass">รหัสผ่าน (Password)</label>
@@ -624,7 +639,7 @@
         <input type="file" id="import-legacy-file" style="display: none;" accept=".json,application/json" onchange="window.importLegacyJSON(event)">
         <button class="btn btn-outline" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;" onclick="window.openAutoBackupModal(); window.closeSidebar();">⏱️ ย้อนเวลา (Local)</button>
         <button class="btn btn-red" onclick="window.logout()">🚪 ลงชื่อออก</button>
-        <span class="version-badge" onclick="window.checkUpdate()">v3.9.0</span>
+        <span class="version-badge" onclick="window.checkUpdate()">v3.10.0</span>
         <div style="font-size: 10px; color: #9CA3AF;">&copy; 2026 พัฒนาโดย นายนนทพัทธ์ วงค์มูล</div>
     </div>
 </aside>
@@ -688,9 +703,11 @@
                 <div class="btn-row">
                     <button class="btn btn-outline" style="background:#f3e8ff; color:#7e22ce; border-color:#7e22ce;" onclick="window.openBehaviorModal()">🧠 วิเคราะห์พฤติกรรม</button>
                     <button class="btn btn-outline" style="background:#fee2e2; color:#991b1b; border-color:#991b1b;" onclick="window.openMissingWorkModal()">🔍 เช็คค้างส่ง</button>
+                    <button class="btn btn-gold" onclick="window.openSchoolExport()">🏫 ส่งออกลงระบบโรงเรียน</button>
                     <button class="btn btn-outline" id="btn-sort" style="background:#fef3c7; border-color:#d97706; color:#92400e;" onclick="window.toggleSortScores()">↕️ เรียงตามคะแนน</button>
                 </div>
             </div>
+            <div id="unit-notice" class="notice no-print"></div>
             <div id="grade-summary" class="summary-strip no-print"></div>
             <div class="table-container"><table id="grades-table"></table></div>
         </div>
@@ -724,6 +741,10 @@
                         <div style="flex:1;"><label style="color:#92400e; font-weight:bold;">คะแนนระหว่างเรียน:</label><input type="number" inputmode="decimal" id="weight-mid" class="input-text" value="80" onchange="window.saveSettings()"></div>
                         <div style="flex:1;"><label style="color:#92400e; font-weight:bold;">คะแนนสอบปลายภาค:</label><input type="number" inputmode="decimal" id="weight-final" class="input-text" value="20" onchange="window.saveSettings()"></div>
                     </div>
+                    <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1; cursor:pointer;">
+                        <input type="checkbox" id="affective-enabled" style="width:20px; height:20px;" onchange="window.saveSettings()">
+                        <span style="font-weight:500;">คิดคะแนนจิตพิสัยอัตโนมัติจากเวลาเรียน (หักจากคะแนนระหว่างเรียน)</span>
+                    </label>
                     <label>คะแนนจิตพิสัยเต็ม (หักจากระหว่างเรียน):</label><input type="number" inputmode="decimal" id="affective-max" class="input-text" value="10" onchange="window.saveSettings()">
                     <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; cursor: pointer;">
                         <input type="checkbox" id="enable-attendance-rule" style="width: 20px; height: 20px;" onchange="window.saveSettings()">
@@ -736,6 +757,27 @@
                         <div style="flex:1;"><label>เกรด 3 (>=):</label><input type="number" inputmode="decimal" id="grade-cut-3" class="input-text" value="70" onchange="window.saveSettings()"></div>
                     </div>
                     <p class="hint" style="margin:0;">เกรด 2.5 / 2 / 1.5 / 1 ใช้เกณฑ์ 65 / 60 / 55 / 50 และต่ำกว่า 50 ได้เกรด 0</p>
+                </div>
+                <div class="card" style="grid-column: 1 / -1;">
+                    <h3 style="margin:0 0 6px; color: var(--primary);">หน่วยการเรียนรู้ (ให้ตรงกับระบบโรงเรียน)</h3>
+                    <p class="hint">ตั้งหน่วยและ <b>คะแนนเต็มของหน่วยตามที่กรอกลงระบบโรงเรียน</b> แล้วผูกแต่ละชิ้นงานเข้ากับหน่วย ระบบจะเทียบบัญญัติไตรยางศ์รายหน่วยให้อัตโนมัติ (เช่น หน่วยละ 20 คะแนน เก็บดิบ 4 ชิ้น ชิ้นละ 10 = 40 ระบบแปลงเป็น 20 ให้)</p>
+                    <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1; cursor:pointer;">
+                        <input type="checkbox" id="unit-mode" style="width:20px; height:20px;" onchange="window.toggleUnitMode(this.checked)">
+                        <span style="font-weight:600;">ใช้ระบบหน่วยการเรียนรู้</span>
+                    </label>
+                    <div id="unit-settings-body" style="display:none;">
+                        <div id="unit-list"></div>
+                        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:10px 0;">
+                            <button class="btn btn-outline btn-sm" onclick="window.addUnit()">+ เพิ่มหน่วย</button>
+                            <div id="unit-sum-info" style="font-size:14px;"></div>
+                        </div>
+                        <label>ปัดเศษคะแนนหน่วย (ให้ตรงกับที่ระบบโรงเรียนรับ):</label>
+                        <select id="unit-round" class="input-text" style="max-width:340px;" onchange="window.saveSettings()">
+                            <option value="2">ทศนิยม 2 ตำแหน่ง</option><option value="1">ทศนิยม 1 ตำแหน่ง</option>
+                            <option value="0">จำนวนเต็ม</option><option value="half">ปัดทีละ 0.5</option><option value="none">ไม่ปัดเศษ</option>
+                        </select>
+                        <p class="hint" style="margin:0;">• ปลายภาค: ตั้ง "คะแนนสอบปลายภาค" เป็น 0 แล้วสร้างเป็นหน่วยแทน ถ้าระบบโรงเรียนนับปลายภาคเป็นหน่วยหนึ่ง<br>• จิตพิสัย: ถ้าโรงเรียนไม่มีช่องแยก ให้ปิดสวิตช์จิตพิสัยอัตโนมัติด้านบน แล้วสร้างหน่วย "คุณลักษณะ/จิตพิสัย" เก็บแบบกรอกเอง</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -901,6 +943,10 @@
                 <label>คะแนนเต็ม:</label>
                 <input type="number" inputmode="decimal" id="col-max" class="input-text" value="10">
             </div>
+        </div>
+        <div id="col-unit-wrap" style="display:none;">
+            <label>หน่วยการเรียนรู้ที่ชิ้นงานนี้อยู่:</label>
+            <select id="col-unit" class="input-text"></select>
         </div>
         <div style="text-align: right; margin-top: 15px; display:flex; gap:8px; justify-content:flex-end;">
             <button class="btn btn-outline" style="border-color: var(--line-strong); color: var(--text-main);" onclick="document.getElementById('column-modal').style.display='none'">ยกเลิก</button>
@@ -1204,6 +1250,32 @@
 
 <div id="print-root" aria-hidden="true"></div>
 
+<div id="school-export-modal" class="modal">
+    <div class="modal-content" style="max-width: 1000px;">
+        <h2 style="margin-top:0; color: var(--primary);">🏫 ตารางสรุปเพื่อบันทึกลงระบบโรงเรียน</h2>
+        <p id="se-note" class="hint"></p>
+        <div id="se-warn" class="notice"></div>
+        <div class="btn-row" style="margin-bottom: 12px;">
+            <button class="btn btn-gold" onclick="window.copySchoolAll()">📋 คัดลอกทั้งตาราง</button>
+            <button class="btn btn-green" onclick="window.downloadSchoolExcel()">📊 ดาวน์โหลด Excel</button>
+            <button class="btn btn-dark" onclick="window.printSchoolExport()">🖨️ พิมพ์</button>
+        </div>
+        <div id="school-export-print-area" style="background: white; padding: 4px;">
+            <div class="print-header print-only">
+                <h2>ตารางสรุปคะแนนเพื่อบันทึกลงระบบโรงเรียน</h2>
+                <h3 id="se-class-info"></h3>
+            </div>
+            <div style="max-height: 52vh; overflow: auto; border: 1px solid var(--border); border-radius: 10px;">
+                <table style="margin: 0; font-size: 13px; width: 100%; min-width: 640px;"><thead id="se-thead"></thead><tbody id="se-tbody"></tbody></table>
+            </div>
+            <div class="print-signature print-only"><p>ลงชื่อ....................................................... ผู้ประเมิน</p><p id="se-teacher"></p></div>
+        </div>
+        <div style="text-align: right; margin-top: 16px;">
+            <button class="btn btn-outline" style="border-color: var(--line-strong); color: var(--text-main);" onclick="document.getElementById('school-export-modal').style.display='none'">ปิด</button>
+        </div>
+    </div>
+</div>
+
 <button id="undo-import-btn" class="btn btn-red no-print" onclick="window.undoLastImport()">↩️ เลิกทำ: คืนค่าการนำเข้าล่าสุด</button>
 
 <script type="module">
@@ -1230,7 +1302,7 @@ const db = getFirestore(app);
 // ==========================================
 // Constants & small helpers
 // ==========================================
-const APP_VERSION = "3.9.0";
+const APP_VERSION = "3.10.0";
 const ADMIN_EMAIL = 'admin@school.com';
 const BACKUP_PREFIX = 'SmartTeacher_AutoBackups_';
 const defaultHolidays = `2026-05-01\n2026-05-04\n2026-05-31\n2026-06-03\n2026-07-28\n2026-07-30\n2026-08-12\n2026-10-13\n2026-10-23\n2026-12-05\n2026-12-10`;
@@ -1240,11 +1312,11 @@ const SETTING_INPUTS = {
   'weight-mid': 'weightMid', 'weight-final': 'weightFinal', 'affective-max': 'affectiveMax', 'min-attendance': 'minAttendance',
   'grade-cut-4': 'gradeCut4', 'grade-cut-35': 'gradeCut35', 'grade-cut-3': 'gradeCut3',
   'start-date': 'startDate', 'holidays': 'holidays', 'periods-per-week': 'periodsPerWeek',
-  'schedule-day': 'scheduleDay', 'schedule-period': 'schedulePeriod', 'schedule-day-2': 'scheduleDay2', 'schedule-period-2': 'schedulePeriod2'
+  'schedule-day': 'scheduleDay', 'schedule-period': 'schedulePeriod', 'schedule-day-2': 'scheduleDay2', 'schedule-period-2': 'schedulePeriod2', 'unit-round': 'unitRound'
 };
 const SETTING_DEFAULTS = {
   weightMid: 80, weightFinal: 20, affectiveMax: 10, minAttendance: 80, gradeCut4: 80, gradeCut35: 75, gradeCut3: 70,
-  startDate: '', holidays: defaultHolidays, periodsPerWeek: '1', scheduleDay: '3', schedulePeriod: '1', scheduleDay2: '3', schedulePeriod2: '1'
+  startDate: '', holidays: defaultHolidays, periodsPerWeek: '1', scheduleDay: '3', schedulePeriod: '1', scheduleDay2: '3', schedulePeriod2: '1', unitRound: '2'
 };
 const ST = {
   'มา': { cls: 'st-ok', fg: '#065f46' }, 'สาย': { cls: 'st-late', fg: '#92400e' },
@@ -1303,7 +1375,7 @@ window.showToast = function (msg = "บันทึกข้อมูลเร�
 };
 
 window.checkUpdate = function () {
-  alert(`เวอร์ชันปัจจุบัน v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- ปรับ UI ใหม่ รองรับแล็ปท็อป / iPad / iPhone\n- แก้ค่าตัดเกรด 4 / 3.5 / 3 ที่ตั้งแล้วไม่ถูกนำไปคำนวณ\n- แก้วัน/คาบของคาบที่ 2 ที่ตั้งแล้วไม่ถูกบันทึก\n- แก้ฐานข้อมูลนักเรียนส่วนกลางที่โหลดรายชื่อเดิมไม่ขึ้น\n- แก้ป้ายแจ้งเตือน (Toast) ที่ไม่เคยแสดง\n- เพิ่มปุ่มดึงช่องคะแนนจากห้องอื่น / กู้คืน JSON ที่เดิมกดแล้วไม่ทำงาน\n- ป้องกันการฝังโค้ด (XSS) จากชื่อนักเรียน/ครู\n- ซิงค์ข้อมูลทันทีเมื่อสลับแอป/ปิดหน้า`);
+  alert(`เวอร์ชันปัจจุบัน v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- เพิ่มระบบหน่วยการเรียนรู้ (เทียบบัญญัติไตรยางศ์รายหน่วย) และสวิตช์เปิด-ปิดจิตพิสัย\n- เพิ่มปุ่ม "ส่งออกลงระบบโรงเรียน" คัดลอกทีละคอลัมน์/ดาวน์โหลด Excel/พิมพ์\n- ปรับ UI ใหม่ รองรับแล็ปท็อป / iPad / iPhone\n- แก้ค่าตัดเกรด 4 / 3.5 / 3 ที่ตั้งแล้วไม่ถูกนำไปคำนวณ\n- แก้วัน/คาบของคาบที่ 2 ที่ตั้งแล้วไม่ถูกบันทึก\n- แก้ฐานข้อมูลนักเรียนส่วนกลางที่โหลดรายชื่อเดิมไม่ขึ้น\n- แก้ป้ายแจ้งเตือน (Toast) ที่ไม่เคยแสดง\n- เพิ่มปุ่มดึงช่องคะแนนจากห้องอื่น / กู้คืน JSON ที่เดิมกดแล้วไม่ทำงาน\n- ป้องกันการฝังโค้ด (XSS) จากชื่อนักเรียน/ครู\n- ซิงค์ข้อมูลทันทีเมื่อสลับแอป/ปิดหน้า`);
 };
 
 // ==========================================
@@ -1675,7 +1747,13 @@ function normalizeClass(c) {
     if (!col.scores || typeof col.scores !== 'object') col.scores = {};
     if (!col.groups || typeof col.groups !== 'object') col.groups = {};
     col.name = col.name || '';
+    col.unitId = col.unitId || '';
   });
+  // หน่วยการเรียนรู้ + สวิตช์จิตพิสัย
+  c.units = (Array.isArray(c.units) ? c.units : []).filter(u => u && typeof u === 'object');
+  c.units.forEach(u => { if (!u.id) u.id = newId('unit'); u.name = String(u.name || ''); u.points = numOr(u.points, 0); });
+  c.unitMode = !!c.unitMode;
+  if (c.affectiveEnabled === undefined) c.affectiveEnabled = true;
   return migrated;
 }
 
@@ -1686,18 +1764,78 @@ window.attendancePct = function (std, c) {
 };
 window.isMsRisk = (std, c) => !!c.enableAttendanceRule && window.attendancePct(std, c) < numOr(c.minAttendance, 80);
 
+// ---------- ระบบหน่วยการเรียนรู้ (Unit-Based) ----------
+const affMaxOf = c => (c.affectiveEnabled === false ? 0 : numOr(c.affectiveMax, 10));
+const finalOn = c => !(c.unitMode && numOr(c.weightFinal, 20) <= 0);   // โหมดหน่วย: ตั้งปลายภาค = 0 เพื่อไปทำเป็นหน่วยแทนได้
+const roundBy = (v, mode) => {
+  if (mode === 'none') return v;
+  if (mode === 'half') return Math.round(v * 2) / 2;
+  const d = mode === '0' ? 0 : mode === '1' ? 1 : 2; const f = Math.pow(10, d);
+  return Math.round((v + 1e-9) * f) / f;
+};
+const scoreDecimals = c => { const m = String(c.unitRound); return m === '0' ? 0 : (m === '1' || m === 'half') ? 1 : 2; };
+window.dispScore = (v, c) => Number(v).toFixed(c.unitMode ? scoreDecimals(c) : 1);
+window.unitsSum = c => (c.units || []).reduce((a, u) => a + numOr(u.points, 0), 0);
+window.getTotalPlan = c => {
+  const aff = affMaxOf(c);
+  const units = c.unitMode ? window.unitsSum(c) : Math.max(0, numOr(c.weightMid, 80) - aff);
+  const fin = finalOn(c) ? numOr(c.weightFinal, 20) : 0;
+  return { units, aff, fin, total: units + aff + fin };
+};
+window.groupedColumns = function (c) {
+  if (!c.unitMode) return [{ unit: null, cols: c.gradeColumns, unassigned: false }];
+  const ids = new Set((c.units || []).map(u => u.id));
+  const gs = (c.units || []).map(u => ({ unit: u, cols: c.gradeColumns.filter(col => col.unitId === u.id), unassigned: false }));
+  const un = c.gradeColumns.filter(col => !ids.has(col.unitId));
+  if (un.length) gs.push({ unit: null, cols: un, unassigned: true });
+  return gs;
+};
+window.planWarnings = function (c) {
+  const w = [];
+  if (c.unitMode) {
+    const ids = new Set((c.units || []).map(u => u.id));
+    const un = c.gradeColumns.filter(col => !ids.has(col.unitId));
+    if (un.length) w.push(`มี ${un.length} ช่องคะแนนที่ยังไม่ผูกหน่วย (ไม่นับในคะแนนรวม): ${un.map(x => esc(x.name)).join(', ')} — กด ✏️ ที่หัวคอลัมน์เพื่อเลือกหน่วย`);
+    const empty = (c.units || []).filter(u => !c.gradeColumns.some(col => col.unitId === u.id));
+    if (empty.length) w.push(`หน่วยที่ยังไม่มีชิ้นงาน (นับเป็น 0 คะแนน): ${empty.map(u => esc(u.name)).join(', ')}`);
+  }
+  const p = window.getTotalPlan(c);
+  if (Math.abs(p.total - 100) > 0.001) w.push(`คะแนนรวมทั้งหมด = ${p.units} (${c.unitMode ? 'หน่วย' : 'ระหว่างเรียน'}) + ${p.aff} (จิตพิสัย) + ${p.fin} (ปลายภาค) = <b>${p.total}</b> ควรเท่ากับ 100`);
+  return w;
+};
+window.renderUnitNotice = function (c) {
+  const el = $('unit-notice'); if (!el) return;
+  const w = window.planWarnings(c);
+  el.innerHTML = w.map(m => `<div>⚠️ ${m}</div>`).join(''); el.style.display = w.length ? 'block' : 'none';
+};
+
 window.calculateStudentTotalObj = function (std, c) {
-  const affectiveMax = numOr(c.affectiveMax, 10);
-  const weightMid = numOr(c.weightMid, 80);
-  const maxAssignmentAllowed = Math.max(0, weightMid - affectiveMax);
-  const st = (std.attendanceStatus || []).slice(0, maxPeriods(c));   // นับเฉพาะคาบที่แสดงอยู่ (เดิมนับทั้ง 40 ช่องแม้ตั้ง 1 คาบ/สัปดาห์)
+  const affectiveMax = affMaxOf(c);
+  const st = (std.attendanceStatus || []).slice(0, maxPeriods(c));   // นับเฉพาะคาบที่แสดงอยู่
   const late = st.filter(s => s === 'สาย').length, leave = st.filter(s => s === 'ลา').length, absent = st.filter(s => s === 'ขาด').length;
-  const affectiveScore = Math.max(0, affectiveMax - late * 0.5 - absent * 2 - leave * 0.2);
+  const affRaw = Math.max(0, affectiveMax - late * 0.5 - absent * 2 - leave * 0.2);
   let totalRaw = 0, sumColumnMax = 0;
   (c.gradeColumns || []).forEach(col => { totalRaw += parseFloat(col.scores[std.id]) || 0; sumColumnMax += colMax(col); });
-  const scaledAssignmentScore = sumColumnMax > 0 ? (totalRaw / sumColumnMax) * maxAssignmentAllowed : 0;
-  const finalScore = parseFloat(std.finalScore) || 0;
-  return { totalRaw, sumColumnMax, scaledAssignmentScore, affectiveScore, finalScore, grandTotal: scaledAssignmentScore + affectiveScore + finalScore, maxAssignmentAllowed };
+  let scaled = 0, maxAssign = 0; const unitScores = {};
+  if (c.unitMode) {
+    // เทียบบัญญัติไตรยางศ์รายหน่วย: คะแนนดิบของชิ้นงานในหน่วย / คะแนนเต็มรวมของชิ้นงาน × คะแนนของหน่วย
+    (c.units || []).forEach(u => {
+      let raw = 0, max = 0;
+      c.gradeColumns.forEach(col => { if (col.unitId === u.id) { raw += parseFloat(col.scores[std.id]) || 0; max += colMax(col); } });
+      const pts = numOr(u.points, 0);
+      const sc = max > 0 ? roundBy(raw / max * pts, c.unitRound) : 0;
+      unitScores[u.id] = { raw, max, score: sc, points: pts };
+      scaled += sc; maxAssign += pts;
+    });
+  } else {
+    maxAssign = Math.max(0, numOr(c.weightMid, 80) - affectiveMax);
+    scaled = sumColumnMax > 0 ? (totalRaw / sumColumnMax) * maxAssign : 0;
+  }
+  const affectiveScore = c.unitMode ? roundBy(affRaw, c.unitRound) : affRaw;
+  const finalScore = finalOn(c) ? (parseFloat(std.finalScore) || 0) : 0;
+  let grandTotal = scaled + affectiveScore + finalScore;
+  if (c.unitMode) grandTotal = Math.round(grandTotal * 1e4) / 1e4;
+  return { totalRaw, sumColumnMax, scaledAssignmentScore: scaled, affectiveScore, finalScore, grandTotal, maxAssignmentAllowed: maxAssign, unitScores };
 };
 
 window.gradeFromTotal = function (t, c) {
@@ -1764,6 +1902,7 @@ window.renderApp = function () {
 
     Object.entries(SETTING_INPUTS).forEach(([id, key]) => { const el = $(id); if (el) el.value = activeC[key]; });
     $('enable-attendance-rule').checked = !!activeC.enableAttendanceRule;
+    window.renderUnitSettings(activeC);
     window.toggleSecondPeriod();
     const sw = $('start-date-warning'); if (sw) sw.style.display = activeC.startDate ? 'none' : 'block';
     const sortBtn = $('btn-sort'); if (sortBtn) sortBtn.classList.toggle('is-on', window.isSortedByScore);
@@ -1823,27 +1962,35 @@ window.renderTables = function (c) {
   $('attendance-table').innerHTML = `<thead>${thead}</thead><tbody>${tbody}</tbody>`;
 
   // ---- ตารางคะแนน ----
+  const groups = window.groupedColumns(c);
+  const plan = window.getTotalPlan(c);
+  const affOn = c.affectiveEnabled !== false, finOn = finalOn(c);
   const sumMax = c.gradeColumns.reduce((a, col) => a + colMax(col), 0);
-  const assignMax = Math.max(0, numOr(c.weightMid, 80) - numOr(c.affectiveMax, 10));
+  const disp = v => window.dispScore(v, c);
   let gThead = `<tr><th>ที่</th><th>รหัส</th><th>ชื่อ-นามสกุล</th>`;
-  c.gradeColumns.forEach(col => {
-    const typeLabel = col.type === 'group' ? '👥 ' : col.type === 'exam' ? '📝 ' : '';
-    gThead += `<th>
-      <div class="col-title" style="color:${col.type === 'exam' ? 'var(--primary)' : 'inherit'};">${typeLabel}${esc(col.name)}<small>(${colMax(col)})</small></div>
-      <div class="col-actions no-print">
-        <button class="icon-btn" title="แก้ไขช่องคะแนน" aria-label="แก้ไข" onclick="window.editColumn(${A(col.id)})">✏️</button>
-        <button class="icon-btn" title="วางคะแนนยกชุด" aria-label="วางคะแนน" onclick="window.openBatchPasteModal(${A(col.id)})">📋</button>
-        <button class="icon-btn" title="ตรวจงานด่วน" aria-label="ตรวจงาน" onclick="window.openRubricModal(${A(col.id)})">🎯</button>
-        <button class="icon-btn danger" title="ลบช่องคะแนน" aria-label="ลบ" onclick="window.deleteColumn(${A(col.id)})">🗑️</button>
-      </div></th>`;
+  groups.forEach(g => {
+    g.cols.forEach(col => {
+      const typeLabel = col.type === 'group' ? '👥 ' : col.type === 'exam' ? '📝 ' : '';
+      const tag = !c.unitMode ? '' : (g.unit ? g.unit.name : 'ยังไม่ผูกหน่วย');
+      gThead += `<th class="${g.unassigned ? 'unit-bad' : ''}">
+        ${tag ? `<div class="unit-tag" title="${esc(tag)}">${esc(tag)}</div>` : ''}
+        <div class="col-title" style="color:${col.type === 'exam' ? 'var(--primary)' : 'inherit'};">${typeLabel}${esc(col.name)}<small>(${colMax(col)})</small></div>
+        <div class="col-actions no-print">
+          <button class="icon-btn" title="แก้ไขช่องคะแนน" aria-label="แก้ไข" onclick="window.editColumn(${A(col.id)})">✏️</button>
+          <button class="icon-btn" title="วางคะแนนยกชุด" aria-label="วางคะแนน" onclick="window.openBatchPasteModal(${A(col.id)})">📋</button>
+          <button class="icon-btn" title="ตรวจงานด่วน" aria-label="ตรวจงาน" onclick="window.openRubricModal(${A(col.id)})">🎯</button>
+          <button class="icon-btn danger" title="ลบช่องคะแนน" aria-label="ลบ" onclick="window.deleteColumn(${A(col.id)})">🗑️</button>
+        </div></th>`;
+    });
+    if (g.unit) gThead += `<th class="unit-sum">สรุป<br>${esc(g.unit.name)}<br><small>(${numOr(g.unit.points, 0)})</small></th>`;
   });
   gThead += `
     <th class="hide-partial" style="background:#fef3c7;">รวมดิบ<br><small>(${sumMax})</small></th>
-    <th style="background:#d1fae5;">หารเก็บ<br><small>(${assignMax})</small></th>
-    <th class="hide-partial" style="background:#e0e7ff;">จิตพิสัย<br><small>(${numOr(c.affectiveMax, 10)})</small></th>
-    <th class="hide-partial">ปลายภาค<br><small>(${numOr(c.weightFinal, 20)})</small>
-      <div class="no-print" style="display:flex; justify-content:center; margin-top:4px;"><button class="btn btn-gold btn-sm" style="min-height:26px; padding:1px 8px; font-size:11px;" onclick="window.openRawDataImportModal('FINAL_SCORE')">📥 นำเข้า</button></div></th>
-    <th class="hide-partial" style="background:#f3f4f6;">รวม 100</th>
+    <th style="background:#d1fae5;">${c.unitMode ? 'รวมหน่วย' : 'หารเก็บ'}<br><small>(${plan.units})</small></th>
+    ${affOn ? `<th class="hide-partial" style="background:#e0e7ff;">จิตพิสัย<br><small>(${plan.aff})</small></th>` : ''}
+    ${finOn ? `<th class="hide-partial">ปลายภาค<br><small>(${plan.fin})</small>
+      <div class="no-print" style="display:flex; justify-content:center; margin-top:4px;"><button class="btn btn-gold btn-sm" style="min-height:26px; padding:1px 8px; font-size:11px;" onclick="window.openRawDataImportModal('FINAL_SCORE')">📥 นำเข้า</button></div></th>` : ''}
+    <th class="hide-partial" style="background:#f3f4f6;">รวม ${plan.total}</th>
     <th class="hide-partial">เกรด</th>
     <th class="no-print hide-partial">หมายเหตุ</th></tr>`;
 
@@ -1852,41 +1999,47 @@ window.renderTables = function (c) {
     const calc = window.calculateStudentTotalObj(std, c);
     const roll = c.students.indexOf(std) + 1;
     gTbody += `<tr><td>${roll}</td><td>${esc(std.studentId || '-')}</td><td class="name-cell">${esc(std.name)}</td>`;
-    c.gradeColumns.forEach(col => {
-      const val = col.scores[std.id];
-      let gOpt = '<option value="">กลุ่ม</option>';
-      if (col.type === 'group') {
-        const used = Object.values(col.groups || {}).map(Number).filter(n => !isNaN(n));
-        const gMax = Math.max(12, ...used);
-        for (let k = 1; k <= gMax; k++) gOpt += `<option value="${k}" ${String(col.groups && col.groups[std.id]) === String(k) ? 'selected' : ''}>ก.${k}</option>`;
-      }
-      gTbody += `<td class="${isMissingScore(val) ? 'cell-missing' : ''}">
-        <input type="number" inputmode="decimal" step="any" class="cell-input" data-std="${esc(std.id)}" data-col="${esc(col.id)}" value="${!isBlank(val) ? esc(val) : ''}" onchange="window.updateScore(${A(std.id)}, ${A(col.id)}, this.value, this)">
-        ${col.type === 'group' ? `<div class="no-print"><select class="grp-select" onchange="window.updateGroup(${A(std.id)}, ${A(col.id)}, this.value)">${gOpt}</select></div>` : ''}
-      </td>`;
+    groups.forEach(g => {
+      g.cols.forEach(col => {
+        const val = col.scores[std.id];
+        let gOpt = '<option value="">กลุ่ม</option>';
+        if (col.type === 'group') {
+          const used = Object.values(col.groups || {}).map(Number).filter(n => !isNaN(n));
+          const gMax = Math.max(12, ...used);
+          for (let k = 1; k <= gMax; k++) gOpt += `<option value="${k}" ${String(col.groups && col.groups[std.id]) === String(k) ? 'selected' : ''}>ก.${k}</option>`;
+        }
+        gTbody += `<td class="${isMissingScore(val) ? 'cell-missing' : ''}">
+          <input type="number" inputmode="decimal" step="any" class="cell-input" data-std="${esc(std.id)}" data-col="${esc(col.id)}" value="${!isBlank(val) ? esc(val) : ''}" onchange="window.updateScore(${A(std.id)}, ${A(col.id)}, this.value, this)">
+          ${col.type === 'group' ? `<div class="no-print"><select class="grp-select" onchange="window.updateGroup(${A(std.id)}, ${A(col.id)}, this.value)">${gOpt}</select></div>` : ''}
+        </td>`;
+      });
+      if (g.unit) gTbody += `<td class="unit-sum" id="unit_${esc(std.id)}_${esc(g.unit.id)}">${disp(calc.unitScores[g.unit.id] ? calc.unitScores[g.unit.id].score : 0)}</td>`;
     });
     gTbody += `
       <td class="hide-partial" id="raw_${esc(std.id)}" style="background:#fffbeb; color:#92400e;">${calc.totalRaw.toFixed(1)}</td>
-      <td id="scaled_${esc(std.id)}" style="background:#ecfdf5; color:#065f46; font-weight:bold;">${calc.scaledAssignmentScore.toFixed(1)}</td>
-      <td class="hide-partial" id="aff_${esc(std.id)}" style="background:#e0e7ff; color:#3730a3;"><b>${calc.affectiveScore.toFixed(1)}</b></td>
-      <td class="hide-partial"><input type="number" inputmode="decimal" step="any" class="cell-input" value="${calc.finalScore}" onchange="window.updateFinal(${A(std.id)}, this.value)"></td>
-      <td class="hide-partial" id="grand_${esc(std.id)}" style="background:#f3f4f6;"><b style="color:${calc.grandTotal < 50 ? 'var(--red)' : 'inherit'}">${calc.grandTotal.toFixed(1)}</b></td>
+      <td id="scaled_${esc(std.id)}" style="background:#ecfdf5; color:#065f46; font-weight:bold;">${disp(calc.scaledAssignmentScore)}</td>
+      ${affOn ? `<td class="hide-partial" id="aff_${esc(std.id)}" style="background:#e0e7ff; color:#3730a3;"><b>${disp(calc.affectiveScore)}</b></td>` : ''}
+      ${finOn ? `<td class="hide-partial"><input type="number" inputmode="decimal" step="any" class="cell-input" value="${calc.finalScore}" onchange="window.updateFinal(${A(std.id)}, this.value)"></td>` : ''}
+      <td class="hide-partial" id="grand_${esc(std.id)}" style="background:#f3f4f6;"><b style="color:${calc.grandTotal < 50 ? 'var(--red)' : 'inherit'}">${disp(calc.grandTotal)}</b></td>
       <td class="hide-partial" id="grade_${esc(std.id)}">${gradeCell(std, c, calc.grandTotal)}</td>
       <td class="no-print hide-partial"><input type="text" class="cell-input wide" value="${esc(std.remark || '')}" onchange="window.updateRemark(${A(std.id)}, this.value)"></td></tr>`;
   });
   $('grades-table').innerHTML = `<thead>${gThead}</thead><tbody>${gTbody}</tbody>`;
   window.renderGradeSummary(c);
+  window.renderUnitNotice(c);
 };
 
 window.recalcStudentDOM = function (stdId, c) {
   const std = c.students.find(s => s.id === stdId); if (!std) return;
   const calc = window.calculateStudentTotalObj(std, c);
+  const disp = v => window.dispScore(v, c);
   const set = (prefix, html) => { const el = $(prefix + stdId); if (el) el.innerHTML = html; };
   set('raw_', calc.totalRaw.toFixed(1));
-  set('scaled_', calc.scaledAssignmentScore.toFixed(1));
-  set('aff_', `<b>${calc.affectiveScore.toFixed(1)}</b>`);
-  set('grand_', `<b style="color:${calc.grandTotal < 50 ? 'var(--red)' : 'inherit'}">${calc.grandTotal.toFixed(1)}</b>`);
+  set('scaled_', disp(calc.scaledAssignmentScore));
+  set('aff_', `<b>${disp(calc.affectiveScore)}</b>`);
+  set('grand_', `<b style="color:${calc.grandTotal < 50 ? 'var(--red)' : 'inherit'}">${disp(calc.grandTotal)}</b>`);
   set('grade_', gradeCell(std, c, calc.grandTotal));
+  if (c.unitMode) (c.units || []).forEach(u => { const el = $(`unit_${stdId}_${u.id}`); if (el && calc.unitScores[u.id]) el.textContent = disp(calc.unitScores[u.id].score); });
 };
 
 window.toggleSortScores = function () { window.isSortedByScore = !window.isSortedByScore; window.renderApp(); };
@@ -1985,9 +2138,79 @@ window.saveSettings = function () {
     else c[key] = el.value;
   });
   c.enableAttendanceRule = $('enable-attendance-rule').checked;
+  c.affectiveEnabled = $('affective-enabled').checked;
   window.saveDataSilent(); window.renderApp();
-  if (numOr(c.weightMid, 80) + numOr(c.weightFinal, 20) !== 100) window.showToast('⚠️ คะแนนระหว่างเรียน + ปลายภาค ไม่เท่ากับ 100', 'warn');
+  const p = window.getTotalPlan(c);
+  if (Math.abs(p.total - 100) > 0.001) window.showToast(`⚠️ คะแนนรวมทั้งหมด = ${p.total} (ควรเท่ากับ 100)`, 'warn');
   else window.showToast();
+};
+
+// ==========================================
+// หน่วยการเรียนรู้: ตั้งค่า
+// ==========================================
+window.renderUnitSettings = function (c) {
+  const on = !!c.unitMode;
+  $('unit-mode').checked = on;
+  $('unit-settings-body').style.display = on ? 'block' : 'none';
+  $('affective-enabled').checked = c.affectiveEnabled !== false;
+  $('affective-max').disabled = c.affectiveEnabled === false;
+  if (!on) return;
+  $('unit-list').innerHTML = c.units.map((u, i) => {
+    const n = c.gradeColumns.filter(col => col.unitId === u.id).length;
+    return `<div class="unit-row">
+      <span class="unit-no">${i + 1}</span>
+      <input type="text" class="input-text" value="${esc(u.name)}" placeholder="ชื่อหน่วย เช่น หน่วยที่ 1 / กลางภาค" onchange="window.updateUnit(${A(u.id)}, 'name', this.value)">
+      <input type="number" inputmode="decimal" step="any" min="0" class="input-text unit-pts" value="${esc(u.points)}" title="คะแนนเต็มของหน่วย (ตามระบบโรงเรียน)" onchange="window.updateUnit(${A(u.id)}, 'points', this.value)">
+      <span class="unit-cols">${n} ช่อง</span>
+      <span class="unit-btns">
+        <button class="icon-btn" ${i === 0 ? 'disabled' : ''} aria-label="เลื่อนขึ้น" onclick="window.moveUnit(${A(u.id)}, -1)">🔼</button>
+        <button class="icon-btn" ${i === c.units.length - 1 ? 'disabled' : ''} aria-label="เลื่อนลง" onclick="window.moveUnit(${A(u.id)}, 1)">🔽</button>
+        <button class="icon-btn danger" aria-label="ลบหน่วย" onclick="window.deleteUnit(${A(u.id)})">🗑️</button>
+      </span></div>`;
+  }).join('');
+  window.updateUnitSumInfo(c);
+};
+window.updateUnitSumInfo = function (c) {
+  const el = $('unit-sum-info'); if (!el) return;
+  const p = window.getTotalPlan(c); const ok = Math.abs(p.total - 100) < 0.001;
+  el.innerHTML = `หน่วยรวม <b>${p.units}</b> + จิตพิสัย <b>${p.aff}</b> + ปลายภาค <b>${p.fin}</b> = <b style="color:${ok ? 'var(--green)' : 'var(--red)'};">${p.total}</b> ${ok ? '✅' : '⚠️ ควรเท่ากับ 100'}`;
+};
+window.toggleUnitMode = function (on) {
+  const c = getActive(); if (!c) return;
+  if (on) {
+    if (!c.units.length) c.units.push({ id: newId('unit'), name: 'คะแนนเก็บ', points: Math.max(0, numOr(c.weightMid, 80) - affMaxOf(c)) });
+    // ผูกช่องคะแนนเดิมเข้ากับหน่วยแรก เพื่อให้คะแนนรวมเท่าเดิม (ไม่หลุดจากการคำนวณ)
+    c.gradeColumns.forEach(col => { if (!c.units.some(u => u.id === col.unitId)) col.unitId = c.units[0].id; });
+    c.unitMode = true;
+    window.showToast(`เปิดระบบหน่วยแล้ว ช่องคะแนนเดิมถูกผูกกับหน่วย "${c.units[0].name}" คะแนนรวมยังเท่าเดิม`);
+  } else { c.unitMode = false; window.showToast('กลับไปใช้การคำนวณแบบรวมทั้งวิชา'); }
+  window.saveDataSilent(); window.renderApp();
+};
+window.addUnit = function () {
+  const c = getActive(); if (!c) return;
+  c.units.push({ id: newId('unit'), name: `หน่วยที่ ${c.units.length + 1}`, points: 10 });
+  window.saveDataSilent(); window.renderApp();
+};
+window.updateUnit = function (id, field, value) {
+  const c = getActive(); const u = c && c.units.find(x => x.id === id); if (!u) return;
+  if (field === 'name') u.name = value.trim() || u.name;
+  else { const v = parseFloat(value); u.points = (isNaN(v) || v < 0) ? 0 : v; }
+  window.saveDataSilent(); window.renderTables(c); window.updateUnitSumInfo(c);
+};
+window.moveUnit = function (id, dir) {
+  const c = getActive(); const i = c.units.findIndex(u => u.id === id), j = i + dir;
+  if (i < 0 || j < 0 || j >= c.units.length) return;
+  [c.units[i], c.units[j]] = [c.units[j], c.units[i]];
+  window.saveDataSilent(); window.renderApp();
+};
+window.deleteUnit = function (id) {
+  const c = getActive(); const u = c.units.find(x => x.id === id); if (!u) return;
+  if (c.units.length <= 1) return alert('ต้องมีอย่างน้อย 1 หน่วย หากไม่ต้องการใช้ ให้ปิดสวิตช์ "ใช้ระบบหน่วยการเรียนรู้"');
+  const n = c.gradeColumns.filter(col => col.unitId === id).length;
+  if (!confirm(`ลบหน่วย "${u.name}" ?` + (n ? `\nช่องคะแนน ${n} ช่องในหน่วยนี้จะกลายเป็น "ยังไม่ผูกหน่วย" (ไม่นับในคะแนนรวมจนกว่าจะเลือกหน่วยใหม่)` : ''))) return;
+  c.gradeColumns.forEach(col => { if (col.unitId === id) col.unitId = ''; });
+  c.units = c.units.filter(x => x.id !== id);
+  window.saveDataSilent(); window.renderApp();
 };
 
 window.openProfileModal = function () {
@@ -2077,15 +2300,17 @@ window.createClass = function () {
   const students = sibling ? sibling.students.map(s => ({ id: s.id, studentId: s.studentId || '', name: s.name || '', email: s.email || '', attendanceStatus: Array(40).fill('มา'), finalScore: 0 })) : [];
 
   const cloneId = $('new-clone-from').value; const newCols = [];
+  let newUnits = [], newUnitMode = false; const unitMap = {};
   if (cloneId) {
     const src = classes.find(c => c.id === cloneId);
+    if (src && src.unitMode) { newUnitMode = true; newUnits = src.units.map(u => { const nu = { id: newId('unit'), name: u.name, points: u.points }; unitMap[u.id] = nu.id; return nu; }); }
     (src && src.gradeColumns || []).forEach(sc => {
-      const col = { id: newId('col'), name: sc.name, type: sc.type, max: sc.max, scores: {}, groups: {} };
+      const col = { id: newId('col'), name: sc.name, type: sc.type, max: sc.max, unitId: unitMap[sc.unitId] || '', scores: {}, groups: {} };
       students.forEach(s => col.scores[s.id] = 0);
       newCols.push(col);
     });
   }
-  const newC = { id: newId('class'), subjectName: name, subjectCode: $('new-subj-code').value.trim(), level, room, students, gradeColumns: newCols };
+  const newC = { id: newId('class'), subjectName: name, subjectCode: $('new-subj-code').value.trim(), level, room, students, gradeColumns: newCols, units: newUnits, unitMode: newUnitMode };
   normalizeClass(newC);
   classes.push(newC);
   window.currentUser.activeClassId = newC.id;
@@ -2102,14 +2327,24 @@ window.deleteCurrentClass = function () {
   window.saveDataSilent(); window.renderApp();
 };
 
+function fillUnitSelect(c, selected) {
+  const wrap = $('col-unit-wrap'); if (!wrap) return;
+  wrap.style.display = c.unitMode ? 'block' : 'none';
+  if (!c.unitMode) return;
+  $('col-unit').innerHTML = '<option value="">-- ยังไม่ผูกหน่วย (ไม่นับคะแนน) --</option>' + c.units.map(u => `<option value="${esc(u.id)}">${esc(u.name)} (${numOr(u.points, 0)} คะแนน)</option>`).join('');
+  $('col-unit').value = selected || '';
+}
 window.openColumnModal = function () {
   $('edit-col-id').value = ''; $('col-name').value = ''; $('col-type').value = 'single'; $('col-max').value = '10';
+  const c = getActive();
+  fillUnitSelect(c, (c.units.some(u => u.id === window.lastUnitId) ? window.lastUnitId : (c.units[0] && c.units[0].id)) || '');
   $('column-modal-title').innerText = 'เพิ่มช่องคะแนนใหม่';
   $('column-modal').style.display = 'flex';
 };
 window.editColumn = function (colId) {
   const c = getActive(); const col = c.gradeColumns.find(x => x.id === colId); if (!col) return;
   $('edit-col-id').value = col.id; $('col-name').value = col.name; $('col-type').value = col.type || 'single'; $('col-max').value = col.max || 10;
+  fillUnitSelect(c, col.unitId);
   $('column-modal-title').innerText = 'แก้ไขรายละเอียดช่องคะแนน';
   $('column-modal').style.display = 'flex';
 };
@@ -2118,11 +2353,12 @@ window.saveColumn = function () {
   const c = getActive();
   const editId = $('edit-col-id').value; const max = parseFloat($('col-max').value); const type = $('col-type').value;
   if (!(max > 0)) return alert('คะแนนเต็มต้องมากกว่า 0');
+  if (c.unitMode && $('col-unit').value) window.lastUnitId = $('col-unit').value;
   if (editId) {
     const col = c.gradeColumns.find(x => x.id === editId);
-    if (col) { col.name = name; col.type = type; col.max = max; }
+    if (col) { col.name = name; col.type = type; col.max = max; if (c.unitMode) col.unitId = $('col-unit').value; }
   } else {
-    const col = { id: newId('col'), name, type, max, scores: {}, groups: {} };
+    const col = { id: newId('col'), name, type, max, unitId: c.unitMode ? $('col-unit').value : '', scores: {}, groups: {} };
     c.students.forEach(s => col.scores[s.id] = 0);
     c.gradeColumns.push(col);
   }
@@ -2151,6 +2387,11 @@ window.executeCloneClass = function () {
     if (names.has(sc.name)) return;
     const col = { id: newId('col'), name: sc.name, type: sc.type, max: sc.max, scores: {}, groups: {} };
     dst.students.forEach(s => col.scores[s.id] = 0);
+    col.unitId = '';
+    if (dst.unitMode && src.unitMode) {   // จับคู่หน่วยตามชื่อ ถ้ายังไม่มีในวิชานี้ให้สร้างหน่วยใหม่ตามต้นทาง
+      const su = src.units.find(u => u.id === sc.unitId);
+      if (su) { let du = dst.units.find(u => u.name === su.name); if (!du) { du = { id: newId('unit'), name: su.name, points: su.points }; dst.units.push(du); } col.unitId = du.id; }
+    }
     dst.gradeColumns.push(col); names.add(sc.name); added++;
   });
   window.saveDataSilent(); window.renderApp();
@@ -2548,7 +2789,7 @@ window.executePrint = function (mode) {
   setTimeout(() => { window.print(); setTimeout(cleanup, 5000); }, 60);   // สำรอง: iOS บางรุ่นไม่ยิง afterprint
 };
 
-window.printModalArea = function (elId) {
+window.printModalArea = function (elId, orient) {
   const src = $(elId); if (!src) return;
   const clone = src.cloneNode(true); clone.id = 'temp-print';
   clone.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));
@@ -2558,10 +2799,12 @@ window.printModalArea = function (elId) {
   const hidden = [];
   Array.from(document.body.children).forEach(ch => { if (['SCRIPT', 'STYLE', 'LINK'].includes(ch.tagName)) return; hidden.push([ch, ch.style.display]); ch.style.display = 'none'; });
   document.body.appendChild(clone);
+  if (orient) { const ps = document.createElement('style'); ps.id = 'modal-print-style'; ps.textContent = `@media print { @page { size: A4 ${orient}; margin: 10mm; } }`; document.head.appendChild(ps); }
   let restored = false;
   const restore = () => {
     if (restored) return; restored = true;
     if (clone.parentNode) clone.parentNode.removeChild(clone);
+    const ps2 = $('modal-print-style'); if (ps2) ps2.remove();
     hidden.forEach(([ch, d]) => ch.style.display = d);
     window.removeEventListener('afterprint', restore);
   };
@@ -2625,11 +2868,12 @@ window.exportExcelCSV = function () {
       let k = `${col.name} (เต็ม ${col.max})`; seen[k] = (seen[k] || 0) + 1; if (seen[k] > 1) k += ` #${seen[k]}`;   // กันชื่อคอลัมน์ซ้ำทับกัน
       row[k] = col.scores[std.id] !== undefined ? col.scores[std.id] : 0;
     });
-    row["รวมคะแนนดิบ"] = Number(calc.totalRaw.toFixed(1));
-    row["หารเก็บ"] = Number(calc.scaledAssignmentScore.toFixed(1));
-    row["จิตพิสัย"] = Number(calc.affectiveScore.toFixed(1));
+    if (c.unitMode) c.units.forEach(u => { row[`สรุป ${u.name} (${u.points})`] = calc.unitScores[u.id] ? calc.unitScores[u.id].score : 0; });
+    row["รวมคะแนนดิบ"] = Number(calc.totalRaw.toFixed(2));
+    row["หารเก็บ"] = Number(calc.scaledAssignmentScore.toFixed(2));
+    row["จิตพิสัย"] = Number(calc.affectiveScore.toFixed(2));
     row["ปลายภาค"] = Number(calc.finalScore);
-    row["รวมสุทธิ (100)"] = Number(calc.grandTotal.toFixed(1));
+    row["รวมสุทธิ (100)"] = Number(calc.grandTotal.toFixed(2));
     row["เกรดที่ได้"] = window.gradeFromTotal(calc.grandTotal, c);
     row["ร้อยละเวลาเรียน"] = Number(window.attendancePct(std, c).toFixed(0));
     row["สถานะเวลาเรียน"] = window.isMsRisk(std, c) ? "มส" : "มีสิทธิ์";
@@ -2637,13 +2881,86 @@ window.exportExcelCSV = function () {
     return row;
   });
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), "คะแนนนักเรียน");
+  const se = window.buildSchoolExport(c);
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([se.headers, ...se.rows]), "สรุปลงระบบโรงเรียน");
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), "คะแนนรายชิ้นงาน");
   XLSX.writeFile(wb, `คะแนน_${c.subjectName}_ม${c.level}_${c.room}.xlsx`);
 };
 
 // ==========================================
 // Batch paste / Rubric / Raw attendance
 // ==========================================
+// ==========================================
+// ส่งออกตารางสรุปเพื่อกรอกลงระบบโรงเรียน (I-Student / SGS ฯลฯ)
+// ==========================================
+window.buildSchoolExport = function (c) {
+  const plan = window.getTotalPlan(c);
+  const affOn = c.affectiveEnabled !== false, finOn = finalOn(c);
+  const dec = c.unitMode ? scoreDecimals(c) : 2;
+  const fmt = v => Number(Number(v).toFixed(dec));
+  const headers = ['เลขที่', 'รหัสประจำตัว', 'ชื่อ - นามสกุล'];
+  if (c.unitMode) c.units.forEach(u => headers.push(`${u.name} (${numOr(u.points, 0)})`));
+  else headers.push(`คะแนนเก็บ (${plan.units})`);
+  if (affOn) headers.push(`จิตพิสัย (${plan.aff})`);
+  if (finOn) headers.push(`ปลายภาค (${plan.fin})`);
+  headers.push(`รวม (${plan.total})`, 'เกรด', 'ร้อยละเวลาเรียน', 'หมายเหตุ');
+  const rows = c.students.map((std, i) => {
+    const k = window.calculateStudentTotalObj(std, c);
+    const row = [i + 1, std.studentId || '', std.name || ''];
+    if (c.unitMode) c.units.forEach(u => row.push(fmt(k.unitScores[u.id] ? k.unitScores[u.id].score : 0)));
+    else row.push(fmt(k.scaledAssignmentScore));
+    if (affOn) row.push(fmt(k.affectiveScore));
+    if (finOn) row.push(fmt(k.finalScore));
+    row.push(fmt(k.grandTotal), window.gradeFromTotal(k.grandTotal, c), Math.round(window.attendancePct(std, c)), std.remark || '');
+    return row;
+  });
+  return { headers, rows };
+};
+
+window.openSchoolExport = function () {
+  const c = getActive(); if (!c) return;
+  const se = window.buildSchoolExport(c); window._schoolExport = se;
+  $('se-thead').innerHTML = '<tr>' + se.headers.map((h, i) => `<th>${esc(h)}${i >= 3 ? `<div class="no-print" style="margin-top:4px;"><button class="icon-btn" title="คัดลอกเฉพาะคอลัมน์นี้" aria-label="คัดลอกคอลัมน์" onclick="window.copySchoolCol(${i})">📋</button></div>` : ''}</th>`).join('') + '</tr>';
+  $('se-tbody').innerHTML = se.rows.map(r => '<tr>' + r.map((v, i) => `<td style="${i === 2 ? 'text-align:left; white-space:nowrap;' : ''}">${esc(v)}</td>`).join('') + '</tr>').join('');
+  $('se-class-info').innerText = `รายวิชา ${c.subjectName} (${c.subjectCode}) ชั้น ${c.level}/${c.room}`;
+  $('se-teacher').innerText = `(${(window.currentUser && window.currentUser.name) || '.......................................................'})`;
+  const modeNote = c.unitMode
+    ? `คะแนนแต่ละหน่วยเทียบบัญญัติไตรยางศ์จากคะแนนดิบของชิ้นงานในหน่วยแล้ว (ปัดเศษ: ${({ '2': 'ทศนิยม 2 ตำแหน่ง', '1': 'ทศนิยม 1 ตำแหน่ง', '0': 'จำนวนเต็ม', 'half': 'ทีละ 0.5', 'none': 'ไม่ปัด' })[String(c.unitRound)] || ''}) ตรงกับที่ใช้คิดเกรดในระบบนี้`
+    : 'ยังไม่ได้เปิดระบบหน่วยการเรียนรู้ ตารางจึงแสดงคะแนนเก็บรวมเป็นคอลัมน์เดียว (เปิดได้ที่แท็บ "ตั้งค่าวิชา")';
+  $('se-note').innerHTML = `${modeNote} · กดปุ่ม 📋 ที่หัวคอลัมน์เพื่อคัดลอกทีละคอลัมน์ แล้วนำไปวางในระบบโรงเรียนได้ทันที`;
+  const w = window.planWarnings(c); const we = $('se-warn');
+  we.innerHTML = w.map(m => `<div>⚠️ ${m}</div>`).join(''); we.style.display = w.length ? 'block' : 'none';
+  $('school-export-modal').style.display = 'flex';
+};
+const copyText = async (text) => {
+  try { await navigator.clipboard.writeText(text); return true; }
+  catch (e) {
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed; opacity:0;';
+    document.body.appendChild(ta); ta.select(); let ok = false;
+    try { ok = document.execCommand('copy'); } catch (_) { }
+    ta.remove(); return ok;
+  }
+};
+const tsvCell = v => String(v).replace(/[\t\r\n]+/g, ' ');
+window.copySchoolCol = async function (idx) {
+  const se = window._schoolExport; if (!se) return;
+  const ok = await copyText(se.rows.map(r => tsvCell(r[idx])).join('\n'));
+  window.showToast(ok ? `คัดลอกคอลัมน์ "${se.headers[idx]}" แล้ว (${se.rows.length} ค่า)` : 'คัดลอกไม่สำเร็จ ลองใหม่อีกครั้ง', ok ? 'ok' : 'warn');
+};
+window.copySchoolAll = async function () {
+  const se = window._schoolExport; if (!se) return;
+  const ok = await copyText([se.headers, ...se.rows].map(r => r.map(tsvCell).join('\t')).join('\n'));
+  window.showToast(ok ? 'คัดลอกทั้งตารางแล้ว วางลง Excel/Google Sheets ได้เลย' : 'คัดลอกไม่สำเร็จ ลองใหม่อีกครั้ง', ok ? 'ok' : 'warn');
+};
+window.downloadSchoolExcel = function () {
+  const c = getActive(); const se = window._schoolExport; if (!c || !se) return;
+  if (typeof XLSX === 'undefined') return alert('โหลดตัวช่วยสร้าง Excel ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([se.headers, ...se.rows]), "สรุปลงระบบโรงเรียน");
+  XLSX.writeFile(wb, `สรุปลงระบบ_${c.subjectName}_ม${c.level}_${c.room}.xlsx`);
+};
+window.printSchoolExport = () => window.printModalArea('school-export-print-area', 'landscape');
+
 window.openBatchPasteModal = function (colId = 'new') {
   const c = getActive();
   if (!c.gradeColumns.length) return alert('กรุณาสร้างชิ้นงานก่อนครับ');
