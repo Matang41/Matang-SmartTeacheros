@@ -320,6 +320,7 @@
         .holiday { background-color: var(--bad-bg) !important; color: var(--red) !important; }
         .makeup { background-color: var(--info-bg) !important; color: var(--info-fg) !important; }
         .cell-missing { background: var(--bad-bg); }
+        .cell-note { background: #FFF7ED; }
 
         /* ปุ่มสถานะเวลาเรียน */
         .att-btn { min-width: 40px; min-height: 30px; padding: 2px 8px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid transparent; }
@@ -639,7 +640,7 @@
         <input type="file" id="import-legacy-file" style="display: none;" accept=".json,application/json" onchange="window.importLegacyJSON(event)">
         <button class="btn btn-outline" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;" onclick="window.openAutoBackupModal(); window.closeSidebar();">⏱️ ย้อนเวลา (Local)</button>
         <button class="btn btn-red" onclick="window.logout()">🚪 ลงชื่อออก</button>
-        <span class="version-badge" onclick="window.checkUpdate()">v3.10.0</span>
+        <span class="version-badge" onclick="window.checkUpdate()">v3.10.1</span>
         <div style="font-size: 10px; color: #9CA3AF;">&copy; 2026 พัฒนาโดย นายนนทพัทธ์ วงค์มูล</div>
     </div>
 </aside>
@@ -1108,6 +1109,7 @@
             <select id="missing-work-select" class="input-text" style="margin:0; flex-grow: 1; min-width: 200px;" onchange="window.renderMissingWorkList()"></select>
             <button class="btn btn-dark" onclick="window.printModalArea('missing-work-print-area')">🖨️ พิมพ์หน้านี้</button>
         </div>
+        <p class="hint" style="margin:0 0 10px;">แถวสีแดง = ยังไม่มีคะแนน (ถือว่าค้างส่งจริง) · แถวสีส้ม = มีคะแนนแล้วแต่ยังไม่ได้เลือก "กลุ่ม" ในระบบ (ไม่นับว่าค้างส่ง เป็นเพียงข้อสังเกต)</p>
         <div id="missing-work-print-area" style="background: white; padding: 4px;">
             <div class="print-header print-only">
                 <h2>รายงานการค้างส่งงาน/ภาระงาน</h2>
@@ -1302,7 +1304,7 @@ const db = getFirestore(app);
 // ==========================================
 // Constants & small helpers
 // ==========================================
-const APP_VERSION = "3.10.0";
+const APP_VERSION = "3.10.1";
 const ADMIN_EMAIL = 'admin@school.com';
 const BACKUP_PREFIX = 'SmartTeacher_AutoBackups_';
 const defaultHolidays = `2026-05-01\n2026-05-04\n2026-05-31\n2026-06-03\n2026-07-28\n2026-07-30\n2026-08-12\n2026-10-13\n2026-10-23\n2026-12-05\n2026-12-10`;
@@ -1375,7 +1377,7 @@ window.showToast = function (msg = "บันทึกข้อมูลเร�
 };
 
 window.checkUpdate = function () {
-  alert(`เวอร์ชันปัจจุบัน v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- เพิ่มระบบหน่วยการเรียนรู้ (เทียบบัญญัติไตรยางศ์รายหน่วย) และสวิตช์เปิด-ปิดจิตพิสัย\n- เพิ่มปุ่ม "ส่งออกลงระบบโรงเรียน" คัดลอกทีละคอลัมน์/ดาวน์โหลด Excel/พิมพ์\n- ปรับ UI ใหม่ รองรับแล็ปท็อป / iPad / iPhone\n- แก้ค่าตัดเกรด 4 / 3.5 / 3 ที่ตั้งแล้วไม่ถูกนำไปคำนวณ\n- แก้วัน/คาบของคาบที่ 2 ที่ตั้งแล้วไม่ถูกบันทึก\n- แก้ฐานข้อมูลนักเรียนส่วนกลางที่โหลดรายชื่อเดิมไม่ขึ้น\n- แก้ป้ายแจ้งเตือน (Toast) ที่ไม่เคยแสดง\n- เพิ่มปุ่มดึงช่องคะแนนจากห้องอื่น / กู้คืน JSON ที่เดิมกดแล้วไม่ทำงาน\n- ป้องกันการฝังโค้ด (XSS) จากชื่อนักเรียน/ครู\n- ซิงค์ข้อมูลทันทีเมื่อสลับแอป/ปิดหน้า`);
+  alert(`เวอร์ชันปัจจุบัน v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- แก้ไข "บอร์ดสรุปงานค้างทั้งห้อง" และ "ศูนย์คัดกรองเด็กเสี่ยง" ที่เคยขึ้นว่านักเรียนค้างส่งงาน ทั้งที่มีการให้คะแนนแล้ว โดยเฉพาะนักเรียนที่เพิ่มชื่อเข้ามาใหม่ในงานกลุ่ม (สาเหตุ: ระบบเดิมกำหนดให้ต้องเลือก "กลุ่ม" ในระบบด้วยเสมอ แม้จะกรอกคะแนนแล้วก็ตาม) ตอนนี้ถ้ามีคะแนนแล้วจะไม่ถือว่าค้างส่งอีกต่อไป\n- เพิ่มระบบหน่วยการเรียนรู้ (เทียบบัญญัติไตรยางศ์รายหน่วย) และสวิตช์เปิด-ปิดจิตพิสัย\n- เพิ่มปุ่ม "ส่งออกลงระบบโรงเรียน" คัดลอกทีละคอลัมน์/ดาวน์โหลด Excel/พิมพ์\n- ปรับ UI ใหม่ รองรับแล็ปท็อป / iPad / iPhone\n- แก้ค่าตัดเกรด 4 / 3.5 / 3 ที่ตั้งแล้วไม่ถูกนำไปคำนวณ\n- แก้วัน/คาบของคาบที่ 2 ที่ตั้งแล้วไม่ถูกบันทึก\n- แก้ฐานข้อมูลนักเรียนส่วนกลางที่โหลดรายชื่อเดิมไม่ขึ้น\n- แก้ป้ายแจ้งเตือน (Toast) ที่ไม่เคยแสดง\n- เพิ่มปุ่มดึงช่องคะแนนจากห้องอื่น / กู้คืน JSON ที่เดิมกดแล้วไม่ทำงาน\n- ป้องกันการฝังโค้ด (XSS) จากชื่อนักเรียน/ครู\n- ซิงค์ข้อมูลทันทีเมื่อสลับแอป/ปิดหน้า`);
 };
 
 // ==========================================
@@ -2306,7 +2308,7 @@ window.createClass = function () {
     if (src && src.unitMode) { newUnitMode = true; newUnits = src.units.map(u => { const nu = { id: newId('unit'), name: u.name, points: u.points }; unitMap[u.id] = nu.id; return nu; }); }
     (src && src.gradeColumns || []).forEach(sc => {
       const col = { id: newId('col'), name: sc.name, type: sc.type, max: sc.max, unitId: unitMap[sc.unitId] || '', scores: {}, groups: {} };
-      students.forEach(s => col.scores[s.id] = 0);
+      students.forEach(s => col.scores[s.id] = '');
       newCols.push(col);
     });
   }
@@ -2359,7 +2361,7 @@ window.saveColumn = function () {
     if (col) { col.name = name; col.type = type; col.max = max; if (c.unitMode) col.unitId = $('col-unit').value; }
   } else {
     const col = { id: newId('col'), name, type, max, unitId: c.unitMode ? $('col-unit').value : '', scores: {}, groups: {} };
-    c.students.forEach(s => col.scores[s.id] = 0);
+    c.students.forEach(s => col.scores[s.id] = '');
     c.gradeColumns.push(col);
   }
   window.saveDataSilent(); window.renderApp();
@@ -2386,7 +2388,7 @@ window.executeCloneClass = function () {
   src.gradeColumns.forEach(sc => {
     if (names.has(sc.name)) return;
     const col = { id: newId('col'), name: sc.name, type: sc.type, max: sc.max, scores: {}, groups: {} };
-    dst.students.forEach(s => col.scores[s.id] = 0);
+    dst.students.forEach(s => col.scores[s.id] = '');
     col.unitId = '';
     if (dst.unitMode && src.unitMode) {   // จับคู่หน่วยตามชื่อ ถ้ายังไม่มีในวิชานี้ให้สร้างหน่วยใหม่ตามต้นทาง
       const su = src.units.find(u => u.id === sc.unitId);
@@ -2554,7 +2556,8 @@ window.saveCentralStudentDB = function () {
       const students = next.map(({ std, ns, isNew }) => {
         if (!isNew) { std.studentId = ns.studentId || ""; std.name = ns.name || ""; std.email = ns.email || ""; return std; }
         const s = blankStudent(ns.id || newId('std'), ns.studentId || '', ns.name || '', ns.email || '');
-        c.gradeColumns.forEach(col => { col.scores[s.id] = 0; });
+        // คะแนนเริ่มต้นของนักเรียนใหม่ตั้งเป็น "ยังไม่มีคะแนน" (ไม่ใช่ 0) เพื่อไม่ให้ระบบ/ครูสับสนกับคะแนนที่ให้จริง
+        c.gradeColumns.forEach(col => { col.scores[s.id] = ''; });
         return s;
       });
       c.students = students;
@@ -2614,14 +2617,27 @@ window.renderMissingWorkList = function () {
   const colId = $('missing-work-select').value; if (!colId) return;
   const c = getActive(); let html = '';
   c.students.forEach((std, idx) => {
-    const reasons = [];
+    // แยกเหตุผลออกเป็น 2 กลุ่ม: "missing" = ยังไม่มีคะแนนจริง (นับว่าค้างส่ง)
+    // และ "note" = มีคะแนนแล้ว แต่ยังไม่ได้เลือก "กลุ่ม" ในระบบ (ไม่ถือว่าค้างส่ง เพราะครูให้คะแนนแล้ว
+    // มักเกิดกับนักเรียนที่เพิ่มชื่อเข้ามาใหม่ภายหลัง ซึ่งยังไม่เคยถูกจับเข้ากลุ่มผ่านเมนู)
+    const missingReasons = [], noteReasons = [];
     const check = col => {
-      if (isMissingScore(col.scores[std.id])) reasons.push(colId === 'ALL' ? col.name : 'ไม่มีคะแนน');
-      if (col.type === 'group' && !(col.groups && col.groups[std.id])) reasons.push(colId === 'ALL' ? `${col.name} (ยังไม่มีกลุ่ม)` : 'ยังไม่มีกลุ่ม');
+      const hasScore = !isMissingScore(col.scores[std.id]);
+      if (!hasScore) {
+        missingReasons.push(colId === 'ALL' ? col.name : 'ไม่มีคะแนน');
+      } else if (col.type === 'group' && !(col.groups && col.groups[std.id])) {
+        noteReasons.push(colId === 'ALL' ? `${col.name} (มีคะแนนแล้ว แต่ยังไม่ระบุกลุ่ม)` : 'มีคะแนนแล้ว แต่ยังไม่ระบุกลุ่ม');
+      }
     };
     if (colId === 'ALL') c.gradeColumns.forEach(check); else { const col = c.gradeColumns.find(x => x.id === colId); if (col) check(col); }
-    const ok = reasons.length === 0;
-    html += `<tr><td>${idx + 1}</td><td>${esc(std.studentId || '-')}</td><td style="text-align:left;">${esc(std.name)}</td><td style="text-align:left; color:${ok ? 'green' : 'var(--red)'};">${ok ? '✅ ครบถ้วน' : esc([...new Set(reasons)].join(', '))}</td></tr>`;
+    const ok = missingReasons.length === 0 && noteReasons.length === 0;
+    const rowCls = missingReasons.length ? 'cell-missing' : (noteReasons.length ? 'cell-note' : '');
+    const statusTxt = missingReasons.length
+      ? esc([...missingReasons].join(', '))
+      : noteReasons.length
+        ? `<span style="color:#92400e;">${esc([...noteReasons].join(', '))}</span>`
+        : '<span style="color:green;">✅ ครบถ้วน</span>';
+    html += `<tr><td>${idx + 1}</td><td>${esc(std.studentId || '-')}</td><td style="text-align:left;">${esc(std.name)}</td><td style="text-align:left;" class="${rowCls}">${statusTxt}</td></tr>`;
   });
   $('missing-work-tbody').innerHTML = html;
 };
@@ -2644,7 +2660,10 @@ window.generateGlobalRiskReport = function () {
     cls.students.forEach(std => {
       const risks = []; let missing = 0; const big = [];
       cls.gradeColumns.forEach(col => {
-        if (isMissingScore(col.scores[std.id]) || (col.type === 'group' && !(col.groups && col.groups[std.id]))) { missing++; if (chkScore && colMax(col) >= scoreVal) big.push(col.name); }
+        // นับว่า "ค้างส่ง" เฉพาะตอนยังไม่มีคะแนนจริงเท่านั้น
+        // (เดิมงานกลุ่มที่มีคะแนนแล้วแต่ยังไม่ได้เลือก "กลุ่ม" ในระบบ ก็ถูกนับว่าค้างส่งไปด้วย ทำให้รายงานคลาดเคลื่อน
+        // โดยเฉพาะนักเรียนที่เพิ่มชื่อเข้ามาใหม่ภายหลัง)
+        if (isMissingScore(col.scores[std.id])) { missing++; if (chkScore && colMax(col) >= scoreVal) big.push(col.name); }
       });
       if (chkCount && missing >= countVal) risks.push(`<span style="color:#b45309;">❌ ค้าง ${missing} ชิ้น</span>`);
       if (chkScore && big.length) risks.push(`<span style="color:#b45309;">💎 ทิ้งงานใหญ่: ${esc(big.join(', '))}</span>`);
@@ -3103,7 +3122,7 @@ window.detectHeaderAndCreateColumn = function () {
   }
   const c = getActive();
   const col = { id: newId('col'), name: header.substring(0, 35), type: 'single', max: 10, scores: {}, groups: {} };
-  c.students.forEach(s => col.scores[s.id] = 0);
+  c.students.forEach(s => col.scores[s.id] = '');
   c.gradeColumns.push(col);
   window.saveDataSilent(); window.openRawDataImportModal(col.id);
   window.showToast(`✨ สร้างชิ้นงาน: "${col.name}"`);
