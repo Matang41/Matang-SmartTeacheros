@@ -640,7 +640,7 @@
         <input type="file" id="import-legacy-file" style="display: none;" accept=".json,application/json" onchange="window.importLegacyJSON(event)">
         <button class="btn btn-outline" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;" onclick="window.openAutoBackupModal(); window.closeSidebar();">⏱️ ย้อนเวลา (Local)</button>
         <button class="btn btn-red" onclick="window.logout()">🚪 ลงชื่อออก</button>
-        <span class="version-badge" onclick="window.checkUpdate()">v3.10.1</span>
+        <span class="version-badge" onclick="window.checkUpdate()">v3.10.2</span>
         <div style="font-size: 10px; color: #9CA3AF;">&copy; 2026 พัฒนาโดย นายนนทพัทธ์ วงค์มูล</div>
     </div>
 </aside>
@@ -1261,6 +1261,12 @@
             <button class="btn btn-gold" onclick="window.copySchoolAll()">📋 คัดลอกทั้งตาราง</button>
             <button class="btn btn-green" onclick="window.downloadSchoolExcel()">📊 ดาวน์โหลด Excel</button>
             <button class="btn btn-dark" onclick="window.printSchoolExport()">🖨️ พิมพ์</button>
+            <button class="btn" style="background:#4338ca;" onclick="window.openIStudentScript()">⚡ สร้างสคริปต์หยอดคะแนน i-Student</button>
+        </div>
+        <div id="se-script-panel" style="display:none; margin-bottom:12px; background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:12px;">
+            <div id="se-script-info" class="hint" style="line-height:1.7;"></div>
+            <textarea id="se-script-text" rows="10" class="input-text" readonly style="font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px; white-space:pre;" onfocus="this.select()"></textarea>
+            <div class="btn-row"><button class="btn btn-gold" onclick="window.copyIStudentScript()">📋 คัดลอกสคริปต์</button></div>
         </div>
         <div id="school-export-print-area" style="background: white; padding: 4px;">
             <div class="print-header print-only">
@@ -1304,7 +1310,7 @@ const db = getFirestore(app);
 // ==========================================
 // Constants & small helpers
 // ==========================================
-const APP_VERSION = "3.10.1";
+const APP_VERSION = "3.10.2";
 const ADMIN_EMAIL = 'admin@school.com';
 const BACKUP_PREFIX = 'SmartTeacher_AutoBackups_';
 const defaultHolidays = `2026-05-01\n2026-05-04\n2026-05-31\n2026-06-03\n2026-07-28\n2026-07-30\n2026-08-12\n2026-10-13\n2026-10-23\n2026-12-05\n2026-12-10`;
@@ -1377,7 +1383,7 @@ window.showToast = function (msg = "บันทึกข้อมูลเร�
 };
 
 window.checkUpdate = function () {
-  alert(`เวอร์ชันปัจจุบัน v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- แก้ไข "บอร์ดสรุปงานค้างทั้งห้อง" และ "ศูนย์คัดกรองเด็กเสี่ยง" ที่เคยขึ้นว่านักเรียนค้างส่งงาน ทั้งที่มีการให้คะแนนแล้ว โดยเฉพาะนักเรียนที่เพิ่มชื่อเข้ามาใหม่ในงานกลุ่ม (สาเหตุ: ระบบเดิมกำหนดให้ต้องเลือก "กลุ่ม" ในระบบด้วยเสมอ แม้จะกรอกคะแนนแล้วก็ตาม) ตอนนี้ถ้ามีคะแนนแล้วจะไม่ถือว่าค้างส่งอีกต่อไป\n- เพิ่มระบบหน่วยการเรียนรู้ (เทียบบัญญัติไตรยางศ์รายหน่วย) และสวิตช์เปิด-ปิดจิตพิสัย\n- เพิ่มปุ่ม "ส่งออกลงระบบโรงเรียน" คัดลอกทีละคอลัมน์/ดาวน์โหลด Excel/พิมพ์\n- ปรับ UI ใหม่ รองรับแล็ปท็อป / iPad / iPhone\n- แก้ค่าตัดเกรด 4 / 3.5 / 3 ที่ตั้งแล้วไม่ถูกนำไปคำนวณ\n- แก้วัน/คาบของคาบที่ 2 ที่ตั้งแล้วไม่ถูกบันทึก\n- แก้ฐานข้อมูลนักเรียนส่วนกลางที่โหลดรายชื่อเดิมไม่ขึ้น\n- แก้ป้ายแจ้งเตือน (Toast) ที่ไม่เคยแสดง\n- เพิ่มปุ่มดึงช่องคะแนนจากห้องอื่น / กู้คืน JSON ที่เดิมกดแล้วไม่ทำงาน\n- ป้องกันการฝังโค้ด (XSS) จากชื่อนักเรียน/ครู\n- ซิงค์ข้อมูลทันทีเมื่อสลับแอป/ปิดหน้า`);
+  alert(`เวอร์ชันปัจจุบัน v${APP_VERSION} (ระบบคลาวด์)\n\nอัปเดตล่าสุด:\n- เพิ่มปุ่ม "สร้างสคริปต์หยอดคะแนน i-Student" ในหน้าส่งออก สร้างชุดคำสั่งจากคะแนนจริงจับคู่ด้วยรหัสประจำตัว\n- แก้ไข "บอร์ดสรุปงานค้างทั้งห้อง" และ "ศูนย์คัดกรองเด็กเสี่ยง" ที่เคยขึ้นว่านักเรียนค้างส่งงาน ทั้งที่มีการให้คะแนนแล้ว โดยเฉพาะนักเรียนที่เพิ่มชื่อเข้ามาใหม่ในงานกลุ่ม (สาเหตุ: ระบบเดิมกำหนดให้ต้องเลือก "กลุ่ม" ในระบบด้วยเสมอ แม้จะกรอกคะแนนแล้วก็ตาม) ตอนนี้ถ้ามีคะแนนแล้วจะไม่ถือว่าค้างส่งอีกต่อไป\n- เพิ่มระบบหน่วยการเรียนรู้ (เทียบบัญญัติไตรยางศ์รายหน่วย) และสวิตช์เปิด-ปิดจิตพิสัย\n- เพิ่มปุ่ม "ส่งออกลงระบบโรงเรียน" คัดลอกทีละคอลัมน์/ดาวน์โหลด Excel/พิมพ์\n- ปรับ UI ใหม่ รองรับแล็ปท็อป / iPad / iPhone\n- แก้ค่าตัดเกรด 4 / 3.5 / 3 ที่ตั้งแล้วไม่ถูกนำไปคำนวณ\n- แก้วัน/คาบของคาบที่ 2 ที่ตั้งแล้วไม่ถูกบันทึก\n- แก้ฐานข้อมูลนักเรียนส่วนกลางที่โหลดรายชื่อเดิมไม่ขึ้น\n- แก้ป้ายแจ้งเตือน (Toast) ที่ไม่เคยแสดง\n- เพิ่มปุ่มดึงช่องคะแนนจากห้องอื่น / กู้คืน JSON ที่เดิมกดแล้วไม่ทำงาน\n- ป้องกันการฝังโค้ด (XSS) จากชื่อนักเรียน/ครู\n- ซิงค์ข้อมูลทันทีเมื่อสลับแอป/ปิดหน้า`);
 };
 
 // ==========================================
@@ -2949,6 +2955,7 @@ window.openSchoolExport = function () {
   $('se-note').innerHTML = `${modeNote} · กดปุ่ม 📋 ที่หัวคอลัมน์เพื่อคัดลอกทีละคอลัมน์ แล้วนำไปวางในระบบโรงเรียนได้ทันที`;
   const w = window.planWarnings(c); const we = $('se-warn');
   we.innerHTML = w.map(m => `<div>⚠️ ${m}</div>`).join(''); we.style.display = w.length ? 'block' : 'none';
+  $('se-script-panel').style.display = 'none';
   $('school-export-modal').style.display = 'flex';
 };
 const copyText = async (text) => {
@@ -2979,6 +2986,96 @@ window.downloadSchoolExcel = function () {
   XLSX.writeFile(wb, `สรุปลงระบบ_${c.subjectName}_ม${c.level}_${c.room}.xlsx`);
 };
 window.printSchoolExport = () => window.printModalArea('school-export-print-area', 'landscape');
+
+// สร้างชุดคำสั่ง (Console) สำหรับหยอดคะแนนลงหน้าเว็บ i-Student โดยจับคู่ด้วยรหัสประจำตัว
+// ลำดับช่องคะแนน = ตามตารางส่งออก: หน่วย/คะแนนเก็บ (ตามลำดับหน่วย) → จิตพิสัย → ปลายภาค
+window.buildIStudentScript = function (c) {
+  const se = window.buildSchoolExport(c);
+  const n = se.headers.length - 7;                    // ตัดคอลัมน์ท้าย: รวม/เกรด/ร้อยละเวลาเรียน/หมายเหตุ + 3 คอลัมน์หน้า
+  const labels = se.headers.slice(3, 3 + n);
+  const skipped = [], data = [];
+  se.rows.forEach(r => {
+    const id = String(r[1] || '').trim();
+    if (!id) { skipped.push(r[2] || ('เลขที่ ' + r[0])); return; }
+    data.push([id, r.slice(3, 3 + n).map(v => Number.isFinite(Number(v)) ? Number(v) : 0)]);
+  });
+  const rowsTxt = data.map(([id, sc]) => '    [' + JSON.stringify(id) + ', [' + sc.join(', ') + ']]').join(',\n');
+  const L = [
+    '(function() {',
+    '  // ' + c.subjectName + ' ม.' + c.level + '/' + c.room + ' | ข้อมูลคะแนน ' + data.length + ' คน (' + n + ' ช่องย่อย)',
+    '  // รูปแบบ: [รหัสนักเรียน, [' + labels.join(' | ').replace(/\s+/g, ' ') + ']]',
+    '  const scoreData = [',
+    rowsTxt,
+    '  ];',
+    '',
+    '  function triggerEvents(el) {',
+    "    ['input', 'change', 'blur', 'keyup'].forEach(function(t) {",
+    '      el.dispatchEvent(new Event(t, { bubbles: true }));',
+    '    });',
+    '  }',
+    "  var SEL = 'input:not([type=\"hidden\"]):not([type=\"checkbox\"]):not([type=\"radio\"]):not([readonly]):not([disabled])';",
+    '',
+    '  var successCount = 0;',
+    "  var rows = Array.from(document.querySelectorAll('tr')).filter(function(r) { return !r.querySelector('tr'); });",
+    '',
+    '  scoreData.forEach(function(item) {',
+    '    var stdId = item[0], scores = item[1];',
+    '    var targetRow = rows.find(function(r) { return r.innerText.includes(stdId); });',
+    '    if (targetRow) {',
+    '      var inputs = Array.from(targetRow.querySelectorAll(SEL));',
+    '      if (inputs.length >= scores.length) {',
+    '        scores.forEach(function(val, idx) {',
+    '          inputs[idx].value = val;',
+    '          triggerEvents(inputs[idx]);',
+    '        });',
+    '        successCount++;',
+    '      } else {',
+    "        console.warn('⚠️ รหัส ' + stdId + ' มีช่องกรอก ' + inputs.length + ' ช่อง แต่ต้องการ ' + scores.length);",
+    '      }',
+    '    } else {',
+    "      console.warn('⚠️ ไม่พบแถวของรหัส ' + stdId);",
+    '    }',
+    '  });',
+    '',
+    '  if (successCount === 0) {',
+    "    console.warn('⚠️ ค้นหาด้วยรหัสไม่พบ กำลังลองหยอดตามลำดับแถว...');",
+    '    var candidateRows = rows.filter(function(r) { return r.querySelectorAll(SEL).length >= ' + n + '; });',
+    '    scoreData.forEach(function(item, rIdx) {',
+    '      if (candidateRows[rIdx]) {',
+    '        var inputs = Array.from(candidateRows[rIdx].querySelectorAll(SEL));',
+    '        item[1].forEach(function(val, cIdx) {',
+    '          inputs[cIdx].value = val;',
+    '          triggerEvents(inputs[cIdx]);',
+    '        });',
+    '        successCount++;',
+    '      }',
+    '    });',
+    '  }',
+    '',
+    "  console.log('🎉 ดำเนินการสำเร็จ! หยอดคะแนนเข้าสู่ระบบแล้ว ' + successCount + ' จาก ' + scoreData.length + ' คน');",
+    "  alert('หยอดคะแนนเรียบร้อยแล้ว ' + successCount + ' คน\\nอย่าลืมตรวจทานแล้วกดปุ่ม \"บันทึก\" ของหน้าเว็บครับ');",
+    '})();'
+  ];
+  return { script: L.join('\n'), count: data.length, skipped, labels, n };
+};
+window.openIStudentScript = function () {
+  const c = getActive(); if (!c) return;
+  const r = window.buildIStudentScript(c);
+  $('se-script-text').value = r.script;
+  const order = r.labels.map((l, i) => (i + 1) + '. ' + esc(l)).join(' &nbsp;→&nbsp; ');
+  let info = '<b>ลำดับช่องที่สคริปต์จะกรอก (ต้องตรงกับลำดับช่องในหน้า i-Student):</b><br>' + order +
+    '<br>จับคู่แถวด้วยรหัสประจำตัว · สร้างจากคะแนนจริง ' + r.count + ' คน<br>วิธีใช้: เปิดหน้ากรอกคะแนนของห้องนั้นใน i-Student → กด F12 → แท็บ Console → วางสคริปต์ → Enter → ตรวจทานแล้วกดบันทึกของเว็บ';
+  if (r.skipped.length) info += '<br><span style="color:var(--red);">⚠️ ข้ามนักเรียนที่ไม่มีรหัสประจำตัว ' + r.skipped.length + ' คน: ' + esc(r.skipped.join(', ')) + '</span>';
+  const w = window.planWarnings(c);
+  if (w.length) info += '<br><span style="color:#92400e;">⚠️ แผนคะแนนยังไม่ครบ/ไม่ตรง 100 โปรดตรวจสอบก่อนใช้งาน</span>';
+  $('se-script-info').innerHTML = info;
+  $('se-script-panel').style.display = 'block';
+};
+window.copyIStudentScript = async function () {
+  const t = $('se-script-text').value; if (!t) return;
+  const ok = await copyText(t);
+  window.showToast(ok ? 'คัดลอกสคริปต์แล้ว วางใน Console ของหน้า i-Student ได้เลย' : 'คัดลอกไม่สำเร็จ ให้แตะในกล่องแล้วเลือกคัดลอกเอง', ok ? 'ok' : 'warn');
+};
 
 window.openBatchPasteModal = function (colId = 'new') {
   const c = getActive();
